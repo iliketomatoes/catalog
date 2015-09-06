@@ -1,24 +1,17 @@
 from flask import Flask, render_template
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-# from models import Base, Restaurant, MenuItem
-from flask import jsonify
 from recipes.controller import recipes
 
 app = Flask(__name__)
 
-# engine = create_engine('sqlite:///italianrecipes.db')
-# Base.metadata.bind = engine
-
-# DBSession = sessionmaker(bind=engine)
-# session = DBSession()
-
 
 @app.route('/')
 def home():
-    return jsonify(data='none', page='home')
+    try:
+        return render_template('index.html')
+    except TemplateNotFound:
+        abort(404)
 
-app.register_blueprint(recipes, url_prefix='/recipes')    
+app.register_blueprint(recipes)
 
 
 if __name__ == '__main__':
