@@ -19,7 +19,6 @@ define([
             };
 
             var compiledTemplate = _.template(recipesListTemplate)(data);
-            console.log(compiledTemplate)
             this.$el.html(compiledTemplate);
         }
     });

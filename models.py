@@ -29,7 +29,7 @@ class Recipe(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(4000))
-    difficulty = Column(String(8))
+    difficulty = Column(String(10))
     duration = Column(Integer)
     region_id = Column(Integer, ForeignKey('regions.id'))
     region = relationship(Region)

@@ -1,4 +1,6 @@
-define(['jquery', 'velocity', 'hammerjquery', 'materialize.core'], function($, velocity, Hammer, Materialize) {
+define(['jquery', 'velocity', 'hammerjquery', 'materialize.core', 'domready'], function($, velocity, Hammer, Materialize, domready) {
+
+    domready(function(){
 
     var methods = {
         init: function(options) {
@@ -435,5 +437,7 @@ define(['jquery', 'velocity', 'hammerjquery', 'materialize.core'], function($, v
             $.error('Method ' + methodOrOptions + ' does not exist on jQuery.sideNav');
         }
     }; // Plugin end
+
+    }); //domready end
 
 })

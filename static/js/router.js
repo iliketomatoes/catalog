@@ -4,13 +4,16 @@ define([
     'underscore',
     'backbone',
     'views/topbar/TopBarView', 
-    'views/recipes/RecipesListView'
-], function($, _, Backbone, TopBarView, RecipesListView) {
+    'views/recipes/RecipesListView',
+    'views/recipes/NewRecipeView'
+], function($, _, Backbone, TopBarView, RecipesListView, NewRecipeView) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-            // Define some URL routes
+            
             'recipes': 'showRecipes',
+
+            'new_recipe': 'newRecipe',
 
             // Default
             '*actions': 'defaultAction'
@@ -19,9 +22,7 @@ define([
 
     var initialize = function() {
 
-        var app_router = new AppRouter;
-
-        var topBarView = new TopBarView();
+        var app_router = new AppRouter;      
 
         app_router.on('route:showRecipes', function() {
 
@@ -37,6 +38,12 @@ define([
             recipesListView.render();
         });
 
+        app_router.on('route:newRecipe', function() {
+            // We have no matching route, lets display the home page 
+            var newRecipeView = new NewRecipeView();
+        });
+
+        var topBarView = new TopBarView();
 
         Backbone.history.start();
     };
