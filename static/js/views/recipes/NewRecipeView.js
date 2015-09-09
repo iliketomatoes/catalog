@@ -54,8 +54,6 @@ define([
                 recipe = $.extend({}, recipe, currentObject);
             });
 
-            console.log(recipe);
-
             Recipes.create(recipe);
             
         }

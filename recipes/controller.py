@@ -2,7 +2,6 @@ from json import dumps
 from flask import Blueprint
 from flask import Response
 from flask import request
-from flask import make_response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Region, Recipe
@@ -16,14 +15,32 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-@recipes.route('/recipes/', methods=['GET'])
+@recipes.route('/recipes', methods=['GET'])
 def showAll():
-    return make_response(dumps(['none', 'controller_recipes']))
+    recipes_list = session.query(Recipe).all()
+    js = dumps([i.serialize for i in recipes_list])
+    return Response(js, status=200, mimetype='application/json')
 
 
-@recipes.route('/recipes/<recipe_id>/', methods=['GET'])
+@recipes.route('/recipes/<recipe_id>', methods=['GET'])
 def showOne(recipe_id):
-    return make_response(dumps(['none', 'controller_recipes/recipe_id']))
+    recipes_list = session.query(Recipe).filter(Recipe.id==recipe_id).all()
+    js = dumps([i.serialize for i in recipes_list])
+    return Response(js, status=200, mimetype='application/json')
+
+
+@recipes.route('/recipes', methods=['POST'])
+def addOne():
+    data_request = request.get_json()
+    newRecipe = Recipe(
+        name=data_request['name'],
+        description=data_request['description'],
+        duration=data_request['duration'],
+        difficulty=data_request['difficulty'],
+        region_id=data_request['region_id'])
+    session.add(newRecipe)
+    session.commit()
+    return Response({'success': True}, status=200, mimetype='application/json')
 
 
 # Get regions
