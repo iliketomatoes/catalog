@@ -16,7 +16,9 @@
                     <div class="card">
                     <h3><%= recipe.get("name") %></h3>
                     <div class="card-info">
-                        <%= recipe.get("description") %>
+                        <a href="#!<%= recipe.get("id") %>">read more</a>
+                        <a href="#!<%= recipe.get("id") %>">edit</a>
+                        <a href="#!<%= recipe.get("id") %>">delete</a>
                     </div>
                     <div class="card-region">
                         Region: <%= regions[recipe.get("region_id")] %>

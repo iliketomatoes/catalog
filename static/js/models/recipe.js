@@ -3,7 +3,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
     // Default attributes for the todo.
     defaults: {
-      done: false,
       duration: '30'
     },
 

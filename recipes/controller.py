@@ -2,6 +2,7 @@ from json import dumps
 from flask import Blueprint
 from flask import Response
 from flask import request
+from flask import jsonify
 from jinja2 import Markup
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -44,7 +45,7 @@ def addOne():
         region_id=sanitize(data_request['region_id']))
     session.add(newRecipe)
     session.commit()
-    return Response({'success': True}, status=200, mimetype='application/json')
+    return jsonify(success='true')
 
 
 # Get regions

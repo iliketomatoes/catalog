@@ -5,13 +5,14 @@ define([
     // Pull in the Collection module from above,
     'collections/regions',
     'collections/recipes',
+    'views/flash/FlashView',
     'text!templates/recipes/newRecipeTemplate.html'
-], function($, _, Backbone, Regions, Recipes,newRecipeTemplate) {
+], function($, _, Backbone, Regions, Recipes, FlashView, newRecipeTemplate) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
 
-        initialize: function(){
+        initialize: function() {
 
             var self = this;
 
@@ -26,8 +27,8 @@ define([
         },
 
         events: {
-            "submit": "addRecipe" 
-        }, 
+            "submit": "addRecipe"
+        },
 
         render: function(regions) {
 
@@ -41,21 +42,32 @@ define([
             this.$el.html(compiledTemplate);
         },
 
-        addRecipe: function(e){
+        addRecipe: function(e) {
             e.preventDefault();
 
             var recipe = {};
 
-            $('#new-recipe-form').serializeArray().forEach(function(el){
+            $('#new-recipe-form').serializeArray().forEach(function(el) {
                 var currentObject = {};
-                
+
                 currentObject[el.name] = el.value;
-            
+
                 recipe = $.extend({}, recipe, currentObject);
             });
 
-            Recipes.create(recipe);
-            
+            Recipes.create(recipe, {
+                success: function(resp) {
+                    console.log('success callback');
+                    console.log(resp);
+                    var flash = new FlashView('success','Succesfully inserted new recipe');
+                },
+                error: function(err) {
+                    console.log('error callback');
+                    console.log(err);
+                    var flash = new FlashView('error','Something went wrong, please retry');
+                }
+            });
+
         }
     });
     return NewRecipeView;
