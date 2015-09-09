@@ -2,6 +2,7 @@ from json import dumps
 from flask import Blueprint
 from flask import Response
 from flask import request
+from jinja2 import Markup
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Region, Recipe
@@ -14,6 +15,9 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+def sanitize(unsafe_form_field):
+    str_to_sanitize = str(unsafe_form_field)
+    return Markup(str_to_sanitize).striptags()
 
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
@@ -33,11 +37,11 @@ def showOne(recipe_id):
 def addOne():
     data_request = request.get_json()
     newRecipe = Recipe(
-        name=data_request['name'],
-        description=data_request['description'],
-        duration=data_request['duration'],
-        difficulty=data_request['difficulty'],
-        region_id=data_request['region_id'])
+        name=sanitize(data_request['name']),
+        description=sanitize(data_request['description']),
+        duration=sanitize(data_request['duration']),
+        difficulty=sanitize(data_request['difficulty']),
+        region_id=sanitize(data_request['region_id']))
     session.add(newRecipe)
     session.commit()
     return Response({'success': True}, status=200, mimetype='application/json')

@@ -263,11 +263,11 @@ MEDIA QUERIES
 /***********X-LARGE UP**********/
 
 @media #{$xlarge-up}{
-  .row{
+  /*.row{
     max-width: 73.75rem;
   }
 
   .contain-to-grid .top-bar {
     max-width: 73.75rem;
-  }
+  }*/
 }

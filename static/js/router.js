@@ -4,9 +4,9 @@ define([
     'underscore',
     'backbone',
     'views/topbar/TopBarView', 
-    'views/recipes/RecipesListView',
+    'views/recipes/RecipeListView',
     'views/recipes/NewRecipeView'
-], function($, _, Backbone, TopBarView, RecipesListView, NewRecipeView) {
+], function($, _, Backbone, TopBarView, RecipeListView, NewRecipeView) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -34,8 +34,8 @@ define([
         app_router.on('route:defaultAction', function(actions) {
 
             // We have no matching route, lets display the home page 
-            var recipesListView = new RecipesListView();
-            recipesListView.render();
+            var recipeListView = new RecipeListView();
+    
         });
 
         app_router.on('route:newRecipe', function() {

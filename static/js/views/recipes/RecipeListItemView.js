@@ -5,10 +5,10 @@ define([
     // Pull in the Collection module from above,
     //'models/project/ProjectModel',
     //'collections/projects/ProjectsCollection',
-    'text!templates/recipes/recipesListTemplate.html'
+    'text!templates/recipes/recipeListTemplate.html'
 
 ], function($, _, Backbone, recipesListTemplate) {
-    var RecipesListView = Backbone.View.extend({
+    var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
         render: function() {
@@ -22,5 +22,5 @@ define([
             this.$el.html(compiledTemplate);
         }
     });
-    return RecipesListView;
+    return RecipeListView;
 });

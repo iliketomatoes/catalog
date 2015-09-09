@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="small-12 columns">
+        <section>
+            <h2>Italian recipes</h2>
+            <div>
+                <a href="#new_recipe" class="button">Add a new recipe</a>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="recipe-list-container">
+    <ul class="recipe-list">
+        <% _.each(recipes, function(recipe){ %>
+            <li class="recipe-list-item">
+                <div class="card-container">
+                    <div class="card">
+                    <h3><%= recipe.get("name") %></h3>
+                    <div class="card-info">
+                        <%= recipe.get("description") %>
+                    </div>
+                    <div class="card-region">
+                        Region: <%= regions[recipe.get("region_id")] %>
+                    </div>
+                    </div>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</div>

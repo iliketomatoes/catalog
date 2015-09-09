@@ -1,0 +1,45 @@
+.recipe-list-container{
+	margin: 0 auto;
+	max-width: $row-width;
+	padding: 0 -15px;
+}
+
+.recipe-list{
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	display: block;
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	overflow: auto;
+}
+
+
+.recipe-list-item{
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+	float: left;
+	width: 100%;
+	@media #{$medium-up}{
+	  width: 50%;
+	}
+}
+
+.card-container{
+	padding: 15px;
+}
+
+.card{
+	border: 1px solid $smoke;
+
+	@include material-element();
+}
+
+.card-region{
+	border-top: 1px solid $smoke;
+	padding: 6px 8px;
+	color: $secondary-text;
+}
