@@ -2,7 +2,7 @@ define([
     'underscore',
     'backbone',
     'models/recipe'
-], function(_, Backbone, Store, Recipe) {
+], function(_, Backbone, Recipe) {
 
     var RecipesCollection = Backbone.Collection.extend({
 

@@ -4,9 +4,9 @@ define([
     'backbone',
     // Pull in the Collection module from above,
     'collections/regions',
-    'text!templates/recipes/newRecipeTemplate.html',
-    'materialize.form'
-], function($, _, Backbone, Regions, newRecipeTemplate) {
+    'collections/recipes',
+    'text!templates/recipes/newRecipeTemplate.html'
+], function($, _, Backbone, Regions, Recipes,newRecipeTemplate) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
@@ -25,6 +25,10 @@ define([
             });
         },
 
+        events: {
+            "submit": "addRecipe" 
+        }, 
+
         render: function(regions) {
 
             var data = {
@@ -33,11 +37,27 @@ define([
                 _: _
             };
 
-            console.log(newRecipeTemplate);
-
             var compiledTemplate = _.template(newRecipeTemplate)(data);
             this.$el.html(compiledTemplate);
-            $('select').material_select();
+        },
+
+        addRecipe: function(e){
+            e.preventDefault();
+
+            var recipe = {};
+
+            $('#new-recipe-form').serializeArray().forEach(function(el){
+                var currentObject = {};
+                
+                currentObject[el.name] = el.value;
+            
+                recipe = $.extend({}, recipe, currentObject);
+            });
+
+            console.log(recipe);
+
+            Recipes.create(recipe);
+            
         }
     });
     return NewRecipeView;

@@ -3,8 +3,9 @@ define([
     'underscore',
     'backbone',
     'text!templates/topbar/topbarTemplate.html',
-    'materialize.sideNav'
-], function($, _, Backbone, topbarTemplate, Materialize) {
+    'domready',
+    'foundation.topbar'
+], function($, _, Backbone, topbarTemplate, domready) {
 
     var TopBarView = Backbone.View.extend({
         el: $("#nav-container"),
@@ -25,8 +26,11 @@ define([
             var compiledTemplate = _.template(topbarTemplate)(data);
 
             this.$el.html(compiledTemplate);
-            $(".button-collapse").sideNav();
 
+            domready(function(){
+                $(document).foundation();
+            });
+            
         }
 
     });

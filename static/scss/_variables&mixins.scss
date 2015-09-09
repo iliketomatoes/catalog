@@ -1,0 +1,228 @@
+/**************************************************************************/
+/* Qua sono definiti i percorsi e le dimensioni                           */
+/**************************************************************************/
+
+$retina: 'only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)';
+
+//Foundation icons path:
+$fi-path: '../../bower_components/foundation-icon-fonts';
+
+$container-max-width: 90rem;
+
+$footer-height: 8rem;
+
+
+
+
+
+/********** MIXINS ***********/
+
+$image-path: '../img' !default;
+$fallback-extension: 'png' !default;
+$retina-suffix: '@2x';
+@mixin background-image($name, $size:false){
+    background-image: url(#{$image-path}/#{$name}.svg);
+    @if($size){
+        background-size: $size;
+    }
+    .no-svg &{
+        background-image: url(#{$image-path}/#{$name}.#{$fallback-extension});
+
+        @media #{$retina}{
+          background-image: url(#{$image-path}/#{$name}#{$retina-suffix}.#{$fallback-extension});
+        }
+    }
+}
+
+@mixin background-pngpattern($name, $size:false){
+    @if($size){
+        background-size: $size;
+    }
+  
+    background-image: url(#{$image-path}/#{$name}.png);
+
+    @media #{$retina}{
+      background-image: url(#{$image-path}/#{$name}#{$retina-suffix}.png);
+    }
+}
+
+@mixin single-transition($property:all, $speed:300ms, $ease:ease-out) {
+  -webkit-transition: $property $speed $ease;
+  -moz-transition: $property $speed $ease;
+  -ms-transition:  $property $speed $ease;
+  -o-transition: $property $speed $ease;
+  transition: $property $speed $ease;
+}
+
+@mixin border-radius($radius){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+ // Create CSS Triangles in a Breeze
+
+  @mixin cssTriangle($triangleSize, $triangleColor, $triangleDirection) {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border: solid $triangleSize;
+    @if ($triangleDirection == top) {
+      border-color: $triangleColor transparent transparent transparent;
+    }
+    @if ($triangleDirection == bottom) {
+      border-color: transparent transparent $triangleColor transparent;
+    }
+    @if ($triangleDirection == left) {
+      border-color: transparent transparent transparent $triangleColor;
+    }
+    @if ($triangleDirection == right) {
+      border-color: transparent $triangleColor transparent transparent;
+    }
+    // .example { @include cssTriangle(5px, #fff, bottom); }
+  }
+
+// generic transform
+@mixin transform($transforms) {
+       -moz-transform: $transforms;
+         -o-transform: $transforms;
+        -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+          transform: $transforms;
+}
+
+@mixin perspective($val) {
+-webkit-perspective: $val;
+-moz-perspective: $val;
+-ms-perspective: $val;
+perspective: $val;
+}
+
+
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.standard-backface{
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+}
+
+
+@mixin box-shadow($shadow : 1px 1px 3px 0px, $color: rgba(50, 50, 50, 0.75)) {
+
+  @if $shadow == none{
+    -webkit-box-shadow: none;
+    -moz-box-shadow:  none;
+    box-shadow: none;
+  }@else{
+    -webkit-box-shadow: $shadow $color;
+    -moz-box-shadow:  $shadow $color;
+    box-shadow: $shadow $color;
+  }
+  
+}
+
+
+@mixin material-element{
+
+  -webkit-box-shadow: 0 1px 6px 0 $shadow, 0 1px 6px 0 $shadow;
+  -moz-box-shadow:    0 1px 6px 0 $shadow, 0 1px 6px 0 $shadow;
+  box-shadow:         0 1px 6px 0 $shadow, 0 1px 6px 0 $shadow;
+
+  &:active{
+    -webkit-box-shadow: none;
+    -moz-box-shadow:    none;
+    box-shadow:         none;
+  }
+
+}
+
+@mixin loading($name){
+
+  &:before{
+    content:'';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: 5.4rem;
+    height: 1.1rem;
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    border: solid 0.1rem #DDDDDD;
+    //transform: translate(-50%, -50%);
+    @include transform(translate(-50%, -50%));
+    @extend .standard-backface;
+  }
+
+  &:after{
+    content:'';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-top: 0.5rem;
+    z-index: 2;
+    border-radius: 50%;
+    background: rgba($elba, 0.6);
+    @include animation('load-animation 1s ease-in-out 0s infinite alternate');
+    @extend .standard-backface;
+  }
+
+ 
+}
+
+
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }  
+  @-ms-keyframes $animation-name {
+    @content;
+  }
+  @-o-keyframes $animation-name {
+    @content;
+  }  
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}
+
+ 
+/*
+EXAMPLE*/
+
+
+@include keyframes(load-animation) {
+  0% {  @include transform(translate(-2.5rem, -0.4rem)); }
+  100% {  @include transform(translate(1.7rem, -0.4rem));}
+}
+ 
+

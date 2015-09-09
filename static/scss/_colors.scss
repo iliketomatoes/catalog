@@ -1,0 +1,70 @@
+/**************************************************************************/
+/* COLORS                                                                 */
+/**************************************************************************/
+
+$blue:#31556A;
+$orange: #E74C3C; //CINNABAR
+
+$red: #E7291F;
+$yellow: #FFD52B;
+$gray: #e0e0e0;
+$darker-gray: #cdcdcd;
+$lightgray: #ddd;
+$green: #82BF56;
+
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+//$silver      : #EFEFEF;
+$silver      : #f0f0f0;
+//$smoke       : #EEEEEE;
+$smoke       : #e1e1e1;
+$gainsboro   : #DDDDDD;
+//$iron        : #CCCCCC;
+$iron        : $darker-gray;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
+
+
+//$shadow: rgba(0,0,0,.12);
+$shadow: rgba(61,61,61,.12);
+
+$neutral-background: $gray;
+$neutral-background-hover: scale-color($neutral-background, $lightness: -5%);
+
+$odd-cell: #eceef2;
+$even-cell: #f2ecee;
+//$odd-cell:#f6ffeb;
+//$even-cell:#ffebf6;
+
+$top-bar-root : $blue;
+
+$top-bar-color: rgba($top-bar-root,0.8);
+
+$dark-picture-layer: rgb(62,62,62);
+
+$border-color: rgba(0,0,0,.12);
+
+$calendar-accent-color: $orange;
+
+$primary-text: rgba(#000, .87);
+$secondary-text: rgba(#000, .54);
+$disabled-text: rgba(#000, .26);
+
+/********** TABS AND ACCORDION  ***********/
+
+$tab-acc-bg: $blue;
+
+/********** MAGNIFIC POPUP  ***********/
+
+$image-background:                $lightgray;

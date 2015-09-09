@@ -1,38 +1,47 @@
-<h2>New recipe</h2>
 <div class="row">
-    <form class="col s12">
-        <div class="row">
-            <div class="input-field col s6">
-                <i class="material-icons prefix">format_quote</i>
-                <input id="name" name="name" type="text" class="validate">
-                <label for="name">Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <i class="material-icons prefix">mode_edit</i>
-                <textarea id="description" name="description" class="materialize-textarea"></textarea>
-                <label for="description">Description</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <p>Difficulty <b>min. 1</b> - <b>max. 5</b>:</p>
-                <p class="range-field">
-                    <input type="range" id="difficulty" name="difficulty" min="1" max="5" />
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <select name="region">
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                </select>
-                <label>Materialize Select</label>
-            </div>
-        </div>
-    </form>
+    <div class="small-12 columns">
+        <section>
+            <h2>New recipe</h2>
+            <form id="new-recipe-form" class="col s12" method="post" action="#!">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" type="text" class="validate">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <p>Difficulty <b>min. 1</b> - <b>max. 5</b></p>
+                        <p class="range-field">
+                            <input type="range" id="difficulty" name="difficulty" min="1" max="5" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Select a region</label>
+                        <select name="region_id">
+                            <% _.each(regions, function(region){ %>
+                                <option value="<%= region.get('id') %>" <% if ( region.get( 'id')==1 ){ %> selected
+                                    <% } %>>
+                                        <%= region.get("name") %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <input type="submit" value="SAVE" class="button small">
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
 </div>
