@@ -1,6 +1,6 @@
 .recipe-list-container{
 	margin: 0 auto;
-	max-width: $row-width;
+	max-width: rem-calc(1500);
 	padding: 0 -15px;
 }
 
@@ -26,6 +26,10 @@
 	@media #{$medium-up}{
 	  width: 50%;
 	}
+
+	@media #{$xlarge-up}{
+	  width: 33.3334%;
+	}
 }
 
 .card-container{
@@ -33,13 +37,15 @@
 }
 
 .card{
-	border: 1px solid $smoke;
+	background-color: $card-bg;
+	color: $coffee-dark;
+	border: 2px solid $border-color;
 
 	@include material-element();
 }
 
 .card-region{
-	border-top: 1px solid $smoke;
+	border-top: 2px solid $border-color;
 	padding: 6px 8px;
 	color: $secondary-text;
 }

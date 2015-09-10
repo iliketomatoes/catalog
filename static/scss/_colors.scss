@@ -4,13 +4,22 @@
 
 $blue:#31556A;
 $orange: #E74C3C; //CINNABAR
-
+$cream: #FDFBC0;
+$body-custom-bg-color: $cream;
 $red: #E7291F;
-$yellow: #FFD52B;
+$yellow: #F5D547;
 $gray: #e0e0e0;
 $darker-gray: #cdcdcd;
 $lightgray: #ddd;
 $green: #82BF56;
+$purple: #5F4BB6;
+$dark-purple: #413C58;
+$card-bg: #F2E9A0;
+$coffee-dark: #473423;
+$coffee: #755A42;
+$coffee-light: #AC8B6F;
+$border-color: #D3C5B0;
+$std-font-color: $coffee;
 
 $white       : #FFFFFF;
 $ghost       : #FAFAFA;
@@ -21,7 +30,7 @@ $white-smoke : #F5F5F5;
 $silver      : #f0f0f0;
 //$smoke       : #EEEEEE;
 $smoke       : #e1e1e1;
-$gainsboro   : #DDDDDD;
+$gainsboro   : $border-color;
 //$iron        : #CCCCCC;
 $iron        : $darker-gray;
 $base        : #AAAAAA;
@@ -34,6 +43,7 @@ $tuatara     : #444444;
 $oil         : #333333;
 $jet         : #222222;
 $black       : #000000;
+
 
 
 //$shadow: rgba(0,0,0,.12);
@@ -53,13 +63,11 @@ $top-bar-color: rgba($top-bar-root,0.8);
 
 $dark-picture-layer: rgb(62,62,62);
 
-$border-color: rgba(0,0,0,.12);
-
 $calendar-accent-color: $orange;
 
-$primary-text: rgba(#000, .87);
-$secondary-text: rgba(#000, .54);
-$disabled-text: rgba(#000, .26);
+$primary-text: rgba($std-font-color, 1);
+$secondary-text: rgba($std-font-color, .87);
+$disabled-text: rgba($std-font-color, .64);
 
 /********** TABS AND ACCORDION  ***********/
 

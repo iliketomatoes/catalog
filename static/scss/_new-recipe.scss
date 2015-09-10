@@ -1,0 +1,55 @@
+.difficulty {
+    float:left;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.difficulty:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.difficulty:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:$iron;
+    //text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.difficulty:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.difficulty > input:checked ~ label {
+    color: $anchor-font-color;
+    //text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.difficulty:not(:checked) > label:hover,
+.difficulty:not(:checked) > label:hover ~ label {
+    color: $anchor-font-color;
+    //text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.difficulty > input:checked + label:hover,
+.difficulty > input:checked + label:hover ~ label,
+.difficulty > input:checked ~ label:hover,
+.difficulty > input:checked ~ label:hover ~ label,
+.difficulty > label:hover ~ input:checked ~ label {
+    color: $anchor-font-color;
+    //text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.difficulty > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}

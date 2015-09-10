@@ -4,26 +4,55 @@
             <h2>New recipe</h2>
             <form id="new-recipe-form" class="col s12" method="post" action="#!">
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label for="name">Name</label>
-                        <input id="name" name="name" type="text" class="validate">
+                    <div class="small-12  medium-8 columns">
+                        <label for="name" class="required">Name</label>
+                            <input id="name" name="name" type="text" class="validate">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                    <div class="small-12 medium-8 columns">
+                        <label for="description" class="required">Description</label>
+                            <textarea id="description" name="description" rows="20"></textarea>
+                        
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label for="difficulty">Difficulty <b>min. 1</b> - <b>max. 5</b></label>
-                        <input type="range" id="difficulty" name="difficulty" min="1" max="5" />
+                    <div class="small-12  medium-8 columns">
+                        <fieldset class="difficulty">
+                            <legend>Difficulty level:</legend>
+                            <input type="radio" id="star5" name="difficulty" value="5">
+                            <label for="star5">5 stars</label>
+                            <input type="radio" id="star4" name="difficulty" value="4">
+                            <label for="star4">4 stars</label>
+                            <input type="radio" id="star3" name="difficulty" value="3">
+                            <label for="star3">3 stars</label>
+                            <input type="radio" id="star2" name="difficulty" value="2">
+                            <label for="star2">2 stars</label>
+                            <input type="radio" id="star1" name="difficulty" value="1" checked="checked">
+                            <label for="star1">1 star</label>
+                        </fieldset>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-12 columns">
-                        <label>Select a region</label>
+                    <div class="small-12  medium-8 columns">
+                        <label for="duration" class="required">Duration in minutes</label>
+                        <div class="row">
+                            <div class="small-10 medium-11 columns">
+                                <div class="range-slider" data-slider data-options="display_selector: #sliderOutput3;start: 0;end: 180;step: 5;">
+                                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                    <span class="range-slider-active-segment"></span>
+                                    <input type="hidden" name="duration">
+                                </div>
+                            </div>
+                            <div class="small-2 medium-1 columns">
+                                <span id="sliderOutput3" style="display:block;margin-top:17px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 medium-8 columns">
+                        <label for="region_id" class="required">Select a region</label>
                         <select name="region_id">
                             <% _.each(regions, function(region){ %>
                                 <option value="<%= region.get('id') %>" <% if ( region.get( 'id')==1 ){ %> selected
@@ -35,8 +64,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-12 columns">
-                        <input type="submit" value="SAVE" class="button small">
+                    <div class="small-12  medium-8 columns">
+                        <input type="submit" value="SAVE" class="button small m-t-1">
                     </div>
                 </div>
             </form>

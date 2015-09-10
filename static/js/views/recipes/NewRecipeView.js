@@ -6,8 +6,10 @@ define([
     'collections/regions',
     'collections/recipes',
     'views/flash/FlashView',
-    'text!templates/recipes/newRecipeTemplate.html'
-], function($, _, Backbone, Regions, Recipes, FlashView, newRecipeTemplate) {
+    'text!templates/recipes/newRecipeTemplate.html',
+    'domready',
+    'foundation.slider'
+], function($, _, Backbone, Regions, Recipes, FlashView, newRecipeTemplate, domready) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
@@ -27,7 +29,7 @@ define([
         },
 
         events: {
-            "submit": "addRecipe"
+            "submit #new-recipe-form": "addRecipe"
         },
 
         render: function(regions) {
@@ -40,6 +42,10 @@ define([
 
             var compiledTemplate = _.template(newRecipeTemplate)(data);
             this.$el.html(compiledTemplate);
+
+            domready(function(){
+                $(document).foundation('slider', 'reflow');
+            });
         },
 
         addRecipe: function(e) {
@@ -67,6 +73,9 @@ define([
                     var flash = new FlashView('error','Something went wrong, please retry');
                 }
             });
+
+            //Unbind submit form to prevent future multi-submits
+            $(this.el).undelegate('#new-recipe-form', 'submit');
 
         }
     });

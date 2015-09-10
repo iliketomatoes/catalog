@@ -117,6 +117,7 @@ $include-html-global-classes: $include-html-classes;
 
 // We use these as default colors throughout
 // $primary-color: #008CBA;
+$primary-color: $purple;
 // $secondary-color: #e7e7e7;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
@@ -125,6 +126,7 @@ $include-html-global-classes: $include-html-classes;
 
 // We use these to control various global styles
 // $body-bg: $white;
+$body-bg: $body-custom-bg-color;
 // $body-font-color: $jet;
 $body-font-color: $primary-text;
 // $body-font-family: $font-family-sans-serif;
@@ -215,6 +217,7 @@ $body-font-color: $primary-text;
 // $header-font-weight: $font-weight-normal;
 // $header-font-style: normal;
 // $header-font-color: $jet;
+$header-font-color: $body-font-color;
 // $header-line-height: 1.4;
 // $header-top-margin: .2rem;
 // $header-bottom-margin: .5rem;
@@ -643,17 +646,22 @@ $body-font-color: $primary-text;
 // $form-label-font-weight: $font-weight-normal;
 // $form-label-line-height: 1.5;
 // $form-label-font-color: scale-color($black, $lightness: 30%);
+$form-label-font-color: $body-font-color;
 // $form-label-small-transform: capitalize;
 // $form-label-bottom-margin: 0;
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
 // $input-font-size: rem-calc(14);
 // $input-bg-color: $white;
+$input-bg-color: scale-color($body-bg, $lightness: 30%);;
 // $input-focus-bg-color: scale-color($white, $lightness: -2%);
 // $input-border-color: scale-color($white, $lightness: -20%);
+$input-border-color: $border-color;
 // $input-focus-border-color: scale-color($white, $lightness: -40%);
+$input-focus-border-color: scale-color($border-color, $lightness: -10%);
 // $input-border-style: solid;
 // $input-border-width: 1px;
+$input-border-width: 2px;
 // $input-border-radius: $global-radius;
 // $input-disabled-bg: $gainsboro;
 // $input-disabled-cursor: $cursor-default-value;
@@ -663,12 +671,15 @@ $body-font-color: $primary-text;
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;
 // $fieldset-border-width: 1px;
+$fieldset-border-width: 2px;
 // $fieldset-border-color: $gainsboro;
+$fieldset-border-color: $input-border-color;
 // $fieldset-padding: rem-calc(20);
 // $fieldset-margin: rem-calc(18 0);
 
 // We use these to style the legends when you use them
 // $legend-bg: $white;
+$legend-bg: transparent;
 // $legend-font-weight: $font-weight-bold;
 // $legend-padding: rem-calc(0 3);
 
@@ -819,6 +830,7 @@ $body-font-color: $primary-text;
 // $label-font-sizing: rem-calc(11);
 // $label-font-weight: $font-weight-normal;
 // $label-font-color: $oil;
+$label-font-color: $body-font-color;
 // $label-font-color-alt: $white;
 // $label-font-family: $body-font-family;
 
@@ -1402,6 +1414,7 @@ $body-font-color: $primary-text;
 
 // Background color for the top bar
 // $topbar-bg-color: $oil;
+$topbar-bg-color: $coffee;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin

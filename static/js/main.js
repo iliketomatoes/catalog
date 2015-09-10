@@ -115,6 +115,11 @@ require.config({
                 'foundation.core'
             ]
         },
+        'foundation.slider': {
+            deps: [
+                'foundation.core'
+            ]
+        },
     }
 
 });
