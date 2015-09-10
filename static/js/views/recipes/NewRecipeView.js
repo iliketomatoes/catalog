@@ -14,7 +14,7 @@ define([
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
 
-        initialize: function() {
+        populate: function() {
 
             var self = this;
 
@@ -51,6 +51,8 @@ define([
         addRecipe: function(e) {
             e.preventDefault();
 
+            var self = this;
+
             var recipe = {};
 
             $('#new-recipe-form').serializeArray().forEach(function(el) {
@@ -65,20 +67,18 @@ define([
                 success: function(resp) {
                     console.log('success callback');
                     console.log(resp);
-                    var flash = new FlashView('success','Succesfully inserted new recipe');
+                    var flash = FlashView.render('success','Succesfully inserted new recipe');
+                    
                 },
                 error: function(err) {
                     console.log('error callback');
                     console.log(err);
-                    var flash = new FlashView('error','Something went wrong, please retry');
+                    var flash = FlashView.render('error','Something went wrong, please retry');
                 }
             });
 
-            //Unbind submit form to prevent future multi-submits
-            $(this.el).undelegate('#new-recipe-form', 'submit');
-
         }
     });
-    return NewRecipeView;
+    return new NewRecipeView();
 
 });

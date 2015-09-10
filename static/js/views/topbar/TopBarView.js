@@ -12,8 +12,6 @@ define([
 
         initialize: function() {
 
-            this.render();
-
         },
 
         render: function() {
@@ -35,6 +33,6 @@ define([
 
     });
 
-    return TopBarView;
+    return new TopBarView();
 
 });

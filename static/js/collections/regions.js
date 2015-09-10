@@ -14,5 +14,5 @@ define([
 
     });
 
-    return new RegionsCollection;
+    return new RegionsCollection();
 });

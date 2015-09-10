@@ -450,9 +450,13 @@ $header-font-color: $body-font-color;
 
 // We use these to build padding for buttons.
 // $button-tny: rem-calc(10);
+$button-tny: rem-calc(8);
 // $button-sml: rem-calc(14);
+$button-sml: rem-calc(12);
 // $button-med: rem-calc(16);
+$button-med: rem-calc(14);
 // $button-lrg: rem-calc(18);
+$button-lrg: rem-calc(16);
 
 // We use this to control the display property.
 // $button-display: inline-block;
@@ -466,6 +470,10 @@ $header-font-color: $body-font-color;
 // $button-font-sml: rem-calc(13);
 // $button-font-med: rem-calc(16);
 // $button-font-lrg: rem-calc(20);
+ $button-font-tny: rem-calc(14);
+ $button-font-sml: rem-calc(16);
+ $button-font-med: rem-calc(18);
+ $button-font-lrg: rem-calc(20);
 // $button-font-weight: $font-weight-normal;
 // $button-font-align: center;
 

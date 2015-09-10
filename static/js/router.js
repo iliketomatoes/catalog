@@ -26,24 +26,23 @@ define([
 
         app_router.on('route:showRecipes', function() {
 
-            var recipesListView = new RecipesListView();
-            recipesListView.render();
+            RecipesListView.populate();
 
         });
 
         app_router.on('route:defaultAction', function(actions) {
 
             // We have no matching route, lets display the home page 
-            var recipeListView = new RecipeListView();
+            RecipeListView.populate();
     
         });
 
         app_router.on('route:newRecipe', function() {
             // We have no matching route, lets display the home page 
-            var newRecipeView = new NewRecipeView();
+            NewRecipeView.populate();
         });
 
-        var topBarView = new TopBarView();
+       TopBarView.render();
 
         Backbone.history.start();
     };

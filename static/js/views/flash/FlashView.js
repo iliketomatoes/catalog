@@ -12,8 +12,6 @@ define([
 
         initialize: function(status, message) {
 
-            //Status: 'success' or 'error'
-            this.render(status, message);
 
         },
 
@@ -37,6 +35,6 @@ define([
 
     });
 
-    return FlashView;
+    return new FlashView();
 
 });

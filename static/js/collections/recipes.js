@@ -14,5 +14,5 @@ define([
 
     });
 
-    return new RecipesCollection;
+    return new RecipesCollection();
 });

@@ -13,7 +13,7 @@ define([
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
-        initialize: function(){
+        populate: function(){
 
             var self = this;
 
@@ -44,5 +44,5 @@ define([
             this.$el.html(compiledTemplate);
         }
     });
-    return RecipeListView;
+    return new RecipeListView();
 });

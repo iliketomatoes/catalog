@@ -22,5 +22,5 @@ define([
             this.$el.html(compiledTemplate);
         }
     });
-    return RecipeListView;
+    return new RecipeListView();
 });
