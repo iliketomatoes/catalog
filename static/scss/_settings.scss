@@ -64,6 +64,8 @@
 // If you want your base font-size to be different and not have it affect the grid breakpoints,
 // set $rem-base to $base-font-size and make sure $base-font-size is a px value.
 // $base-font-size: 100%;
+$base-font-size: 18px;
+$rem-base: $base-font-size;
 
 // The $base-font-size is 100% while $base-line-height is 150%
 // $base-line-height: 150%;
@@ -89,6 +91,8 @@ $include-html-global-classes: $include-html-classes;
 // We use these to define default font stacks
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 // $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+ $font-family-serif: 'Roboto Slab', serif;
+ $font-family-sans-serif: 'Roboto', sans-serif;
 // $font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
 
 // We use these to define default font weights
@@ -155,7 +159,9 @@ $body-font-color: $primary-text;
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // $small-breakpoint:  em-calc(640);
+$small-breakpoint:  em-calc(740);
 // $medium-breakpoint: em-calc(1024);
+$medium-breakpoint: em-calc(980);
 // $large-breakpoint:  em-calc(1440);
 // $xlarge-breakpoint: em-calc(1920);
 
@@ -214,6 +220,7 @@ $body-font-color: $primary-text;
 
 // We use these to control header font styles
 // $header-font-family: $body-font-family;
+$header-font-family:  $font-family-serif;
 // $header-font-weight: $font-weight-normal;
 // $header-font-style: normal;
 // $header-font-color: $jet;
@@ -643,6 +650,7 @@ $header-font-color: $body-font-color;
 // We use these to style the labels in different ways
 // $form-label-pointer: pointer;
 // $form-label-font-size: rem-calc(14);
+$form-label-font-size: rem-calc(16);
 // $form-label-font-weight: $font-weight-normal;
 // $form-label-line-height: 1.5;
 // $form-label-font-color: scale-color($black, $lightness: 30%);
@@ -652,6 +660,7 @@ $form-label-font-color: $body-font-color;
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
 // $input-font-size: rem-calc(14);
+$input-font-size: rem-calc(16);
 // $input-bg-color: $white;
 $input-bg-color: scale-color($body-bg, $lightness: 30%);;
 // $input-focus-bg-color: scale-color($white, $lightness: -2%);

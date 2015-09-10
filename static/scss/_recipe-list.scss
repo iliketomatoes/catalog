@@ -1,3 +1,50 @@
+$max-recipelist-view-width: rem-calc(1500);
+
+/*
+==================================
+SUBMENU
+==================================*/
+
+.submenu-container{
+	max-width: $row-width;
+	margin: 0rem auto 2rem;
+	@extend .clearfix;
+	
+	
+	@media #{$medium-up}{
+	  padding: 10px 0;	
+	  margin: 2rem auto;	
+	  border-bottom: 2px solid $border-color;
+	}
+}
+
+.submenu-half{
+	
+	overflow: auto;
+	padding: 10px 15px;
+	margin: 0.2rem 1rem;
+	border-bottom: 2px solid $border-color;
+
+
+	@media #{$medium-up}{
+	  float: left;	
+	  padding: 0 15px;
+	  width: 50%;
+	  margin: 0;
+	  border-bottom: none;
+	 	&:not(:first-of-type){
+			border-left: 2px solid $border-color;
+		}
+	}
+
+}
+
+
+/*
+==================================
+RECIPE LIST
+==================================*/
+
 .recipe-list-container{
 	margin: 0 auto;
 	max-width: rem-calc(1500);
