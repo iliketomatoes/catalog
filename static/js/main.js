@@ -4,6 +4,7 @@ require.config({
         'underscore': '/static/js/libs/underscore/underscore-min',
         'backbone': '/static/js/libs/backbone/backbone-min',
         'domready': '/static/js/modules/domReady',
+        'dropzone': '/static/js/modules/dropzone-amd-module',
         'velocity': '/static/js/modules/velocity.min',
         'foundation.core': '/static/bower_components/foundation/js/foundation/foundation',
         'foundation.abide': '/static/bower_components/foundation/js/foundation/foundation.abide',

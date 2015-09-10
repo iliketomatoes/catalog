@@ -6,10 +6,11 @@ define([
     'collections/regions',
     'collections/recipes',
     'views/flash/FlashView',
+    'views/recipes/AddPictureView',
     'text!templates/recipes/newRecipeTemplate.html',
     'domready',
     'foundation.slider'
-], function($, _, Backbone, Regions, Recipes, FlashView, newRecipeTemplate, domready) {
+], function($, _, Backbone, Regions, Recipes, FlashView, AddPictureView, newRecipeTemplate, domready) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
@@ -65,12 +66,14 @@ define([
 
             Recipes.create(recipe, {
                 success: function(model, resp) {
-
-                    var flash = FlashView.render('success', 'Succesfully inserted new recipe');
+                    // Let's pass the model id and name to the second form
+                    // I.E. form for adding a picture
+                    AddPictureView.render(resp.id, resp.name);
+                    //var flash = FlashView.render('success', 'Succesfully inserted new recipe');
 
                 },
                 error: function(model, error) {
-                
+
                     var errorMsg = '';
                     errorMsg += '<b>' + error.status + '</b>';
                     errorMsg += ' Something went wrong. --->';

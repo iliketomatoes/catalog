@@ -6,10 +6,9 @@ define([
     //'models/project/ProjectModel',
     'collections/recipes',
     'collections/regions',
-    'text!templates/recipes/recipeListTemplate.html',
-    'text!templates/recipes/recipeListItemTemplate.html'
+    'text!templates/recipes/recipeListTemplate.html'
 
-], function($, _, Backbone, Recipes, Regions, recipeListTemplate, recipeListItemTemplate) {
+], function($, _, Backbone, Recipes, Regions, recipeListTemplate) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
