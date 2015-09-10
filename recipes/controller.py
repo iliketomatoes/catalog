@@ -16,9 +16,30 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-def sanitize(unsafe_form_field):
-    str_to_sanitize = str(unsafe_form_field)
-    return Markup(str_to_sanitize).striptags()
+
+class InputDataHolder:
+
+    def __init__(self, errors, inputs):
+        self.errors = errors
+        self.inputs = inputs
+
+
+def sanitize(key, value):
+    str_to_sanitize = str(value)
+    return {key: Markup(str_to_sanitize).striptags()}
+
+
+def checkRecipe(data_request):
+    errors = []
+    sanitized_inputs = {}
+    for key, value in data_request.iteritems():
+        tmp = sanitize(key, value)
+        if (tmp[key] == '' or tmp[key] == None):
+            errors.append(key)
+        else:
+            sanitized_inputs.update(tmp)
+    return InputDataHolder(errors, sanitized_inputs)
+
 
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
@@ -29,23 +50,28 @@ def showAll():
 
 @recipes.route('/recipes/<recipe_id>', methods=['GET'])
 def showOne(recipe_id):
-    recipes_list = session.query(Recipe).filter(Recipe.id==recipe_id).all()
+    recipes_list = session.query(Recipe).filter(Recipe.id == recipe_id).all()
     js = dumps([i.serialize for i in recipes_list])
     return Response(js, status=200, mimetype='application/json')
 
 
 @recipes.route('/recipes', methods=['POST'])
 def addOne():
-    data_request = request.get_json()
-    newRecipe = Recipe(
-        name=sanitize(data_request['name']),
-        description=sanitize(data_request['description']),
-        duration=sanitize(data_request['duration']),
-        difficulty=sanitize(data_request['difficulty']),
-        region_id=sanitize(data_request['region_id']))
-    session.add(newRecipe)
-    session.commit()
-    return jsonify(success='true')
+    data = checkRecipe(request.get_json())
+    if (len(data.errors) == 0):
+        newRecipe = Recipe(
+            name=data.inputs['name'],
+            description=data.inputs['description'],
+            duration=data.inputs['duration'],
+            difficulty=data.inputs['difficulty'],
+            region_id=data.inputs['region_id'])
+        session.add(newRecipe)
+        session.commit()
+        return jsonify(id=newRecipe.id, name=newRecipe.name)
+    else:
+        resp = jsonify(error=data.errors)
+        resp.status_code = 400
+        return resp
 
 
 # Get regions

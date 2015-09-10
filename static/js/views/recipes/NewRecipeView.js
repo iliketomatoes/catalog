@@ -43,7 +43,7 @@ define([
             var compiledTemplate = _.template(newRecipeTemplate)(data);
             this.$el.html(compiledTemplate);
 
-            domready(function(){
+            domready(function() {
                 $(document).foundation('slider', 'reflow');
             });
         },
@@ -51,7 +51,7 @@ define([
         addRecipe: function(e) {
             e.preventDefault();
 
-            var self = this;
+            $(document).trigger('close.fndtn.alert');
 
             var recipe = {};
 
@@ -64,16 +64,20 @@ define([
             });
 
             Recipes.create(recipe, {
-                success: function(resp) {
-                    console.log('success callback');
-                    console.log(resp);
-                    var flash = FlashView.render('success','Succesfully inserted new recipe');
-                    
+                success: function(model, resp) {
+
+                    var flash = FlashView.render('success', 'Succesfully inserted new recipe');
+
                 },
-                error: function(err) {
-                    console.log('error callback');
-                    console.log(err);
-                    var flash = FlashView.render('error','Something went wrong, please retry');
+                error: function(model, error) {
+                
+                    var errorMsg = '';
+                    errorMsg += '<b>' + error.status + '</b>';
+                    errorMsg += ' Something went wrong. --->';
+                    for (var i = 0; i < error.responseJSON.error.length; i++) {
+                        errorMsg += ' <b>' + error.responseJSON.error[i] + '</b>';
+                    }
+                    var flash = FlashView.render('error', errorMsg);
                 }
             });
 

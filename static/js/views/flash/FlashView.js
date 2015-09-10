@@ -8,7 +8,6 @@ define([
 ], function($, _, Backbone, flashTemplate, domready) {
 
     var FlashView = Backbone.View.extend({
-        el: $("#flash-container"),
 
         initialize: function(status, message) {
 
@@ -25,7 +24,7 @@ define([
 
             var compiledTemplate = _.template(flashTemplate)(data);
 
-            this.$el.html(compiledTemplate);
+            $('#flash-container').html(compiledTemplate);
 
             domready(function(){
                 $(document).foundation('alert', 'reflow');

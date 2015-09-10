@@ -1,19 +1,24 @@
 <div class="row">
     <div class="small-12 columns">
+        <div id="flash-container">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="small-12 columns">
         <section>
-            <h2>New recipe</h2>
+            <h2 class="page-title">New recipe</h2>
             <form id="new-recipe-form" class="col s12" method="post" action="#!">
                 <div class="row">
                     <div class="small-12  medium-8 columns">
                         <label for="name" class="required">Name</label>
-                            <input id="name" name="name" type="text" class="validate">
+                        <input id="name" name="name" type="text" class="validate">
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 medium-8 columns">
                         <label for="description" class="required">Description</label>
-                            <textarea id="description" name="description" rows="20"></textarea>
-                        
+                        <textarea id="description" name="description" rows="20"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -65,7 +70,7 @@
                 </div>
                 <div class="row">
                     <div class="small-12  medium-8 columns">
-                        <input type="submit" value="SAVE" class="button small m-t-1">
+                        <button type="submit" class="button m-t-1">SUBMIT</button>
                     </div>
                 </div>
             </form>

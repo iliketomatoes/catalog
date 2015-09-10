@@ -35,6 +35,9 @@ body{
   min-height: $footer-height;
 }    
 
+#container{
+  padding: 0 0 2rem;
+}
 
 iframe{
 	height:100% !important;
@@ -114,7 +117,14 @@ ACCORDION
 /*
 ==================================
 TYPOGRAPHY
-==================================*/ 
+==================================*/
+
+.page-title{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $border-color;
+}
+
 .bold{
   font-weight: bold;
 }

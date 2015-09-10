@@ -8,6 +8,7 @@ button, .button, input[type="submit"]{
 	transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	border-radius: 2px;
     @include material-element();
+    letter-spacing: 0.02rem;
 
     &:active, &:focus{
     	outline: none;
