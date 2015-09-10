@@ -1,10 +1,10 @@
 <div class="submenu-container">
     <div class="submenu-half">
         <span class="bold">All the regions</span>
-        <a href="#!" class="right bold">Select a region <i class="fi-widget"></i></a>
+        <a href="#!" class="right bold"><i class="fi-widget"></i> Select a region</a>
     </div>
     <div class="submenu-half">
-        <a href="#new_recipe" class="right bold">Add a new recipe <i class="fi-plus"></i></a>
+        <a href="#new_recipe" class="right bold"><i class="fi-plus"></i> Add a new recipe</a>
     </div>
 </div>
 <div class="recipe-list-container">
@@ -13,7 +13,17 @@
             <li class="recipe-list-item">
                 <div class="card-container">
                     <div class="card">
-                    <h3><%= recipe.get("name") %></h3>
+                    <a href="/#!" class="card-header-link">
+                        <div class="card-header image-wrapper">
+                        <div class="dark-layer"></div>
+                        <% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
+                            recipe.set("image_url", "/static/img/italian_food.png");
+                            } %>
+                        
+                        <img src="<%= recipe.get("image_url") %>" alt="<%= recipe.get("name") %>">
+                        <div class="card-title"><%= recipe.get("name") %></div>
+                        </div>
+                    </a>
                     <div class="card-info">
                         <a href="#!<%= recipe.get("id") %>">read more</a>
                         <a href="#!<%= recipe.get("id") %>">edit</a>

@@ -5,38 +5,32 @@ $max-recipelist-view-width: rem-calc(1500);
 SUBMENU
 ==================================*/
 
-.submenu-container{
-	max-width: $row-width;
-	margin: 0rem auto 2rem;
-	@extend .clearfix;
-	
-	
-	@media #{$medium-up}{
-	  padding: 10px 0;	
-	  margin: 2rem auto 3rem;	
-	  border-bottom: 2px solid $border-color;
-	}
+.submenu-container {
+    max-width: $row-width;
+    margin: 0rem auto 2rem;
+    @extend .clearfix;
+    @media #{$medium-up} {
+        padding: 10px 0;
+        margin: 2rem auto 3rem;
+        border-bottom: 2px solid $border-color;
+    }
 }
 
-.submenu-half{
-	
-	overflow: auto;
-	padding: 10px 15px;
-	margin: 0.2rem 1rem;
-	border-bottom: 2px solid $border-color;
-
-
-	@media #{$medium-up}{
-	  float: left;	
-	  padding: 0 15px;
-	  width: 50%;
-	  margin: 0;
-	  border-bottom: none;
-	 	&:not(:first-of-type){
-			border-left: 2px solid $border-color;
-		}
-	}
-
+.submenu-half {
+    overflow: auto;
+    padding: 10px 15px;
+    margin: 0.2rem 1rem;
+    border-bottom: 2px solid $border-color;
+    @media #{$medium-up} {
+        float: left;
+        padding: 0 15px;
+        width: 50%;
+        margin: 0;
+        border-bottom: none;
+        &:not(:first-of-type) {
+            border-left: 2px solid $border-color;
+        }
+    }
 }
 
 
@@ -45,54 +39,120 @@ SUBMENU
 RECIPE LIST
 ==================================*/
 
-.recipe-list-container{
-	margin: 0 auto;
-	max-width: rem-calc(1500);
-	padding: 0 -15px;
+.recipe-list-container {
+    margin: 0 auto;
+    max-width: rem-calc(1500);
+    padding: 0 -15px;
 }
 
-.recipe-list{
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-	display: block;
-	width: 100%;
-	list-style-type: none;
-	margin: 0;
-	overflow: auto;
-}
-
-
-.recipe-list-item{
-	-webkit-box-sizing: border-box;
+.recipe-list {
+    -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
-	float: left;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    overflow: auto;
+}
+
+.recipe-list-item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    width: 100%;
+    @media #{$medium-up} {
+        width: 50%;
+    }
+    @media #{$xlarge-up} {
+        width: 33.3334%;
+    }
+}
+
+.card-container {
+    padding: 15px;
+}
+
+.card {
+    background-color: $card-bg;
+    //color: $coffee-dark;
+    border: 2px solid $border-color;
+    @include material-element();
+}
+
+.dark-layer{
+	 -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 10;    
+}
+
+
+.card-header {
+    height: rem-calc(300);
+    position: relative;
+    border-bottom: 2px solid $border-color;
+
+    &:hover{
+    	.dark-layer{
+    		background-color: rgba($cream, 0.4);
+    	}
+    	
+    }
+   
+}
+
+
+.card-title{
+	position: absolute;
+	bottom: 0;
 	width: 100%;
-	@media #{$medium-up}{
-	  width: 50%;
-	}
-
-	@media #{$xlarge-up}{
-	  width: 33.3334%;
-	}
+	color: $anchor-font-color;
+	//background-color: rgba($dark-purple, 0.8);
+	font-family: $header-font-family;
+	font-weight: bold;
+	font-size: rem-calc(22);
+	padding: 10px;
+	//text-shadow: 1px 1px 2px rgba(68, 68, 68, 0.83);
+	z-index: 100;
 }
 
-.card-container{
-	padding: 15px;
+.card-info{
+	padding: 20px 10px;
 }
 
-.card{
-	background-color: $card-bg;
-	color: $coffee-dark;
-	border: 2px solid $border-color;
-
-	@include material-element();
+.image-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    img {
+        width: 100%;
+        -webkit-transition: all 450ms ease;
+        -moz-transition: all 450ms ease;
+        -ms-transition: all 450ms ease;
+        -o-transition: all 450ms ease;
+        transition: all 450ms ease;
+    }
+    &:hover {
+        img {
+            -webkit-transform: scale(1.05);
+            -moz-transform: scale(1.05);
+            -ms-transform: scale(1.05);
+            -o-transform: scale(1.05);
+            transform: scale(1.05);
+        }
+    }
 }
 
-.card-region{
-	border-top: 2px solid $border-color;
-	padding: 6px 8px;
-	color: $secondary-text;
+.card-region {
+    border-top: 2px solid $border-color;
+    padding: 6px 10px;
+    color: $secondary-text;
 }

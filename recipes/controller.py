@@ -1,9 +1,11 @@
+import os
 from json import dumps
 from flask import Blueprint
 from flask import Response
 from flask import request
 from flask import jsonify
 from jinja2 import Markup
+from werkzeug import secure_filename
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Region, Recipe
@@ -38,7 +40,7 @@ def checkRecipe(data_request):
             errors.append(key)
         else:
             sanitized_inputs.update(tmp)
-    return InputDataHolder(errors, sanitized_inputs)
+    return InputDataHolder(errors, sanitized_inputs)  
 
 
 @recipes.route('/recipes', methods=['GET'])
@@ -81,3 +83,20 @@ def showRegions():
     js = dumps([i.serialize for i in region_list])
     resp = Response(js, status=200, mimetype='application/json')
     return resp
+
+# Managing picture upload
+UPLOAD_FOLDER = 'static/img'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@recipes.route('/uploadpicture/<recipe_id>', methods=['POST'])
+def upload_picture(recipe_id):
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            return jsonify(filename=filename)

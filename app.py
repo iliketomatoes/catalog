@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from recipes.controller import recipes
 
+
 app = Flask(__name__)
 
 
