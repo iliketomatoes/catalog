@@ -1,7 +1,5 @@
 import os
-from json import dumps
 from flask import Blueprint
-from flask import Response
 from flask import request
 from flask import jsonify
 from jinja2 import Markup
@@ -39,16 +37,14 @@ def checkRecipe(data_request):
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
     recipes_list = db_session.query(Recipe).all()
-    js = dumps([i.serialize for i in recipes_list])
-    return Response(js, status=200, mimetype='application/json')
+    return jsonify(collection=[i.serialize for i in recipes_list])
 
 
 @recipes.route('/recipes/<recipe_id>', methods=['GET'])
 def showOne(recipe_id):
     recipes_list = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).all()
-    js = dumps([i.serialize for i in recipes_list])
-    return Response(js, status=200, mimetype='application/json')
+    return jsonify(collection=[i.serialize for i in recipes_list])
 
 
 @recipes.route('/recipes', methods=['POST'])

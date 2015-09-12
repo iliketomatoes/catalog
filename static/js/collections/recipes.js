@@ -10,7 +10,11 @@ define([
         model: Recipe,
 
         // Save all of the todo items under the `"todos"` namespace.
-        url: '/recipes'
+        url: '/recipes',
+
+        parse: function(response){
+            return response.collection;
+        }
 
     });
 
