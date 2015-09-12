@@ -6,17 +6,10 @@ from flask import request
 from flask import jsonify
 from jinja2 import Markup
 from werkzeug import secure_filename
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import Base, Region, Recipe
+from database import db_session
+from models import Region, Recipe
 
 recipes = Blueprint('recipes', __name__)
-
-engine = create_engine('sqlite:///italianrecipes.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 
 class InputDataHolder:
@@ -40,19 +33,20 @@ def checkRecipe(data_request):
             errors.append(key)
         else:
             sanitized_inputs.update(tmp)
-    return InputDataHolder(errors, sanitized_inputs)  
+    return InputDataHolder(errors, sanitized_inputs)
 
 
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
-    recipes_list = session.query(Recipe).all()
+    recipes_list = db_session.query(Recipe).all()
     js = dumps([i.serialize for i in recipes_list])
     return Response(js, status=200, mimetype='application/json')
 
 
 @recipes.route('/recipes/<recipe_id>', methods=['GET'])
 def showOne(recipe_id):
-    recipes_list = session.query(Recipe).filter(Recipe.id == recipe_id).all()
+    recipes_list = db_session.query(Recipe).filter(
+        Recipe.id == recipe_id).all()
     js = dumps([i.serialize for i in recipes_list])
     return Response(js, status=200, mimetype='application/json')
 
@@ -67,30 +61,23 @@ def addOne():
             duration=data.inputs['duration'],
             difficulty=data.inputs['difficulty'],
             region_id=data.inputs['region_id'])
-        session.add(newRecipe)
-        session.commit()
+        db_session.add(newRecipe)
+        db_session.commit()
         return jsonify(id=newRecipe.id, name=newRecipe.name)
     else:
         resp = jsonify(error=data.errors)
         resp.status_code = 400
         return resp
 
-
-# Get regions
-@recipes.route('/regions', methods=['GET'])
-def showRegions():
-    region_list = session.query(Region).all()
-    js = dumps([i.serialize for i in region_list])
-    resp = Response(js, status=200, mimetype='application/json')
-    return resp
-
 # Managing picture upload
-UPLOAD_FOLDER = 'static/img'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 @recipes.route('/uploadpicture/<recipe_id>', methods=['POST'])
 def upload_picture(recipe_id):

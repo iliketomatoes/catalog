@@ -1,7 +1,9 @@
 from flask import Flask, render_template
+from database import init_db
 from recipes.controller import recipes
+from regions.controller import regions
 
-
+init_db()
 app = Flask(__name__)
 
 
@@ -13,6 +15,7 @@ def home():
         abort(404)
 
 app.register_blueprint(recipes)
+app.register_blueprint(regions)
 
 
 if __name__ == '__main__':

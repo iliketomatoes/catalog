@@ -1,9 +1,9 @@
-import os
-import sys
+# import os
+# import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
 
 Base = declarative_base()
 
@@ -49,7 +49,7 @@ class Recipe(Base):
         }
 
 
-engine = create_engine('sqlite:///italianrecipes.db')
+# engine = create_engine('sqlite:///italianrecipes.db')
 
 
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
