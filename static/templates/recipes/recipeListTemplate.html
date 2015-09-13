@@ -7,11 +7,17 @@
         <a href="#new_recipe" class="right bold"><i class="fi-plus"></i> Add a new recipe</a>
     </div>
 </div>
-<div class="recipe-list-container">
+
+<% if(recipes.length === 0){ %>       
+<div class="row">
+    <div class="small-12 columns">
+        <h2 class="text-center">There are no items in this category.</h2>
+    </div>
+</div>
+<% } %>
+
+<div class="recipe-list-container open-menu-hide">
     <ul class="recipe-list">
-        <% if(recipes.length === 0){ %>
-            <li class="recipe-list-item"><h2>There are no items in this category.</h2></li>
-        <% } %>
         <% _.each(recipes, function(recipe){ %>
             <li class="recipe-list-item">
                 <div class="card-container">

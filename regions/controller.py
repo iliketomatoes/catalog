@@ -12,3 +12,9 @@ regions = Blueprint('regions', __name__)
 def showRegions():
     region_list = db_session.query(Region).all()
     return jsonify(collection=[i.serialize for i in region_list])
+
+@regions.route('/regions/<int:region_id>', methods=['GET'])
+def showOne(region_id):
+    region_list = db_session.query(Region).filter(
+        Region.id == region_id).all()
+    return jsonify(collection=[i.serialize for i in region_list])    
