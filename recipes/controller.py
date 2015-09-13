@@ -36,11 +36,16 @@ def checkRecipe(data_request):
 
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
-    recipes_list = db_session.query(Recipe).all()
+    region_id = request.args.get('region_id')
+    if (region_id == '' or region_id is None):
+        recipes_list = db_session.query(Recipe).all()
+    else:
+        recipes_list = db_session.\
+            query(Recipe).filter_by(region_id=region_id).all()
     return jsonify(collection=[i.serialize for i in recipes_list])
 
 
-@recipes.route('/recipes/<recipe_id>', methods=['GET'])
+@recipes.route('/recipes/<int:recipe_id>', methods=['GET'])
 def showOne(recipe_id):
     recipes_list = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).all()

@@ -8,7 +8,6 @@ body {
 }
 
 body{
-	-webkit-text-size-adjust: 100%;
 	-webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
@@ -47,6 +46,10 @@ iframe{
 
 a > svg {
   pointer-events: none;
+}
+
+small{
+  color: $small-font-color;
 }
 
 /*

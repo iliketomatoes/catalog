@@ -10,6 +10,19 @@
             <h2 class="page-title">New recipe</h2>
             <form id="new-recipe-form" class="col s12" method="post" action="#!">
                 <div class="row">
+                    <div class="small-12 medium-8 columns">
+                        <label for="region_id" class="required">Select a region</label>
+                        <select name="region_id">
+                            <% _.each(regions, function(region){ %>
+                                <option value="<%= region.get('id') %>" <% if ( region.get( 'id')==1 ){ %> selected
+                                    <% } %>>
+                                        <%= region.get("name") %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="small-12  medium-8 columns">
                         <label for="name" class="required">Name</label>
                         <input id="name" name="name" type="text" class="validate">
@@ -53,19 +66,6 @@
                                 <span id="sliderOutput3" style="display:block;margin-top:17px;"></span>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-12 medium-8 columns">
-                        <label for="region_id" class="required">Select a region</label>
-                        <select name="region_id">
-                            <% _.each(regions, function(region){ %>
-                                <option value="<%= region.get('id') %>" <% if ( region.get( 'id')==1 ){ %> selected
-                                    <% } %>>
-                                        <%= region.get("name") %>
-                                </option>
-                                <% }); %>
-                        </select>
                     </div>
                 </div>
                 <div class="row">
