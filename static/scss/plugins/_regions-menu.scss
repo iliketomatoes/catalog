@@ -1,0 +1,51 @@
+#regions-menu-container{
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	z-index: 400;
+}
+
+.regions-menu-list-ctr{
+	position: relative;
+	background-color: $card-bg;
+	padding: 15px;
+	overflow: auto;
+}
+
+.regions-menu-list{
+	list-style-type: none;
+	margin: 0;
+	font-size: rem-calc(16);
+
+	@media #{$medium-up} {
+        -moz-column-count: 2;
+	    -moz-column-gap: 20px;
+	    -webkit-column-count: 2;
+	    -webkit-column-gap: 20px;
+	    column-count: 2;
+	    column-gap: 20px;
+    }
+
+    @media #{$large-up} {
+        -moz-column-count: 4;
+	    -moz-column-gap: 20px;
+	    -webkit-column-count: 4;
+	    -webkit-column-gap: 20px;
+	    column-count: 4;
+	    column-gap: 20px;
+    }
+	
+	li a{
+		display: block;
+		padding: 15px 15px;
+		margin-bottom: 10px;
+		border: 1px solid $border-color;
+		border-radius: 4px;
+		@include single-transition(background-color);
+
+		&:hover{
+			background-color: scale-color($card-bg, $lightness: -6%);
+		}
+	}
+
+}

@@ -15,6 +15,24 @@ button, .button, input[type="submit"]{
     }
 }
 
+.circle-button{
+	overflow: hidden;
+	transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	border-radius: 50%;
+	padding: 0.8rem 0.9rem;
+	line-height: 0;
+	background-color: $anchor-font-color;
+	color: $white;
+    @include material-element();
+    letter-spacing: 0.02rem;
+
+    &:active, &:focus{
+    	background-color: $anchor-font-color-hover;
+    	color: $white !important;
+    	outline: none;
+    }
+}
+
 .ripple{
 	overflow: hidden;
 }

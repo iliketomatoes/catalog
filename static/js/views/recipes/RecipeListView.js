@@ -5,7 +5,6 @@ define([
     'collections/recipes',
     'collections/regions',
     'text!templates/recipes/recipeListTemplate.html'
-
 ], function($, _, Backbone, Recipes, Regions, recipeListTemplate) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
@@ -25,18 +24,16 @@ define([
 
             // When data is collected, let's render the view
             $.when.apply($, complete).done(function() {
-                self.render(Regions.models, Recipes.models)
+                self.render(Regions.models, Recipes.models, region_id);
             });
         },
 
-        updateRegionLabel: function(region_id){
+        render: function(regions, recipes, selected_region) {
 
-        },
-
-        render: function(regions, recipes) {
-
-            var region_label = 'All the regions';
-            if(regions.length === 1) region_label = regions[0].get('name');
+            var defaultRegion = {
+                id: 0,
+                name: 'All the regions'
+            };
 
             var mapped_regions = [];
 
@@ -44,10 +41,15 @@ define([
                 mapped_regions[region.get('id')] = region.get('name');
             });
 
+            if (selected_region) {
+                defaultRegion.id = selected_region;
+                defaultRegion.name =  mapped_regions[selected_region];
+            }
+
             var data = {
                 regions: mapped_regions,
                 recipes: recipes,
-                region_label: region_label,
+                defaultRegion: defaultRegion,
                 _: _
             };
 

@@ -3,10 +3,11 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'regionmenu',
     'views/topbar/TopBarView',
     'views/recipes/RecipeListView',
     'views/recipes/NewRecipeView'
-], function($, _, Backbone, TopBarView, RecipeListView, NewRecipeView) {
+], function($, _, Backbone, regionmenu,TopBarView, RecipeListView, NewRecipeView) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
