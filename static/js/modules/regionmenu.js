@@ -19,6 +19,22 @@ define([
             //Open menu
             if ($istanceMenu.data('menu') == 'closed') {
 
+                var currentRegionId = $('#region-select').data('id');
+
+                $('.regions-menu-list-item').each(function(el){
+              
+                    var $that = $(this);
+
+                    if($that.data('id') == currentRegionId){
+                        $that.addClass('bold');
+                        $that.find('i').removeClass('hide');
+                    }else{
+                        $that.removeClass('bold');
+                        $that.find('i').addClass('hide');
+                    }
+                
+                });
+
                 var $menuBg = this.getBackground();
                 var $openMenuHideEl = $('.open-menu-hide');
 
@@ -27,6 +43,12 @@ define([
                 if (menuHeight >= $(window).height()) {
                     $openMenuHideEl.addClass('hide');
                     $menuBg.removeClass('hide');
+                    
+                    $('#modal-menu-ctr').css({
+                        'position': 'absolute',
+                        'top': '0'
+                    });
+
                     $istanceMenu.css({
                         'position': 'absolute',
                         'top': '-' + menuHeight + 'px',
@@ -39,6 +61,10 @@ define([
 
                 } else {
                     $menuBg.removeClass('hide');
+                    $('#modal-menu-ctr').css({
+                        'position': 'relative',
+                        'top': 'auto'
+                    });
                     $istanceMenu.css({
                         'position': 'fixed',
                         'top': 'auto',
@@ -105,7 +131,7 @@ define([
 
     $('body').on('click', '.region-menu, .close-menu', menu.toggleMenu.bind(menu));
 
-    $('body').on('click', '.regions-menu-bg', menu.closeMenu.bind(menu, true));
+    $('body').on('click', '.regions-menu-bg, .regions-menu-list-item', menu.closeMenu.bind(menu, true));
 
     $(window).on('resize', menu.closeMenu.bind(menu, false));
 

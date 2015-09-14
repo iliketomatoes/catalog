@@ -6,10 +6,13 @@ define([
     'regionmenu',
     'views/topbar/TopBarView',
     'views/recipes/RecipeListView',
-    'views/recipes/NewRecipeView'
-], function($, _, Backbone, regionmenu,TopBarView, RecipeListView, NewRecipeView) {
+    'views/recipes/NewRecipeView',
+    'views/regionsmenu/RegionsMenuView',
+    'collections/regions',
+], function($, _, Backbone, regionmenu, TopBarView, RecipeListView, NewRecipeView, RegionsMenuView, Regions) {
 
     var AppRouter = Backbone.Router.extend({
+
         routes: {
 
             'recipes': 'showRecipes',
@@ -27,28 +30,40 @@ define([
 
         var app_router = new AppRouter;
 
-        app_router.on('route:showRecipes', function() {
-            RecipesListView.populate();
+        // Fetch data from the collections
+        var regions = _.invoke([Regions], 'fetch');
+
+        // When data is collected, let's render the view
+        $.when.apply($, regions).done(function() {
+
+            app_router.on('route:showRecipes', function() {
+                RecipesListView.populate();
+            });
+
+            app_router.on('route:filterByRegion', function(region_id) {
+                RecipeListView.populate(region_id);
+            });
+
+            app_router.on('route:newRecipe', function() {
+                NewRecipeView.render();
+            });
+
+            app_router.on('route:defaultAction', function() {
+                // We have no matching route, lets display the home page 
+                RecipeListView.populate();
+            });
+
+            TopBarView.render();
+
+            RegionsMenuView.render()
+
+            Backbone.history.start();
         });
 
-        app_router.on('route:filterByRegion', function(region_id) {
-            RecipeListView.populate(region_id);
-        });
-
-        app_router.on('route:newRecipe', function() {
-            NewRecipeView.populate();
-        });
-
-        app_router.on('route:defaultAction', function() {
-            // We have no matching route, lets display the home page 
-            RecipeListView.populate();
-        });
-
-        TopBarView.render();
-
-        Backbone.history.start();
     };
+
     return {
         initialize: initialize
     };
+
 });

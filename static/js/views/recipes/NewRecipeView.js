@@ -15,28 +15,21 @@ define([
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
 
-        populate: function() {
+        regions: null,
 
-            var self = this;
-
-            var onDataHandler = function(collection) {
-                self.render(Regions.models);
-            };
-
-            Regions.fetch({
-                success: onDataHandler,
-                dataType: "json"
-            });
+        initialize: function() {
+            this.regions = Regions.models;
         },
 
         events: {
             "submit #new-recipe-form": "addRecipe"
         },
 
-        render: function(regions) {
+
+        render: function() {
 
             var data = {
-                regions: regions,
+                regions: this.regions,
                 data: null,
                 _: _
             };

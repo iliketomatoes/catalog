@@ -1,0 +1,20 @@
+<div class="regions-menu-bg hide"></div>
+<div id="regions-menu-container" class="hide" data-name="" data-id="" data-menu="closed">
+    <div class="regions-menu-list-ctr">
+        <button class="close-menu right circle-button ripple"><i class="fi-x"></i></button>
+        <h3 class="page-title">
+            <a href="/#" class="regions-menu-list-item" data-id="0">All the regions <i class="fi-check hide"></i></a>
+        </h3>
+        <ul class="regions-menu-list">
+            <% _.each(regions, function(region, index){ %>
+            <% if(region){ %>
+            <li>
+                <a href="/#region/<%= region.get("id") %>" class="regions-menu-list-item" data-id="<%= region.get("id") %>">
+                    <%= region.get("name") %> <i class="fi-check right hide"></i>
+                </a>
+            </li>
+            <%}%>
+            <% }); %>
+        </ul>
+    </div>
+</div>

@@ -9,6 +9,12 @@ define([
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
+        regions: null,
+
+        initialize: function(){
+            this.regions = Regions.models;
+        },
+
         populate: function(region_id) {
 
             var self = this;
@@ -20,11 +26,11 @@ define([
             };
 
             // Fetch data from the collections
-            var complete = _.invoke([Regions, Recipes], 'fetch', queryParams);
+            var complete = _.invoke([Recipes], 'fetch', queryParams);
 
             // When data is collected, let's render the view
             $.when.apply($, complete).done(function() {
-                self.render(Regions.models, Recipes.models, region_id);
+                self.render(self.regions, Recipes.models, region_id);
             });
         },
 

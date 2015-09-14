@@ -1,7 +1,7 @@
 <div class="submenu-container">
     <div class="submenu-half">
-        <span class="bold"><%= defaultRegion.name %></span>
-        <a href="#!" class="right bold region-menu"><i class="fi-widget"></i> Select a region</a>
+        <span class="bold"><%= defaultRegion.name %> <i class="fi-check"></i></span>
+        <a href="#!" id="region-select" class="right bold region-menu" data-id="<%= defaultRegion.id %>"><i class="fi-widget"></i> Select a region</a>
     </div>
     <div class="submenu-half">
         <a href="#new_recipe" class="right bold"><i class="fi-plus"></i> Add a new recipe</a>
@@ -56,24 +56,4 @@
             </li>
         <% }); %>
     </ul>
-</div>
-<div class="regions-menu-bg hide"></div>
-<div id="regions-menu-container" class="hide" data-name="<%= defaultRegion.name %>" data-id="<%= defaultRegion.id %>" data-menu="closed">
-    <div class="regions-menu-list-ctr">
-        <button class="close-menu right circle-button ripple"><i class="fi-x"></i></button>
-        <h3 class="page-title<% if(defaultRegion.id === 0){ %> selected-region bold <%}%>">
-            <a href="/#">All the regions<% if(defaultRegion.id === 0){ %> <i class="fi-check"></i><%}%></a>
-        </h3>
-        <ul class="regions-menu-list">
-            <% _.each(regions, function(region, index){ %>
-            <% if(region){ %>
-            <li <% if(region === defaultRegion.name){ %> class="selected-region bold" <%}%>>
-                <a href="/#region/<%= index %>">
-                    <%= region %><% if(region === defaultRegion.name){ %> <i class="fi-check right"></i><%}%>
-                </a>
-            </li>
-            <%}%>
-            <% }); %>
-        </ul>
-    </div>
 </div>
