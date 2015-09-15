@@ -22,7 +22,7 @@
             <li class="recipe-list-item">
                 <div class="card-container">
                     <div class="card">
-                    <a href="/#!" class="card-header-link">
+                    <a href="/#recipe/<%= recipe.get("id") %>" class="card-header-link">
                         <div class="card-header image-wrapper">
                         <div class="dark-layer"></div>
                         <% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){

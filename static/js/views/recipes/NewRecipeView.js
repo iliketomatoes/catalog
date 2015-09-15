@@ -3,33 +3,25 @@ define([
     'underscore',
     'backbone',
     // Pull in the Collection module from above,
-    'collections/regions',
     'collections/recipes',
     'views/flash/FlashView',
     'views/recipes/AddPictureView',
     'text!templates/recipes/newRecipeTemplate.html',
     'domready',
     'foundation.slider'
-], function($, _, Backbone, Regions, Recipes, FlashView, AddPictureView, newRecipeTemplate, domready) {
+], function($, _, Backbone, Recipes, FlashView, AddPictureView, newRecipeTemplate, domready) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
-
-        regions: null,
-
-        initialize: function() {
-            this.regions = Regions.models;
-        },
 
         events: {
             "submit #new-recipe-form": "addRecipe"
         },
 
-
-        render: function() {
+        render: function(regions) {
 
             var data = {
-                regions: this.regions,
+                regions: regions.models,
                 data: null,
                 _: _
             };
@@ -57,7 +49,9 @@ define([
                 recipe = $.extend({}, recipe, currentObject);
             });
 
-            Recipes.create(recipe, {
+            var RecipeCollection = new Recipes();
+
+            RecipeCollection.create(recipe, {
                 success: function(model, resp) {
                     // Let's pass the model id and name to the second form
                     // I.E. form for adding a picture

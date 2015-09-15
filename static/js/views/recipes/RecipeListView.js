@@ -3,19 +3,12 @@ define([
     'underscore',
     'backbone',
     'collections/recipes',
-    'collections/regions',
     'text!templates/recipes/recipeListTemplate.html'
-], function($, _, Backbone, Recipes, Regions, recipeListTemplate) {
+], function($, _, Backbone, Recipes, recipeListTemplate) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
-        regions: null,
-
-        initialize: function(){
-            this.regions = Regions.models;
-        },
-
-        populate: function(region_id) {
+        populate: function(RegionCollection, region_id) {
 
             var self = this;
 
@@ -25,12 +18,13 @@ define([
                 region_id: region_id
             };
 
+            var RecipesCollection = new Recipes();
             // Fetch data from the collections
-            var complete = _.invoke([Recipes], 'fetch', queryParams);
+            var promise = _.invoke([RecipesCollection], 'fetch', queryParams);
 
             // When data is collected, let's render the view
-            $.when.apply($, complete).done(function() {
-                self.render(self.regions, Recipes.models, region_id);
+            $.when.apply($, promise).done(function() {
+                self.render(RegionCollection.models, RecipesCollection.models, region_id);
             });
         },
 

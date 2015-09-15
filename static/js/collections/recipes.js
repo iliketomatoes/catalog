@@ -9,7 +9,6 @@ define([
         // Reference to this collection's model.
         model: Recipe,
 
-        // Save all of the todo items under the `"todos"` namespace.
         url: '/recipes',
 
         parse: function(response){
@@ -18,5 +17,5 @@ define([
 
     });
 
-    return new RecipesCollection();
+    return RecipesCollection;
 });
