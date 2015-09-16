@@ -2,14 +2,13 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    // Pull in the Collection module from above,
     'collections/recipes',
     'views/flash/FlashView',
     'views/recipes/AddPictureView',
     'text!templates/recipes/newRecipeTemplate.html',
     'domready',
     'foundation.slider'
-], function($, _, Backbone, Recipes, FlashView, AddPictureView, newRecipeTemplate, domready) {
+], function($, _, Backbone, RecipeCollection, FlashView, AddPictureView, newRecipeTemplate, domready) {
 
     var NewRecipeView = Backbone.View.extend({
         el: $("#container"),
@@ -18,10 +17,17 @@ define([
             "submit #new-recipe-form": "addRecipe"
         },
 
-        render: function(regions) {
+        initialize: function(options) {
+
+            this.regions = options.regions;
+            this.render();
+
+        },
+
+        render: function() {
 
             var data = {
-                regions: regions.models,
+                regions: this.regions.models,
                 data: null,
                 _: _
             };
@@ -49,14 +55,13 @@ define([
                 recipe = $.extend({}, recipe, currentObject);
             });
 
-            var RecipeCollection = new Recipes();
+            var collection = new RecipeCollection();
 
-            RecipeCollection.create(recipe, {
+            collection.create(recipe, {
                 success: function(model, resp) {
                     // Let's pass the model id and name to the second form
                     // I.E. form for adding a picture
                     AddPictureView.render(resp.id, resp.name);
-                    //var flash = FlashView.render('success', 'Succesfully inserted new recipe');
 
                 },
                 error: function(model, error) {
@@ -73,6 +78,6 @@ define([
 
         }
     });
-    return new NewRecipeView();
+    return NewRecipeView;
 
 });

@@ -9,33 +9,54 @@ define([
     var RecipeView = Backbone.View.extend({
         el: $("#container"),
 
-        regions: null,
+        template: _.template(recipeTemplate),
 
-        populate: function(RegionCollection, model) {
-            this.regions = RegionCollection.models;
-            var RecipeCollection = new Recipes([model]);
-            model.bind("change", _.bind(this.render, this));
-            model.fetch();
+        initialize: function(options) {
+
+            this.regions = options.regions;
+
+            //_.bindAll(this, 'render');
+            //this.collection.bind('add', this.render);
+
+            var self = this;
+            self.mapped_regions = [];
+            _.map(self.regions.models, function(region) {
+                self.mapped_regions[region.get('id')] = region.get('name');
+            });
         },
 
-        render: function(recipes) {
+        populate: function(recipe_id) {
+            /*this.regions = RegionCollection.models;
+            var recipes = new Recipes([model]);
+            model.bind("change", _.bind(this.render, this));
+            model.fetch();*/
+            var recipe = this.collection.get(recipe_id);
+            if(typeof recipe === 'undefined'){
+                console.log('è undefined!!!!');
+                this.collection.fetch({
+                    data: {
+                        id: recipe_id
+                    }
+                });
+            }else{
+                this.render(recipe);  
+            }
             
-            var mapped_regions = [];
+        },
 
-            _.map(this.regions, function(region) {
-                mapped_regions[region.get('id')] = region.get('name');
-            });
+        render: function(recipe) {
 
+            console.log(recipe);
 
             var data = {
-                regions: mapped_regions,
-                recipes: recipes,
+                regions: self.mapped_regions,
+                recipe: recipe,
                 _: _
             };
 
-            var compiledTemplate = _.template(recipeTemplate)(data);
+            var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
         }
     });
-    return new RecipeView();
+    return RecipeView;
 });

@@ -2,18 +2,18 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'collections/regions',
+    'regionmenu',
     'text!templates/regionsmenu/regionsMenuTemplate.html',
     'domready'
-], function($, _, Backbone, Regions, newRecipeTemplate, domready) {
+], function($, _, Backbone, regionmenu, newRecipeTemplate, domready) {
 
     var RegionsMenuView = Backbone.View.extend({
         el: $("#modal-menu-ctr"),
 
-        render: function(RegionCollection) {
+        render: function(regions) {
 
             var data = {
-                regions: RegionCollection.models,
+                regions: regions.models,
                 data: null,
                 _: _
             };

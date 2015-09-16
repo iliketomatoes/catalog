@@ -1,0 +1,33 @@
+<div class="card-container">
+    <div class="card">
+    <a href="/#recipe/<%= recipe.get("id") %>" class="card-header-link">
+        <div class="card-header image-wrapper">
+        <div class="dark-layer"></div>
+        <% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
+            recipe.set("image_url", "/static/img/italian_food.png");
+            } %>
+        
+        <img src="<%= recipe.get("image_url") %>" alt="<%= recipe.get("name") %>">
+        <div class="card-title"><%= recipe.get("name") %></div>
+        </div>
+    </a>
+    <div class="card-info">
+        <!--<a href="#!<%= recipe.get("id") %>">read more</a>
+        <a href="#!<%= recipe.get("id") %>">edit</a>
+        <a href="#!<%= recipe.get("id") %>">delete</a>-->
+            <div class="card-subinfo">
+                <small>Prep time:</small>
+                <br>
+                <span><i class="fi-clock"></i> <%= recipe.get("duration") %> minutes</span>
+            </div>
+            <div class="card-subinfo">
+                <small>Difficulty:</small>
+                <br>
+                <span><% for(var i = 0; i < recipe.get("difficulty"); i++){ %><i class="fi-star"></i><% } %></span>
+            </div>
+    </div>
+    <div class="card-region">
+        Region: <a href="/#region/<%= recipe.get("region_id") %>"><%= regions[recipe.get("region_id")] %></a>
+    </div>
+    </div>
+</div>

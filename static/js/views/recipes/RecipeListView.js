@@ -2,60 +2,82 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'views/recipes/RecipeListItemView',
     'collections/recipes',
     'text!templates/recipes/recipeListTemplate.html'
-], function($, _, Backbone, Recipes, recipeListTemplate) {
+], function($, _, Backbone, RecipeListItemView, RecipeCollection, recipeListTemplate) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
-        populate: function(RegionCollection, region_id) {
+        template: _.template(recipeListTemplate),
+
+        initialize: function(options) {
 
             var self = this;
-
             var queryParams = {};
 
-            if (!!region_id) queryParams.data = {
-                region_id: region_id
+            this.regions = options.regions;
+
+            self.mapped_regions = [];
+            _.map(self.regions.models, function(region) {
+                self.mapped_regions[region.get('id')] = region.get('name');
+            });
+
+
+            if (!!options.region_id) queryParams.data = {
+                region_id: options.region_id
             };
 
-            var RecipesCollection = new Recipes();
-            // Fetch data from the collections
-            var promise = _.invoke([RecipesCollection], 'fetch', queryParams);
+            queryParams.success = function(recipes) {
+                //If there are no recipes
+                if (recipes.length == 0) {
+                    var emptyCategory = '<div class="row"><div class="small-12 columns">';
+                    emptyCategory += '<h2 class="text-center">There are no items in this category.</h2>';
+                    emptyCategory += '</div></div>';
 
-            // When data is collected, let's render the view
-            $.when.apply($, promise).done(function() {
-                self.render(RegionCollection.models, RecipesCollection.models, region_id);
-            });
+                    $('.recipe-list-container').html(emptyCategory);
+                }
+            };
+
+            _.bindAll(this, 'addOne');
+            this.collection = new RecipeCollection();
+            this.collection.bind('add', this.addOne);
+
+            this.render(options.region_id);
+            this.collection.fetch(queryParams);
         },
 
-        render: function(regions, recipes, selected_region) {
+        render: function(region_id) {
 
             var defaultRegion = {
                 id: 0,
                 name: 'All the regions'
             };
 
-            var mapped_regions = [];
-
-            _.map(regions, function(region) {
-                mapped_regions[region.get('id')] = region.get('name');
-            });
-
-            if (selected_region) {
-                defaultRegion.id = selected_region;
-                defaultRegion.name =  mapped_regions[selected_region];
+            if (region_id) {
+                defaultRegion.id = region_id;
+                defaultRegion.name = this.mapped_regions[region_id];
             }
 
             var data = {
-                regions: mapped_regions,
-                recipes: recipes,
+                regions: this.mapped_regions,
                 defaultRegion: defaultRegion,
                 _: _
             };
 
-            var compiledTemplate = _.template(recipeListTemplate)(data);
+            var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
+
+        },
+
+        addOne: function(recipe) {
+            var view = new RecipeListItemView({
+                model: recipe,
+                mapped_regions: this.mapped_regions
+            });
+            $('.recipe-list').append(view.render().el);
         }
+
     });
-    return new RecipeListView();
+    return RecipeListView;
 });

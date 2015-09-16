@@ -3,16 +3,23 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'regionmenu',
     'views/topbar/TopBarView',
     'views/recipes/RecipeListView',
     'views/recipes/RecipeView',
     'views/recipes/NewRecipeView',
     'views/regionsmenu/RegionsMenuView',
-    'collections/regions',
-    'collections/recipes',
-    'models/recipe',
-], function($, _, Backbone, regionmenu, TopBarView, RecipeListView, RecipeView, NewRecipeView, RegionsMenuView, Regions, Recipes, Recipe) {
+    'collections/regions'
+], function(
+    $,
+    _,
+    Backbone,
+    TopBarView,
+    RecipeListView,
+    RecipeView,
+    NewRecipeView,
+    RegionsMenuView,
+    RegionCollection
+) {
 
     var AppRouter = Backbone.Router.extend({
 
@@ -33,36 +40,35 @@ define([
 
     var initialize = function() {
 
-        var app_router = new AppRouter;
+        var app_router = new AppRouter();
 
-        var RegionCollection = new Regions();
+        var regions = new RegionCollection();
 
         // Fetch data from the collections
-        var promise = _.invoke([RegionCollection], 'fetch');
+        var promise = _.invoke([regions], 'fetch');
 
         // When data is collected, let's render the view
         $.when.apply($, promise).done(function() {
 
             app_router.on('route:showRecipes', function() {
-                RecipeListView.populate(RegionCollection);
+                var showRecipes = new RecipeListView({regions: regions});
             });
 
             app_router.on('route:filterByRegion', function(region_id) {
-                RecipeListView.populate(RegionCollection, region_id);
+                var filterRecipes = new RecipeListView({regions: regions, region_id: region_id});
             });
 
             app_router.on('route:newRecipe', function() {
-                NewRecipeView.render(RegionCollection);
+                var newRecipe = new NewRecipeView({regions: regions});
             });
 
-            app_router.on('route:showOneRecipe', function(id) {
-                var recipe = new Recipe({id: id});
-                RecipeView.populate(RegionCollection, recipe);
+            app_router.on('route:showOneRecipe', function(recipe_id) {    
+                readRecipeView.populate(recipe_id);
             });
 
             TopBarView.render();
 
-            RegionsMenuView.render(RegionCollection);
+            RegionsMenuView.render(regions);
 
             Backbone.history.start();
         });
