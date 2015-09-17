@@ -13,9 +13,7 @@ define([
         el: $("#container"),
 
         events: {
-            'click .card-delete-btn': 'deleteItem',
-            'click .confirm-deletion-confirm': 'confirmedDeleteItem',
-            'click .confirm-deletion-abort': 'abortedDeleteItem',
+            'click .card-delete-btn': 'deleteItem'
         },
 
         template: _.template(recipeListTemplate),
@@ -90,6 +88,9 @@ define([
         },
 
         initFoundation: function() {
+
+            var self = this;
+
             domready(function(){
                 $(document).foundation();
             });
@@ -97,31 +98,28 @@ define([
 
         deleteItem: function(e){
             e.preventDefault();
+            var self = this;
             var target = event.target ? event.target : event.srcElement;
             var targetID = target.getAttribute('data-id');
             var model = this.collection.get(targetID);
-            $('#confirm-deletion-confirm').data('id', targetID);
+            $('.confirm-deletion-confirm').data('id', targetID);
             $('#confirm-deletion-name').text(model.get('name'));
             $('#confirm-deletion').foundation('reveal', 'open');
+            $('.confirm-deletion-confirm').one('click', self.confirmedDeleteItem);
+            $('.confirm-deletion-abort').one('click', self.abortedDeleteItem);
         },
 
         confirmedDeleteItem: function(e){
             e.preventDefault();
-            var target = event.target ? event.target : event.srcElement;
-            var targetID = target.getAttribute('data-id');
-            this.collection.remove(targetID, {
-                success: function(){
-                    console.log(arguments);
-                },
-                error: function(){
-                    console.log(arguments);
-                },
-
-            });
+            var targetID = $('.confirm-deletion-confirm').data('id');
+            console.log(targetID);
+            var modelToDelete = this.collection.get(targetID);
+            console.log(modelToDelete);
+            modelToDelete.clear();
+            $('#confirm-deletion').foundation('reveal', 'close');
         },
 
         abortedDeleteItem: function(e){
-            console.log('presssssoooo');
             $('#confirm-deletion').foundation('reveal', 'close');
         }
 

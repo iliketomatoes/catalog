@@ -52,6 +52,13 @@ def showOne(recipe_id):
     return jsonify(collection=[i.serialize for i in recipes_list])
 
 
+@recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
+def deleteOne(recipe_id):
+    recipes_list = db_session.query(Recipe).filter(
+        Recipe.id == recipe_id).delete()
+    return jsonify(id=recipe_id)   
+
+
 @recipes.route('/recipes', methods=['POST'])
 def addOne():
     data = checkRecipe(request.get_json())
