@@ -1,30 +1,76 @@
+/*
+==================================
+BANNER
+==================================*/ 
+
 .recipe-banner{
 	position: relative;
 	background-color: $coffee-light;
-	height: rem-calc(300);
+	height: rem-calc(200);
 	width: 100%;
 	padding-top: 3rem;
 	text-align: center;
+
+	@media #{$medium-up}{
+	  	height: rem-calc(250);
+	}
+
+	@media #{$large-up}{
+	  	height: rem-calc(300);
+	}
 }
 
 .recipe-img-container{
 	position: absolute;
 	left: 50%;
 	bottom: -8rem;
-	margin-left: - rem-calc(200);
+	margin-left: - rem-calc(150);
+	width: rem-calc(300);
+	height: rem-calc(300);
 	border-radius: 50%;
-	width: rem-calc(400);
-	height: rem-calc(400);
 	@include material-element();
 	background-size: cover;
 	background-repeat: no-repeat;
-	//margin: 0 auto 2rem;
+	@media #{$medium-up}{
+	  	margin-left: - rem-calc(170);
+		width: rem-calc(340);
+		height: rem-calc(340);
+	}
+	@media #{$large-up}{
+	  	margin-left: - rem-calc(200);
+		width: rem-calc(400);
+		height: rem-calc(400);
+	}
 }
 
+/*
+==================================
+RECIPE
+==================================*/ 
+
+.recipe-title{
+	margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid $border-color;
+}    
+
 .recipe-container{
-	padding-top: 7rem;
+	padding-top: 7.5rem;
 	position: relative;
 	width: 100%;
+}
+.recipe-link{
+}
+
+.recipe-time{
+	@media #{$medium-up}{
+	  border-left: 2px solid $border-color;
+	}
+}
+
+.recipe-difficulty{
+	border-left: 2px solid $border-color;
 }
 
 .recipe-info{
@@ -33,10 +79,17 @@
  	}
 }   
 
-
 .recipe-description{
-	font-family: $header-font-family;
-	font-size: 1.2rem;
-	margin: 2rem auto;
+	margin: 2.4rem auto 2rem;
+	max-width: rem-calc(720);
+
+	@media #{$medium-up}{
+	   margin: 4rem auto 2rem;	
+	   font-size: 1.2rem;
+	}
+}
+
+.recipe-footer-links{
+	margin: 0.5rem auto 0;
 	max-width: rem-calc(720);
 }

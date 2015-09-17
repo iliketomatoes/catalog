@@ -1,42 +1,48 @@
 <style>
-	body{
-		background-color: #F9F9F9;
-	}
+body {
+    background-color: #F9F9F9;
+}
 </style>
 <div class="recipe-banner">
-<% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
+    <% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
 			            recipe.set("image_url", "/static/img/italian_food.png");
 			            } %>
-	<div class="recipe-img-container" style="background-image: url(<%= recipe.get("image_url") %>)">
-	</div>   	
+        <div class="recipe-img-container" style="background-image: url(<%= recipe.get("image_url") %>)">
+        </div>
 </div>
 <div class="recipe-container">
-<div class="row">
-    <div class="small-12 columns">
-        <h2 class="page-title"><%= recipe.get("name") %></h2>
-        <div class="row">
-        	<div class="small-4 columns">
-		        <div class="recipe-info">
-		        	<small>Region:</small>
-		            <br>
-		            <a href="/#region/<%= recipe.get("region_id") %>"><%= regions[recipe.get("region_id")] %></a>
-		        </div>
-		        <div class="recipe-info">
-		            <small>Prep time:</small>
-		            <br>
-		            <span><i class="fi-clock"></i> <%= recipe.get("duration") %> minutes</span>
-		        </div>
-		        <div class="recipe-info">
-		            <small>Difficulty:</small>
-		            <br>
-		            <span><% for(var i = 0; i < recipe.get("difficulty"); i++){ %><i class="fi-star"></i><% } %></span>
-		        </div>
-		    </div>    
-	        <div class="small-8 columns">
-	        	
-	        </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <h2 class="recipe-title"><%= recipe.get("name") %></h2>
+            <div class="row">
+                <div class="small-12 medium-6 large-4 columns">
+                	<small>Region:</small>
+                    <br>
+                    <a href="/#region/<%= recipe.get("region_id") %>" class="recipe-link">
+                        <%= regions[recipe.get("region_id")] %>
+                    </a>
+                </div>
+                <div class="small-6 medium-3 large-4 columns recipe-time">
+                    <small>Prep time:</small>
+                    <br>
+                    <span><i class="fi-clock"></i> <%= recipe.get("duration") %> minutes</span>
+                </div>
+                <div class="small-6 medium-3 large-4 columns recipe-difficulty">
+                    <small>Difficulty:</small>
+                    <br>
+                    <span><% for(var i = 0; i < recipe.get("difficulty"); i++){ %><i class="fi-star"></i><% } %></span>
+                </div>
+            </div>
+            <p class="recipe-description">
+                <%= recipe.get("description") %>
+            </p>
         </div>
-        <p class="recipe-description"><%= recipe.get("description") %></p>
     </div>
 </div>
+<div class="row">
+	<div class="small-12 columns">
+		<div class="recipe-footer-links">
+			<a href="/#">&#10229; Go to the recipes list</a>
+		</div>
+	</div>
 </div>

@@ -468,6 +468,7 @@ $button-lrg: rem-calc(14);
 // $button-font-family: $body-font-family;
 // $button-font-color: $white;
 // $button-font-color-alt: $oil;
+$button-font-color-alt: $purple;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
 // $button-font-med: rem-calc(16);
@@ -570,11 +571,13 @@ $button-lrg: rem-calc(14);
 
 // We use this to control the background color
 // $f-dropdown-bg: $white;
+$f-dropdown-bg: $card-bg;
 
 // We use this to set the border styles for dropdowns.
 // $f-dropdown-border-style: solid;
 // $f-dropdown-border-width: 1px;
 // $f-dropdown-border-color: scale-color($white, $lightness: -20%);
+$f-dropdown-border-color: $border-color;
 
 // We use these to style the triangle pip.
 // $f-dropdown-triangle-size: 6px;
@@ -1160,7 +1163,9 @@ $range-slider-bar-border-width: 2px;
 
 // We use these to control the style of the reveal overlay.
 // $reveal-overlay-bg: rgba($black, .45);
+$reveal-overlay-bg: $dark-layer-color;
 // $reveal-overlay-bg-old: $black;
+$reveal-overlay-bg-old: $coffee-dark;
 
 // We use these to control the style of the modal itself.
 // $reveal-modal-bg: $white;
