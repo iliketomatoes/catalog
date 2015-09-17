@@ -21,6 +21,13 @@ define([
     RegionCollection
 ) {
 
+    $.ajaxSetup({
+        headers: {
+            "Accept": "application/json; charset=UTF-8",
+            "Content-Type": "application/json; charset=UTF-8"
+        }
+    });
+
     var AppRouter = Backbone.Router.extend({
 
         routes: {
@@ -47,7 +54,7 @@ define([
         // Fetch data from the collections
         var promise = _.invoke([regions], 'fetch');
 
-        // When data is collected, let's render the view
+        // When regions are collected, let's render the view
         $.when.apply($, promise).done(function() {
 
             app_router.on('route:showRecipes', function() {
@@ -63,7 +70,7 @@ define([
             });
 
             app_router.on('route:showOneRecipe', function(recipe_id) {    
-                readRecipeView.populate(recipe_id);
+                var readRecipeView = new RecipeView({regions: regions, recipe_id: recipe_id});
             });
 
             TopBarView.render();

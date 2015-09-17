@@ -5,7 +5,7 @@ define([
     'collections/recipes',
     'models/recipe',
     'text!templates/recipes/recipeTemplate.html'
-], function($, _, Backbone, Recipes, Recipe, recipeTemplate) {
+], function($, _, Backbone, RecipeCollection, RecipeModel, recipeTemplate) {
     var RecipeView = Backbone.View.extend({
         el: $("#container"),
 
@@ -13,43 +13,45 @@ define([
 
         initialize: function(options) {
 
+            var self = this;
             this.regions = options.regions;
 
-            //_.bindAll(this, 'render');
-            //this.collection.bind('add', this.render);
-
-            var self = this;
             self.mapped_regions = [];
             _.map(self.regions.models, function(region) {
                 self.mapped_regions[region.get('id')] = region.get('name');
             });
-        },
 
-        populate: function(recipe_id) {
-            /*this.regions = RegionCollection.models;
-            var recipes = new Recipes([model]);
-            model.bind("change", _.bind(this.render, this));
-            model.fetch();*/
-            var recipe = this.collection.get(recipe_id);
-            if(typeof recipe === 'undefined'){
-                console.log('è undefined!!!!');
-                this.collection.fetch({
-                    data: {
-                        id: recipe_id
+            _.bindAll(this, 'render');
+
+            this.model = new RecipeModel({
+                id: options.recipe_id
+            });
+            this.model.parse = function(response){
+                return response.collection[0];
+            };
+            this.collection = new RecipeCollection([this.model]);
+
+            this.model.bind('change', this.render);
+
+            var queryParams = {
+                success: function(recipes, response){
+                    if (response.collection.length == 0) {
+                        var emptyCategory = '<div class="row"><div class="small-12 columns">';
+                        emptyCategory += '<h2 class="text-center m-t-3">There are no recipes corresponding to the given id.</h2>';
+                        emptyCategory += '</div></div>';
+
+                        self.$el.html(emptyCategory);
                     }
-                });
-            }else{
-                this.render(recipe);  
-            }
-            
+                }
+            };
+
+            this.model.fetch(queryParams);
         },
 
         render: function(recipe) {
 
-            console.log(recipe);
-
             var data = {
-                regions: self.mapped_regions,
+                regions: this.mapped_regions,
                 recipe: recipe,
                 _: _
             };

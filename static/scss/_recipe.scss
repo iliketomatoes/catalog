@@ -1,0 +1,42 @@
+.recipe-banner{
+	position: relative;
+	background-color: $coffee-light;
+	height: rem-calc(300);
+	width: 100%;
+	padding-top: 3rem;
+	text-align: center;
+}
+
+.recipe-img-container{
+	position: absolute;
+	left: 50%;
+	bottom: -8rem;
+	margin-left: - rem-calc(200);
+	border-radius: 50%;
+	width: rem-calc(400);
+	height: rem-calc(400);
+	@include material-element();
+	background-size: cover;
+	background-repeat: no-repeat;
+	//margin: 0 auto 2rem;
+}
+
+.recipe-container{
+	padding-top: 7rem;
+	position: relative;
+	width: 100%;
+}
+
+.recipe-info{
+ 	i{
+ 		margin-right: 0.2rem;
+ 	}
+}   
+
+
+.recipe-description{
+	font-family: $header-font-family;
+	font-size: 1.2rem;
+	margin: 2rem auto;
+	max-width: rem-calc(720);
+}

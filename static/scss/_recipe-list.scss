@@ -78,7 +78,7 @@ RECIPE LIST
     background-color: $card-bg;
     //color: $coffee-dark;
     border: 2px solid $border-color;
-    @include material-element();
+    //@include material-element();
 }
 
 .dark-layer{

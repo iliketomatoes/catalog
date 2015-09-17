@@ -4,7 +4,8 @@
 
 $blue:#31556A;
 $orange: #E74C3C; //CINNABAR
-$cream: #FDFBC0;
+//$cream: scale-color(#FDFBC0, $lightness: 10%);
+$cream: #FDFBC0 !default;
 $body-custom-bg-color: $cream;
 $red: #E7291F;
 $yellow: #F5D547;

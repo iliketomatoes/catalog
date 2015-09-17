@@ -18,7 +18,7 @@ class InputDataHolder:
 
 
 def sanitize(key, value):
-    str_to_sanitize = str(value)
+    str_to_sanitize = value
     return {key: Markup(str_to_sanitize).striptags()}
 
 
