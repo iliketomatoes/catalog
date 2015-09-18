@@ -22,9 +22,11 @@ define([
             });
 
             _.bindAll(this, 'render');
+        },
 
+        populate: function(recipe_id){
             this.model = new RecipeModel({
-                id: options.recipe_id
+                id: recipe_id
             });
             this.model.parse = function(response){
                 return response.collection[0];

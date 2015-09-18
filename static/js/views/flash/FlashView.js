@@ -9,6 +9,8 @@ define([
 
     var FlashView = Backbone.View.extend({
 
+        el: $("#flash-message-ctr"),
+
         initialize: function(status, message) {
 
 
@@ -24,7 +26,7 @@ define([
 
             var compiledTemplate = _.template(flashTemplate)(data);
 
-            $('#flash-container').html(compiledTemplate);
+            this.$el.html(compiledTemplate);
 
             domready(function(){
                 $(document).foundation('alert', 'reflow');
@@ -34,6 +36,6 @@ define([
 
     });
 
-    return new FlashView();
+    return FlashView;
 
 });

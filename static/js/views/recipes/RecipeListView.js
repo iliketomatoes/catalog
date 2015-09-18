@@ -21,7 +21,6 @@ define([
         initialize: function(options) {
 
             var self = this;
-            var queryParams = {};
 
             this.regions = options.regions;
 
@@ -30,9 +29,14 @@ define([
                 self.mapped_regions[region.get('id')] = region.get('name');
             });
 
+            _.bindAll(this, 'addOne', 'initFoundation', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
+        },
 
-            if (!!options.region_id) queryParams.data = {
-                region_id: options.region_id
+        populate: function(region_id) {
+            var queryParams = {};
+
+            if (!!region_id) queryParams.data = {
+                region_id: region_id
             };
 
             queryParams.success = function(recipes) {
@@ -46,13 +50,15 @@ define([
                 }
             };
 
-            _.bindAll(this, 'addOne', 'initFoundation', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
+            this.undelegateEvents();
+            this.delegateEvents();
+
             this.collection = new RecipeCollection();
             this.collection.bind('add', this.addOne);
             //Let's init the foundation plugins when we have done adding recipes to the view
             this.collection.bind('update', this.initFoundation);
 
-            this.render(options.region_id);
+            this.render(region_id);
             this.collection.fetch(queryParams);
         },
 
@@ -91,15 +97,15 @@ define([
 
             var self = this;
 
-            domready(function(){
+            domready(function() {
                 $(document).foundation();
             });
         },
 
-        deleteItem: function(e){
+        deleteItem: function(e) {
             e.preventDefault();
             var self = this;
-            var target = event.target ? event.target : event.srcElement;
+            var target = e.target ? e.target : e.srcElement;
             var targetID = target.getAttribute('data-id');
             var model = this.collection.get(targetID);
             $('.confirm-deletion-confirm').data('id', targetID);
@@ -109,17 +115,15 @@ define([
             $('.confirm-deletion-abort').one('click', self.abortedDeleteItem);
         },
 
-        confirmedDeleteItem: function(e){
+        confirmedDeleteItem: function(e) {
             e.preventDefault();
             var targetID = $('.confirm-deletion-confirm').data('id');
-            console.log(targetID);
             var modelToDelete = this.collection.get(targetID);
-            console.log(modelToDelete);
             modelToDelete.clear();
             $('#confirm-deletion').foundation('reveal', 'close');
         },
 
-        abortedDeleteItem: function(e){
+        abortedDeleteItem: function(e) {
             $('#confirm-deletion').foundation('reveal', 'close');
         }
 

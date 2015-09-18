@@ -20,6 +20,13 @@ define([
         initialize: function(options) {
 
             this.regions = options.regions;
+
+        },
+
+        populate: function(){
+
+            this.undelegateEvents();
+            this.delegateEvents();
             this.render();
 
         },
@@ -38,6 +45,8 @@ define([
             domready(function() {
                 $(document).foundation('slider', 'reflow');
             });
+
+            return this;
         },
 
         addRecipe: function(e) {
@@ -72,7 +81,8 @@ define([
                     for (var i = 0; i < error.responseJSON.error.length; i++) {
                         errorMsg += ' <b>' + error.responseJSON.error[i] + '</b>';
                     }
-                    var flash = FlashView.render('error', errorMsg);
+                    var flash = new FlashView(); 
+                    flash.render('error', errorMsg);
                 }
             });
 

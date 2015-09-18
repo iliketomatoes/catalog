@@ -57,20 +57,26 @@ define([
         // When regions are collected, let's render the view
         $.when.apply($, promise).done(function() {
 
+            var newRecipe = new NewRecipeView({regions: regions});
+
+            var recipeList = new RecipeListView({regions: regions});
+
+            var readRecipeView = new RecipeView({regions: regions});
+
             app_router.on('route:showRecipes', function() {
-                var showRecipes = new RecipeListView({regions: regions});
+                recipeList.populate();
             });
 
             app_router.on('route:filterByRegion', function(region_id) {
-                var filterRecipes = new RecipeListView({regions: regions, region_id: region_id});
+                recipeList.populate(region_id);
             });
 
             app_router.on('route:newRecipe', function() {
-                var newRecipe = new NewRecipeView({regions: regions});
+                newRecipe.populate();
             });
 
-            app_router.on('route:showOneRecipe', function(recipe_id) {    
-                var readRecipeView = new RecipeView({regions: regions, recipe_id: recipe_id});
+            app_router.on('route:showOneRecipe', function(recipe_id) {
+                readRecipeView.populate(recipe_id);
             });
 
             TopBarView.render();

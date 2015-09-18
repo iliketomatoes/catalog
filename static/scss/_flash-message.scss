@@ -1,0 +1,17 @@
+#flash-message-ctr{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	padding: rem-calc(15);
+	z-index: 600;
+
+	@media #{$medium-up} {
+		width: rem-calc(700);
+		left: 50%;
+		margin-left: - rem-calc(350);
+	}
+}
+
+.alert-box{
+	    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
