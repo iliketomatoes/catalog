@@ -1,16 +1,18 @@
 <div class="row">
     <div class="small-12 columns">
         <section>
-            <h2 class="page-title">New recipe</h2>
+            <h2 class="page-title"><% if(recipe){ %><%= recipe.get("name") %><% }else{ %>New recipe<% } %></h2>
             <form id="new-recipe-form" class="col s12" method="post" action="#!">
                 <div class="row">
                     <div class="small-12 medium-8 columns">
                         <label for="region_id" class="required">Select a region</label>
                         <select name="region_id">
                             <% _.each(regions, function(region){ %>
-                                <option value="<%= region.get('id') %>" <% if ( region.get( 'id')==1 ){ %> selected
+                                <option value="<%= region.get('id') %>"
+                                    <% if(recipe && region.get('id')==recipe.get('region_id')){ %> selected<% }else{ %>
+                                        <% if ( region.get('id')==1 ){ %> selected<% } %>
                                     <% } %>>
-                                        <%= region.get("name") %>
+                                        <%= region.get('name') %>
                                 </option>
                                 <% }); %>
                         </select>
@@ -18,39 +20,63 @@
                 </div>
                 <div class="row">
                     <div class="small-12  medium-8 columns">
+                        <% 
+                            var name = '';
+                            if(recipe){
+                                name = recipe.get('name');
+                            }
+                        %>
                         <label for="name" class="required">Name</label>
-                        <input id="name" name="name" type="text" class="validate">
+                        <input id="name" name="name" type="text" class="validate" value="<%= name %>">
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12 medium-8 columns">
+                        <% 
+                            var description = '';
+                            if(recipe){
+                                description = recipe.get('description');
+                            }
+                        %>
                         <label for="description" class="required">Description</label>
-                        <textarea id="description" name="description" rows="20"></textarea>
+                        <textarea id="description" name="description" rows="20"><%= description %></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12  medium-8 columns">
+                        <% 
+                            var difficulty = 1;
+                            if(recipe){
+                                difficulty = recipe.get('difficulty');
+                            }
+                        %>
                         <fieldset class="difficulty">
                             <legend>Difficulty level:</legend>
-                            <input type="radio" id="star5" name="difficulty" value="5">
+                            <input type="radio" id="star5" name="difficulty" value="5" <% if(difficulty == 5){ %>checked="checked"<% } %>>
                             <label for="star5">5 stars</label>
-                            <input type="radio" id="star4" name="difficulty" value="4">
+                            <input type="radio" id="star4" name="difficulty" value="4" <% if(difficulty == 4){ %>checked="checked"<% } %>>
                             <label for="star4">4 stars</label>
-                            <input type="radio" id="star3" name="difficulty" value="3">
+                            <input type="radio" id="star3" name="difficulty" value="3" <% if(difficulty == 3){ %>checked="checked"<% } %>>
                             <label for="star3">3 stars</label>
-                            <input type="radio" id="star2" name="difficulty" value="2">
+                            <input type="radio" id="star2" name="difficulty" value="2" <% if(difficulty == 2){ %>checked="checked"<% } %>>
                             <label for="star2">2 stars</label>
-                            <input type="radio" id="star1" name="difficulty" value="1" checked="checked">
+                            <input type="radio" id="star1" name="difficulty" value="1" <% if(difficulty == 1){ %>checked="checked"<% } %>>
                             <label for="star1">1 star</label>
                         </fieldset>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-12  medium-8 columns">
+                        <% 
+                            var duration = 90;
+                            if(recipe){
+                                duration = recipe.get('duration');
+                            }
+                        %>
                         <label for="duration" class="required">Duration in minutes</label>
                         <div class="row">
                             <div class="small-10 medium-11 columns">
-                                <div class="range-slider" data-slider data-options="display_selector: #sliderOutput3;start: 0;end: 180;step: 5;">
+                                <div class="range-slider" data-slider data-options="display_selector: #sliderOutput3;start: 0;end: 180;step: 5;initial: <%= duration %>;">
                                     <span class="range-slider-handle" role="slider" tabindex="0"></span>
                                     <span class="range-slider-active-segment"></span>
                                     <input type="hidden" name="duration">

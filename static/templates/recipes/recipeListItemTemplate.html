@@ -4,8 +4,8 @@
             <button href="#" data-dropdown="drop-<%= recipe.get("id") %>" aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button tiny secondary">&#8226;&#8226;&#8226;</button>
             <br>
             <ul id="drop-<%= recipe.get("id") %>" data-dropdown-content class="f-dropdown" aria-hidden="true">
-                <li><a href="#" data-id="<%= recipe.get("id") %>" class="card-edit-btn"><i class="fi-pencil"></i> Update recipe</a></li>
-                <li><a href="#" data-id="<%= recipe.get("id") %>" class="card-edit-pic-btn"><i class="fi-photo"></i> Change picture</a></li>
+                <li><a href="/#edit/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-btn"><i class="fi-pencil"></i> Update recipe</a></li>
+                <li><a href="/#edit/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-pic-btn"><i class="fi-photo"></i> Change picture</a></li>
                 <li><a href="#" data-id="<%= recipe.get("id") %>" class="card-delete-btn"><i class="fi-x-circle"></i> Delete</a></li>
             </ul>
         </div>

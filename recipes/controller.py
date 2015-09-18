@@ -28,7 +28,10 @@ def checkRecipe(data_request):
     for key, value in data_request.iteritems():
         tmp = sanitize(key, value)
         if (tmp[key] == '' or tmp[key] == None):
-            errors.append(key)
+            if(key == 'image_url'):
+                pass
+            else:
+                errors.append(key)
         else:
             sanitized_inputs.update(tmp)
     return InputDataHolder(errors, sanitized_inputs)
@@ -46,21 +49,21 @@ def showAll():
 
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['GET'])
-def showOne(recipe_id):
+def showRecipe(recipe_id):
     recipes_list = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).all()
     return jsonify(collection=[i.serialize for i in recipes_list])
 
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
-def deleteOne(recipe_id):
+def deleteRecipe(recipe_id):
     recipes_list = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).delete()
-    return jsonify(id=recipe_id)   
+    return jsonify(id=recipe_id)
 
 
 @recipes.route('/recipes', methods=['POST'])
-def addOne():
+def addRecipe():
     data = checkRecipe(request.get_json())
     if (len(data.errors) == 0):
         newRecipe = Recipe(
@@ -72,6 +75,25 @@ def addOne():
         db_session.add(newRecipe)
         db_session.commit()
         return jsonify(id=newRecipe.id, name=newRecipe.name)
+    else:
+        resp = jsonify(error=data.errors)
+        resp.status_code = 400
+        return resp
+
+
+@recipes.route('/recipes/<int:recipe_id>', methods=['PUT'])
+def uppdateRecipe(recipe_id):
+    data = checkRecipe(request.get_json())
+    if (len(data.errors) == 0):
+        recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
+        recipe.name=data.inputs['name']
+        recipe.description=data.inputs['description']
+        recipe.duration=data.inputs['duration']
+        recipe.difficulty=data.inputs['difficulty']
+        recipe.region_id=data.inputs['region_id']
+        db_session.add(recipe)
+        db_session.commit()
+        return jsonify(collection=[recipe.serialize])
     else:
         resp = jsonify(error=data.errors)
         resp.status_code = 400

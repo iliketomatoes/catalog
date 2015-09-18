@@ -6,7 +6,7 @@ define([
     'views/topbar/TopBarView',
     'views/recipes/RecipeListView',
     'views/recipes/RecipeView',
-    'views/recipes/NewRecipeView',
+    'views/recipes/FormRecipeView',
     'views/regionsmenu/RegionsMenuView',
     'collections/regions'
 ], function(
@@ -16,7 +16,7 @@ define([
     TopBarView,
     RecipeListView,
     RecipeView,
-    NewRecipeView,
+    FormRecipeView,
     RegionsMenuView,
     RegionCollection
 ) {
@@ -40,6 +40,8 @@ define([
 
             'recipe/:recipe_id': 'showOneRecipe',
 
+            'edit/:recipe_id': 'editRecipe',
+
             // Default
             '*actions': 'showRecipes'
         }
@@ -57,7 +59,7 @@ define([
         // When regions are collected, let's render the view
         $.when.apply($, promise).done(function() {
 
-            var newRecipe = new NewRecipeView({
+            var formRecipe = new FormRecipeView({
                 regions: regions
             });
 
@@ -78,7 +80,11 @@ define([
             });
 
             app_router.on('route:newRecipe', function() {
-                newRecipe.populate();
+                formRecipe.populate();
+            });
+
+            app_router.on('route:editRecipe', function(recipe_id) {
+                formRecipe.populate(recipe_id);
             });
 
             app_router.on('route:showOneRecipe', function(recipe_id) {
