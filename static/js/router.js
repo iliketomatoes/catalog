@@ -57,11 +57,17 @@ define([
         // When regions are collected, let's render the view
         $.when.apply($, promise).done(function() {
 
-            var newRecipe = new NewRecipeView({regions: regions});
+            var newRecipe = new NewRecipeView({
+                regions: regions
+            });
 
-            var recipeList = new RecipeListView({regions: regions});
+            var recipeList = new RecipeListView({
+                regions: regions
+            });
 
-            var readRecipeView = new RecipeView({regions: regions});
+            var readRecipeView = new RecipeView({
+                regions: regions
+            });
 
             app_router.on('route:showRecipes', function() {
                 recipeList.populate();

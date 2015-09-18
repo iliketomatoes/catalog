@@ -13,13 +13,14 @@ class Region(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    recipes = relationship("Recipe", backref="regions")
 
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
             'name': self.name,
-            'id': self.id,
+            'id': self.id
         }
 
 
@@ -33,7 +34,7 @@ class Recipe(Base):
     duration = Column(Integer, nullable=False)
     image_url = Column(String(400), nullable=True)
     region_id = Column(Integer, ForeignKey('regions.id'))
-    region = relationship(Region)
+    # region = relationship(Region)
 
     @property
     def serialize(self):
