@@ -60,6 +60,11 @@ define([
 
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
+
+            $('.go-back-btn').one('click', function(e){
+                e.preventDefault();
+                Backbone.history.history.back();
+            });
         }
     });
     return RecipeView;

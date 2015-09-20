@@ -30,6 +30,9 @@ define([
             this.delegateEvents();
             this.collection = new RecipeCollection();
 
+            // Let's nullify the model first
+            this.model = null;
+
             if (!!recipe_id) {
 
                 this.model = new RecipeModel({
@@ -68,7 +71,6 @@ define([
             var data = {
                 recipe: recipe,
                 regions: this.regions.models,
-                data: null,
                 _: _
             };
 
@@ -91,6 +93,10 @@ define([
 
             var flash = new FlashView();
 
+
+            /**
+             * If it's not a brand new recipe -> PUT
+             */
             if (!!this.model) {
 
                 $('#new-recipe-form').serializeArray().forEach(function(el) {
@@ -101,16 +107,16 @@ define([
 
                 this.model.save(recipe, {
                     success: function(model, resp) {
-                        
+
                         var successMsg = '';
                         successMsg += '<b>';
                         successMsg += self.model.get('name');
                         successMsg += '</b>';
                         successMsg += ' updated successfully.';
-                        
+
                         flash.render('success', successMsg);
 
-                        window.location.hash = '/#';
+                        Backbone.history.history.back();
 
                     },
                     error: function(model, error) {
@@ -121,11 +127,14 @@ define([
                         for (var i = 0; i < error.responseJSON.error.length; i++) {
                             errorMsg += ' <b>' + error.responseJSON.error[i] + '</b>';
                         }
-            
+
                         flash.render('error', errorMsg);
                     }
                 });
 
+            /**
+             * If we are creating a new recipe from scratch -> POST
+             */
             } else {
 
                 var recipe = {};
@@ -141,8 +150,8 @@ define([
                 this.collection.create(recipe, {
                     success: function(model, resp) {
                         // Let's pass the model id and name to the second form
-                        // I.E. form for adding a picture
-                        AddPictureView.render(resp.id, resp.name);
+                        // i.e. form for adding a picture
+                        var addPicView = new AddPictureView({recipe_id: resp.id, old: false});
 
                     },
                     error: function(model, error) {
@@ -153,7 +162,7 @@ define([
                         for (var i = 0; i < error.responseJSON.error.length; i++) {
                             errorMsg += ' <b>' + error.responseJSON.error[i] + '</b>';
                         }
-            
+
                         flash.render('error', errorMsg);
                     }
                 });

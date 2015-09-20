@@ -31,6 +31,7 @@ BANNER
 	@include material-element();
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: 50% 50%;
 	@media #{$medium-up}{
 	  	margin-left: - rem-calc(170);
 		width: rem-calc(340);

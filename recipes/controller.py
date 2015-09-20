@@ -37,6 +37,13 @@ def checkRecipe(data_request):
     return InputDataHolder(errors, sanitized_inputs)
 
 
+def removeImage(image_url):
+    file_to_remove = os.path.join(UPLOAD_FOLDER, image_url)
+    if(os.path.isfile(file_to_remove)):
+        print 'File to remove', file_to_remove
+        os.remove(file_to_remove)
+
+
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
     region_id = request.args.get('region_id')
@@ -57,9 +64,13 @@ def showRecipe(recipe_id):
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
 def deleteRecipe(recipe_id):
-    recipes_list = db_session.query(Recipe).filter(
-        Recipe.id == recipe_id).delete()
-    return jsonify(id=recipe_id)
+    recipe = db_session.query(Recipe).filter(
+        Recipe.id == recipe_id).one()
+    if(recipe.image_url is not None):
+        removeImage(recipe.image_url)
+    db_session.delete(recipe)
+    db_session.commit()
+    return jsonify(id=recipe.id)
 
 
 @recipes.route('/recipes', methods=['POST'])
@@ -86,11 +97,11 @@ def uppdateRecipe(recipe_id):
     data = checkRecipe(request.get_json())
     if (len(data.errors) == 0):
         recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
-        recipe.name=data.inputs['name']
-        recipe.description=data.inputs['description']
-        recipe.duration=data.inputs['duration']
-        recipe.difficulty=data.inputs['difficulty']
-        recipe.region_id=data.inputs['region_id']
+        recipe.name = data.inputs['name']
+        recipe.description = data.inputs['description']
+        recipe.duration = data.inputs['duration']
+        recipe.difficulty = data.inputs['difficulty']
+        recipe.region_id = data.inputs['region_id']
         db_session.add(recipe)
         db_session.commit()
         return jsonify(collection=[recipe.serialize])
@@ -111,9 +122,22 @@ def allowed_file(filename):
 
 @recipes.route('/uploadpicture/<recipe_id>', methods=['POST'])
 def upload_picture(recipe_id):
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            return jsonify(filename=filename)
+    recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        filename = str(recipe.id) + '-' + secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        # Let's remove the old image if any were assiociated to the recipe
+        if(recipe.image_url is not None):
+            removeImage(recipe.image_url)
+        recipe.image_url = filename
+        db_session.add(recipe)
+        db_session.commit()
+        return jsonify(collection=[recipe.serialize])
+    else:
+        errorMsg = """It \'s likely that 
+        you sent an invalid format file. 
+        Could not process your request."""
+        resp = jsonify(error=[errorMsg])
+        resp.status_code = 400
+        return resp

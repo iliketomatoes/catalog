@@ -4,11 +4,15 @@ body {
 }
 </style>
 <div class="recipe-banner">
-    <% if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
-			            recipe.set("image_url", "/static/img/italian_food.png");
-			            } %>
-        <div class="recipe-img-container" style="background-image: url(<%= recipe.get("image_url") %>)">
-        </div>
+    <% 
+        var image;
+        if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
+			 image = "/static/img/italian_food.png";
+		}else{
+            image = "/static/uploads/" + recipe.get("image_url");
+        } %>
+    <div class="recipe-img-container" style="background-image: url(<%= image %>)">
+    </div>
 </div>
 <div class="recipe-container">
     <div class="row">
@@ -42,7 +46,7 @@ body {
 <div class="row">
 	<div class="small-12 columns">
 		<div class="recipe-footer-links">
-			<a href="/#">&#10229; Go to the recipes list</a>
+			<a href="/#" class="go-back-btn">&#10229; Go back</a>
 		</div>
 	</div>
 </div>

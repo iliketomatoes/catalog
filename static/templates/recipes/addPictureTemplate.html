@@ -1,10 +1,45 @@
+<% if(old){%>
+<div class="row">
+    <div class="small-12 columns">
+        <section>
+            <h2 class="page-title"><%= name %></h2>
+        </section>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="small-12 columns">
+    	<h3>Current image</h3>
+    	 <% 
+        var image;
+        if(recipe.get("image_url") == "null" || recipe.get("image_url") == null){
+			 image = "/static/img/italian_food.png";
+		}else{
+            image = "/static/uploads/" + recipe.get("image_url");
+        } %>
+    	<img src="<%= image %>" alt="<%= name %>">
+    </div>
+</div>
+<div class="row">
+    <div class="small-12 columns m-t-2">
+    	<h3>Change image</h3>
+    	<div id="upload-picture-form" class="dropzone"></div>
+    </div>
+</div>
+<div class="row">
+	<div class="small-12 columns m-t-2">
+		<a href="/#" class="go-back-btn">&#10229; Go back</a>
+	</div>
+</div>
+<% }else{%>
 <div class="row">
     <div class="small-12 columns">
         <section>
             <h2 class="page-title">Add a picture</h2>
             <h3 class="success-title">You succesfully inserted <strong><%= name %></strong> as a new recipe!</h3>
-            <p>Now you can attach a picture to that recipe or you can either return to the <a href="/#home">homepage</a>.</p>
+            <p>Now you can attach a picture to your recipe or you can either return to the <a href="/#home">homepage</a>.</p>
         </section>
         <div id="upload-picture-form" class="dropzone"></div>
     </div>
 </div>
+<% }%>

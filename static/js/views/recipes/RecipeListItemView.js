@@ -10,7 +10,8 @@ define([
         className: 'recipe-list-item',
 
         events: {
-            'click .card-header-link': 'pullupPage'
+            'click .card-header-link': 'pullupPage',
+            'click .card-edit-btn': 'pullupPage'
         },
 
         template: _.template(recipeListItemTemplate),
