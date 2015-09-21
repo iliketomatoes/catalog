@@ -32,6 +32,7 @@ define([
 
             // Let's nullify the model first
             this.model = null;
+            this.actual_region = null;
 
             if (!!recipe_id) {
 
@@ -43,7 +44,7 @@ define([
                 };
                 this.collection.add(this.model);
 
-                this.model.bind('change', this.render);
+                this.model.bind('sync', this.render);
 
                 var queryParams = {
                     success: function(recipes, response) {
@@ -68,6 +69,10 @@ define([
 
         render: function(recipe) {
 
+            if(!!recipe){
+                this.actual_region = parseInt(recipe.get('region_id'));
+            }
+
             var data = {
                 recipe: recipe,
                 regions: this.regions.models,
@@ -81,7 +86,6 @@ define([
                 $(document).foundation('slider', 'reflow');
             });
 
-            return this;
         },
 
         addRecipe: function(e) {
@@ -107,6 +111,29 @@ define([
 
                 this.model.save(recipe, {
                     success: function(model, resp) {
+
+                        var regionId = parseInt(model.get('region_id'));
+
+                        //If we have changed region we have to update the counter
+                        if(self.actual_region !== regionId){
+                            var $new_counter = $('.region-count').filter(function(index, el) {
+                                return parseInt($(el).attr("data-region-count")) === regionId;
+                            });
+
+                            var $old_counter = $('.region-count').filter(function(index, el) {
+                                return parseInt($(el).attr("data-region-count")) === self.actual_region;
+                            });
+
+                            var newCounterValue = parseInt($new_counter.text() || '0') + 1;
+
+                            var oldCounterValue = parseInt($old_counter.text()) - 1;
+
+                            oldCounterValue = oldCounterValue === 0 ? '' :  oldCounterValue;
+
+                            $new_counter.text(newCounterValue.toString());
+
+                            $old_counter.text(oldCounterValue.toString());
+                        }
 
                         var successMsg = '';
                         successMsg += '<b>';
@@ -160,7 +187,6 @@ define([
                         var regionId = parseInt(model.get('region_id'));
 
                         var $counter = $('.region-count').filter(function(index, el) {
-                            console.log(parseInt($(el).attr("data-region-count")) === regionId);
                             return parseInt($(el).attr("data-region-count")) === regionId;
                         });
 
