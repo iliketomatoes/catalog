@@ -58,7 +58,11 @@ define([
         var regions = new RegionCollection();
 
         // Fetch data from the collections
-        var promise = _.invoke([regions], 'fetch');
+        var promise = _.invoke([regions], 'fetch', {
+            data: {
+                count: 'true'
+            }
+        });
 
         // When regions are collected, let's render the view
         $.when.apply($, promise).done(function() {

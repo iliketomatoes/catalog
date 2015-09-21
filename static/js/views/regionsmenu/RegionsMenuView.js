@@ -12,9 +12,15 @@ define([
 
         render: function(regions) {
 
+            var totalCount = 0;
+
+            _.each(regions.models, function(region){
+                totalCount += region.get('count');
+            });
+
             var data = {
                 regions: regions.models,
-                data: null,
+                totalCount: totalCount,
                 _: _
             };
 

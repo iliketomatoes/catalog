@@ -132,9 +132,9 @@ define([
                     }
                 });
 
-            /**
-             * If we are creating a new recipe from scratch -> POST
-             */
+                /**
+                 * If we are creating a new recipe from scratch -> POST
+                 */
             } else {
 
                 var recipe = {};
@@ -151,7 +151,29 @@ define([
                     success: function(model, resp) {
                         // Let's pass the model id and name to the second form
                         // i.e. form for adding a picture
-                        var addPicView = new AddPictureView({recipe_id: resp.id, old: false});
+                        var addPicView = new AddPictureView({
+                            recipe_id: resp.id,
+                            old: false
+                        });
+
+                        //Update the counter in the menu
+                        var regionId = parseInt(model.get('region_id'));
+
+                        var $counter = $('.region-count').filter(function(index, el) {
+                            console.log(parseInt($(el).attr("data-region-count")) === regionId);
+                            return parseInt($(el).attr("data-region-count")) === regionId;
+                        });
+
+                        var $totalCount = $('#total-count');
+
+                        var actualValue = parseInt($counter.text() || '0') + 1;
+
+                        var totalValue = parseInt($totalCount.text() || '0') + 1;
+
+                        $counter.text(actualValue.toString());
+
+                        $totalCount.text(totalValue.toString());
+
 
                     },
                     error: function(model, error) {

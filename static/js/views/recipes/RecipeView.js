@@ -17,7 +17,7 @@ define([
             this.regions = options.regions;
 
             self.mapped_regions = [];
-            _.map(self.regions.models, function(region) {
+            _.each(self.regions.models, function(region) {
                 self.mapped_regions[region.get('id')] = region.get('name');
             });
 
