@@ -1,0 +1,49 @@
+.app-top-bar{
+	height: rem-calc(70);
+	padding-top: rem-calc(12);
+	background-color: $coffee;
+	color: $white;
+
+	a{
+		color: $white;
+	}
+}
+
+.nav-content {
+    margin: 0 auto;
+    max-width: rem-calc(1470);
+    overflow: auto;
+}
+
+#app-logo{
+	font-size: 1rem;
+	font-weight: bold;
+	font-family: $header-font-family;
+
+	img{
+		margin-right: 0.5rem;
+		float: left;
+		width: 32px;
+	}
+
+	span{
+		float: left;
+		padding-top: 0.3rem;
+	}
+
+	@media #{$medium-up}{
+
+		font-size: 1.5rem;
+
+		  img{
+			width: 36px;
+		}
+	}
+}
+
+.user-log-ctr{
+	font-size: rem-calc(16);
+	overflow: auto;
+	margin-top: 0.6rem;
+	font-weight: bold;
+}

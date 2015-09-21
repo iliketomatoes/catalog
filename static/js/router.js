@@ -103,7 +103,7 @@ define([
                 readRecipeView.populate(recipe_id);
             });
 
-            TopBarView.render();
+            //TopBarView.render();
 
             RegionsMenuView.render(regions);
 

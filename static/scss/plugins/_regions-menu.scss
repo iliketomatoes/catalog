@@ -91,3 +91,9 @@ Regions menu
 	font-style: italic;
 	color: $coffee-light;
 }
+
+.regions-menu-list-item[data-id="0"]{
+	i{
+		margin-left: 0.5rem;
+	}
+}

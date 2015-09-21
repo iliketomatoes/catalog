@@ -1,0 +1,22 @@
+#app-footer{
+	border-top: 2px solid $border-color;
+	background-color: $card-bg;
+	color: $coffee;
+	padding-top: 2rem;
+}
+
+.footer-content{
+	font-size: rem-calc(15);
+}
+
+.social-link-list{
+	list-style-type: none;
+	display: block;
+	margin: 0.5rem 0;
+	text-align: center;
+	li{
+		display: inline-block;
+		margin: 0 0.5rem;
+		font-size: rem-calc(20);
+	}
+}
