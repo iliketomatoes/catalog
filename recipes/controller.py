@@ -6,6 +6,7 @@ from jinja2 import Markup
 from werkzeug import secure_filename
 from database import db_session
 from models import Region, Recipe
+from sqlalchemy.sql import func
 
 recipes = Blueprint('recipes', __name__)
 
@@ -48,10 +49,10 @@ def removeImage(image_url):
 def showAll():
     region_id = request.args.get('region_id')
     if (region_id == '' or region_id is None):
-        recipes_list = db_session.query(Recipe).all()
+        recipes_list = db_session.query(Recipe).order_by(Recipe.last_update.desc()).all()
     else:
         recipes_list = db_session.\
-            query(Recipe).filter_by(region_id=region_id).all()
+            query(Recipe).filter_by(region_id=region_id).order_by(Recipe.last_update.desc()).all()
     return jsonify(collection=[i.serialize for i in recipes_list])
 
 
@@ -102,6 +103,7 @@ def uppdateRecipe(recipe_id):
         recipe.duration = data.inputs['duration']
         recipe.difficulty = data.inputs['difficulty']
         recipe.region_id = data.inputs['region_id']
+        recipe.last_update = func.now()
         db_session.add(recipe)
         db_session.commit()
         return jsonify(collection=[recipe.serialize])
