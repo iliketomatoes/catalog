@@ -12,13 +12,6 @@ app.register_blueprint(recipes)
 app.register_blueprint(regions)
 app.register_blueprint(auth)
 
-@app.route('/')
-def home():
-    try:
-        return render_template('index.html')
-    except TemplateNotFound:
-        abort(404)
-
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=8000)

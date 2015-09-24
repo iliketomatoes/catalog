@@ -1,0 +1,119 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Article">
+
+<head>
+    <meta charset="utf-8">
+    <title>Italian recipes</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/css/app.css">
+    <!-- BEGIN Pre-requisites -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
+    <!-- END Pre-requisites -->
+    <script>
+    function start() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '423265727322-qjbdk1ipn5usl97l6l250jp5vsda3n6u.apps.googleusercontent.com'
+            });
+        });
+    }
+    </script>
+</head>
+
+<body>
+    <nav id="nav-container" class="app-top-bar" data-topbar role="navigation">
+        <div class="nav-content">
+            <div class="small-4 medium-6 columns">
+                <a href="/#" id="app-logo"><img src="/static/img/italianrecipes.png" alt="Italian recipes"> <span class="hide-for-small">Italian recipes</span></a>
+            </div>
+            <div class="small-8 medium-6 columns">
+                <div class="user-log-ctr hide">
+                    <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div id="wrap">
+        <main id="container">
+            <div class="row">
+                <div class="small-12 columns">
+                    <h1 class="page-title">Login</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <button id="signinButton">Sign in with Google <i class="fi-social-google-plus"></i></button>
+                    <script>
+                    $('#signinButton').click(function() {
+                        // signInCallback defined in step 6.
+                        auth2.grantOfflineAccess({
+                            'redirect_uri': 'postmessage'
+                        }).then(signInCallback);
+                    });
+                    </script>
+                    <div id="result"></div>
+                    <script>
+                    function signInCallback(authResult) {
+
+                        var state = '{{ state }}';
+
+                        if (authResult['code']) {
+
+                            // Hide the sign-in button now that the user is authorized, for example:
+                            $('#signinButton').attr('style', 'display: none');
+
+                            // Send the code to the server
+                            $.ajax({
+                                type: 'POST',
+                                beforeSend: function(request) {
+                                    request.setRequestHeader('italian-recipes-token', state);
+                                },
+                                url: '/auth/gconnect',
+                                contentType: 'application/octet-stream; charset=utf-8',
+                                success: function(xhr) {
+                                    // Handle or verify the server response.
+                                    var msg = xhr.error || xhr.success;
+
+                                    $('#result').html(msg[0] + ': ' + xhr.data.name + '</br>Redirecting...');
+
+                                    setTimeout(function(){
+                                        window.location.href = "/";
+                                    }, 3000)
+                                },
+                                error: function(xhr) {
+                                    var msg = xhr.error || xhr.success;
+                                    $('#result').html(msg[0]);
+                                },
+                                processData: false,
+                                data: authResult['code']
+                            });
+                        } else {
+                            // There was an error.
+                            $('#result').html('<div class="alert"> NO ONE TIME CODE WAS RECEIVED FROM GOOGLE</div>');
+                        }
+                    }
+                    </script>
+                </div>
+            </div>
+        </main>
+        <div id="push"></div>
+    </div>
+    <footer id="app-footer" class="open-menu-hide">
+        <div class="footer-content text-center">
+            <span>Concept, code and design by <a href="http://iliketomatoes.com" target="_blank">Giancarlo Soverini</a> for Udacity.</span>
+            <br>
+            <span>Not for commercial use.</span>
+            <ul class="social-link-list">
+                <li><a href="https://github.com/iliketomatoes" target="_blank"><i class="fi-social-github"></i></a></li>
+                <li><a href="https://twitter.com/GSoverini" target="_blank"><i class="fi-social-twitter"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

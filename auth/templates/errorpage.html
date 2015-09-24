@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="/static/css/app.css">
-    <script data-main="/static/js/main" src="/static/js/libs/require/require.js"></script>
 </head>
 
 <body>
@@ -18,29 +17,35 @@
                 <a href="/#" id="app-logo"><img src="/static/img/italianrecipes.png" alt="Italian recipes"> <span class="hide-for-small">Italian recipes</span></a>
             </div>
             <div class="small-8 medium-6 columns">
-                <div class="user-log-ctr">
+                <div class="user-log-ctr hide">
                     <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
                 </div>
             </div>
         </div>
     </nav>
     <div id="wrap">
-    <main id="container">
-    </main>
-    <div id="modal-menu-ctr">
-    </div>
-    <div id="flash-message-ctr">
-    </div>
-    <div id="push"></div>
+        <main id="container">
+            <div class="row">
+                <div class="small-12 columns">
+                    <h1 class="page-title">Error</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                   <h2>{{ status }} - {{ error }}</h2>
+                </div>
+            </div>
+        </main>
+        <div id="push"></div>
     </div>
     <footer id="app-footer" class="open-menu-hide">
         <div class="footer-content text-center">
             <span>Concept, code and design by <a href="http://iliketomatoes.com" target="_blank">Giancarlo Soverini</a> for Udacity.</span>
             <br>
             <span>Not for commercial use.</span>
-           <ul class="social-link-list">
-              <li><a href="https://github.com/iliketomatoes" target="_blank"><i class="fi-social-github"></i></a></li>
-              <li><a href="https://twitter.com/GSoverini" target="_blank"><i class="fi-social-twitter"></i></a></li>
+            <ul class="social-link-list">
+                <li><a href="https://github.com/iliketomatoes" target="_blank"><i class="fi-social-github"></i></a></li>
+                <li><a href="https://twitter.com/GSoverini" target="_blank"><i class="fi-social-twitter"></i></a></li>
             </ul>
         </div>
     </footer>
