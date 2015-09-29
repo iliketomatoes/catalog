@@ -33,17 +33,21 @@ define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function
 
                     $totalCount.text(totalValue.toString());
 
+                    this.view.remove();
+
                 },
                 error: function(model, error) {
 
                     var errorMsg = '';
                     errorMsg += '<b>' + error.status + '</b>';
-                    errorMsg += ' Something went wrong.';
+                    for (var i = 0; i < error.responseJSON.error.length; i++) {
+                        errorMsg += ' <b>' + error.responseJSON.error[i] + '</b>';
+                    }
                     flash.render('error', errorMsg);
 
                 }
             });
-            this.view.remove();
+
         }
 
     });

@@ -2,10 +2,11 @@ import os
 from flask import Blueprint
 from flask import request
 from flask import jsonify
+from flask import session as login_session
 from jinja2 import Markup
 from werkzeug import secure_filename
 from database import db_session
-from models import Region, Recipe
+from models import Region, Recipe, User
 from sqlalchemy.sql import func
 
 recipes = Blueprint('recipes', __name__)
@@ -49,10 +50,12 @@ def removeImage(image_url):
 def showAll():
     region_id = request.args.get('region_id')
     if (region_id == '' or region_id is None):
-        recipes_list = db_session.query(Recipe).order_by(Recipe.last_update.desc()).all()
+        recipes_list = db_session.query(Recipe).order_by(
+            Recipe.last_update.desc()).all()
     else:
         recipes_list = db_session.\
-            query(Recipe).filter_by(region_id=region_id).order_by(Recipe.last_update.desc()).all()
+            query(Recipe).filter_by(region_id=region_id).order_by(
+                Recipe.last_update.desc()).all()
     return jsonify(collection=[i.serialize for i in recipes_list])
 
 
@@ -65,6 +68,10 @@ def showRecipe(recipe_id):
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
 def deleteRecipe(recipe_id):
+    if 'username' not in login_session:
+        resp = jsonify(error=['You are not allowed to do this'])
+        resp.status_code = 401
+        return resp
     recipe = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).one()
     if(recipe.image_url is not None):
@@ -76,6 +83,10 @@ def deleteRecipe(recipe_id):
 
 @recipes.route('/recipes', methods=['POST'])
 def addRecipe():
+    if 'username' not in login_session:
+        resp = jsonify(error=['You are not allowed to do this'])
+        resp.status_code = 401
+        return resp
     data = checkRecipe(request.get_json())
     if (len(data.errors) == 0):
         newRecipe = Recipe(
@@ -95,6 +106,10 @@ def addRecipe():
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['PUT'])
 def uppdateRecipe(recipe_id):
+    if 'username' not in login_session:
+        resp = jsonify(error=['You are not allowed to do this'])
+        resp.status_code = 401
+        return resp
     data = checkRecipe(request.get_json())
     if (len(data.errors) == 0):
         recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
@@ -124,6 +139,10 @@ def allowed_file(filename):
 
 @recipes.route('/uploadpicture/<recipe_id>', methods=['POST'])
 def upload_picture(recipe_id):
+    if 'username' not in login_session:
+        resp = jsonify(error=['You are not allowed to do this'])
+        resp.status_code = 401
+        return resp
     recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
     file = request.files['file']
     if file and allowed_file(file.filename):

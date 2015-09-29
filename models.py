@@ -22,6 +22,26 @@ class Region(Base):
         }
 
 
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False)
+    picture = Column(String(250), nullable=False)
+    recipes = relationship("Recipe", backref="users")
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'name': self.name,
+            'id': self.id,
+            'email': self.email,
+            'picture': self.picture
+        }
+
+
 class Recipe(Base):
     __tablename__ = 'recipes'
 
@@ -32,6 +52,7 @@ class Recipe(Base):
     duration = Column(Integer, nullable=False)
     image_url = Column(String(400), nullable=True)
     region_id = Column(Integer, ForeignKey('regions.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     insert_date = Column(DateTime(timezone=True), default=func.now())
     last_update = Column(DateTime(timezone=True), default=func.now())
     # region = relationship(Region)
@@ -47,6 +68,7 @@ class Recipe(Base):
             'duration': self.duration,
             'image_url': self.image_url,
             'region_id': self.region_id,
+            'user_id': self.user_id,
             'insert_date': self.insert_date,
             'last_update': self.last_update
         }

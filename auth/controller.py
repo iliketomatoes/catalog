@@ -1,24 +1,46 @@
-from flask import render_template, redirect
-from flask import session as login_session
 import random
 import string
+import httplib2
+import json
+import requests
+from flask import render_template, redirect
+from flask import session as login_session
 from flask import Blueprint
 from flask import request
 from flask import jsonify
 from database import db_session
-
+from models import User
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
-import httplib2
-import json
-from flask import make_response
-import requests
+
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Udacity Catalog - Italian Recipes"
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    db_session.add(newUser)
+    db_session.commit()
+    # user = db_session.query(User).filter_by(email=login_session['email']).one()
+    return newUser.id
+
+
+def getUserInfo(user_id):
+    user = db_session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 
 @auth.route('/')
@@ -105,6 +127,12 @@ def login():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # see if user exists, if it doesn't make a new one
+    user_id = getUserID(data["email"])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     return jsonify(success=['Login Successful'], data=data)
 
 
@@ -112,10 +140,12 @@ def login():
 def loginCallback():
     return 'login loginCallback'
 
+
 @auth.route('/clearSession')
 def clearSession():
     login_session.clear()
     return redirect('/')
+
 
 @auth.route('/auth/gdisconnect')
 def gdisconnect():
