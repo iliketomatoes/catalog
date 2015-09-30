@@ -55,6 +55,9 @@ define([
                 url: '/uploadpicture/' + id,
                 dictDefaultMessage: 'Drop image here to upload',
                 acceptedFiles: '.png, .jpg, .jpeg',
+                headers: {
+                    'italian-recipes-token': window.italianRecipesToken
+                },
                 success: function(){
                     var successMsg = '';
                         successMsg += '<b>';

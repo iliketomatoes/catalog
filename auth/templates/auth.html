@@ -60,7 +60,7 @@
                     <script>
                     function signInCallback(authResult) {
 
-                        var state = '{{ state }}';
+                        var italianRecipesToken = '{{ state }}';
 
                         if (authResult['code']) {
 
@@ -71,7 +71,7 @@
                             $.ajax({
                                 type: 'POST',
                                 beforeSend: function(request) {
-                                    request.setRequestHeader('italian-recipes-token', state);
+                                    request.setRequestHeader('italian-recipes-token', italianRecipesToken);
                                 },
                                 url: '/auth/gconnect',
                                 contentType: 'application/octet-stream; charset=utf-8',

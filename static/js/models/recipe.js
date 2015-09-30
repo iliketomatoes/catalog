@@ -1,7 +1,7 @@
 define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function($, _, Backbone, FlashView) {
     var RecipeModel = Backbone.Model.extend({
         clear: function() {
-
+            var self = this;
             var flash = new FlashView();
             this.destroy({
                 success: function(model, resp) {
@@ -33,7 +33,7 @@ define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function
 
                     $totalCount.text(totalValue.toString());
 
-                    this.view.remove();
+                    self.view.remove();
 
                 },
                 error: function(model, error) {

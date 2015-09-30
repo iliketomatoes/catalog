@@ -16,11 +16,15 @@ SUBMENU
     }
 }
 
-.submenu-half {
+.submenu-half, .submenu {
     overflow: auto;
     padding: 10px 15px;
     margin: 0.2rem 1rem;
     border-bottom: 2px solid $border-color;
+    
+}
+
+.submenu-half{
     @media #{$medium-up} {
         float: left;
         padding: 0 15px;
@@ -30,6 +34,14 @@ SUBMENU
         &:not(:first-of-type) {
             border-left: 2px solid $border-color;
         }
+    }
+}
+
+.submenu {
+    @media #{$medium-up} {
+        padding: 0 15px;
+        margin: 0;
+        border-bottom: none;
     }
 }
 

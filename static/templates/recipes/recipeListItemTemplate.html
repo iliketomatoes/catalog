@@ -1,6 +1,7 @@
 <div class="card-container">
     <div class="card">
         <div class="card-dropdown-container">
+            <% if(window.userId == recipe.get("user_id")){ %>
             <button href="#" data-dropdown="drop-<%= recipe.get("id") %>" aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button tiny secondary">&#8226;&#8226;&#8226;</button>
             <br>
             <ul id="drop-<%= recipe.get("id") %>" data-dropdown-content class="f-dropdown" aria-hidden="true">
@@ -8,6 +9,7 @@
                 <li><a href="/#picture/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-pic-btn"><i class="fi-photo"></i> Change picture</a></li>
                 <li><a href="#" data-id="<%= recipe.get("id") %>" class="card-delete-btn"><i class="fi-x-circle"></i> Delete</a></li>
             </ul>
+            <% } %>
         </div>
         <a href="/#recipe/<%= recipe.get("id") %>" class="card-header-link">
             <div class="card-header image-wrapper">

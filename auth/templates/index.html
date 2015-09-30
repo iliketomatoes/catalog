@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="/static/css/app.css">
+    <script>
+    window.italianRecipesToken = '{{ state }}';
+    window.userId = {{ session.user_id or 'null'}};
+    </script>
     <script data-main="/static/js/main" src="/static/js/libs/require/require.js"></script>
 </head>
 
@@ -21,10 +25,15 @@
                 <div class="user-log-ctr">
                 {% if not session.credentials %}
                     <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
+                 </div>
                 {% else %}
                     <a href="/auth/gdisconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
-                {% endif %}
+                 </div>
+                 <div class="user-info right">
+                    <span>{{ session.username.partition(' ')[0] + ' ' + session.username.partition(' ')[2][0] + '.'  }}</span>
+                    <img src="{{ session.picture}}" width="36" height="36" alt="{{ session.username }}">
                 </div>
+                {% endif %}
             </div>
         </div>
     </nav>

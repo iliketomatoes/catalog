@@ -68,12 +68,20 @@ def showRecipe(recipe_id):
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
 def deleteRecipe(recipe_id):
+    if request.headers.get('italian-recipes-token') != login_session['state']:
+        resp = jsonify(error=['You are not allowed to make such request.'])
+        resp.status_code = 401
+        return resp
     if 'username' not in login_session:
         resp = jsonify(error=['You are not allowed to do this'])
         resp.status_code = 401
         return resp
     recipe = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).one()
+    if recipe.user_id != login_session['user_id']:
+        resp = jsonify(error=['You are not authorized to do this!'])
+        resp.status_code = 403
+        return resp
     if(recipe.image_url is not None):
         removeImage(recipe.image_url)
     db_session.delete(recipe)
@@ -83,6 +91,10 @@ def deleteRecipe(recipe_id):
 
 @recipes.route('/recipes', methods=['POST'])
 def addRecipe():
+    if request.headers.get('italian-recipes-token') != login_session['state']:
+        resp = jsonify(error=['You are not allowed to make such request.'])
+        resp.status_code = 401
+        return resp
     if 'username' not in login_session:
         resp = jsonify(error=['You are not allowed to do this'])
         resp.status_code = 401
@@ -94,7 +106,8 @@ def addRecipe():
             description=data.inputs['description'],
             duration=data.inputs['duration'],
             difficulty=data.inputs['difficulty'],
-            region_id=data.inputs['region_id'])
+            region_id=data.inputs['region_id'],
+            user_id=login_session['user_id'])
         db_session.add(newRecipe)
         db_session.commit()
         return jsonify(id=newRecipe.id, name=newRecipe.name)
@@ -106,6 +119,10 @@ def addRecipe():
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['PUT'])
 def uppdateRecipe(recipe_id):
+    if request.headers.get('italian-recipes-token') != login_session['state']:
+        resp = jsonify(error=['You are not allowed to make such request.'])
+        resp.status_code = 401
+        return resp
     if 'username' not in login_session:
         resp = jsonify(error=['You are not allowed to do this'])
         resp.status_code = 401
@@ -113,6 +130,10 @@ def uppdateRecipe(recipe_id):
     data = checkRecipe(request.get_json())
     if (len(data.errors) == 0):
         recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
+        if recipe.user_id != login_session['user_id']:
+            resp = jsonify(error=['You are not authorized to do this!'])
+            resp.status_code = 403
+            return resp
         recipe.name = data.inputs['name']
         recipe.description = data.inputs['description']
         recipe.duration = data.inputs['duration']
@@ -139,11 +160,19 @@ def allowed_file(filename):
 
 @recipes.route('/uploadpicture/<recipe_id>', methods=['POST'])
 def upload_picture(recipe_id):
+    if request.headers.get('italian-recipes-token') != login_session['state']:
+        resp = jsonify(error=['You are not allowed to make such request.'])
+        resp.status_code = 401
+        return resp
     if 'username' not in login_session:
         resp = jsonify(error=['You are not allowed to do this'])
         resp.status_code = 401
         return resp
     recipe = db_session.query(Recipe).filter_by(id=recipe_id).one()
+    if recipe.user_id != login_session['user_id']:
+        resp = jsonify(error=['You are not authorized to do this!'])
+        resp.status_code = 403
+        return resp
     file = request.files['file']
     if file and allowed_file(file.filename):
         filename = str(recipe.id) + '-' + secure_filename(file.filename)

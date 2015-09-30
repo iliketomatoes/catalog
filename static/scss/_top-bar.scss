@@ -46,4 +46,20 @@
 	overflow: auto;
 	margin-top: 0.6rem;
 	font-weight: bold;
+	float: right;
+}
+
+.user-info{
+	float: right;
+	margin-right: 0.8rem;
+	padding-top: 0.2rem;
+
+	span{
+		font-size: rem-calc(14);
+	}
+
+	img{
+		margin-left: 0.2rem;
+		border-radius: 50%;
+	}
 }

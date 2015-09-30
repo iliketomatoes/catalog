@@ -37,25 +37,34 @@ def getUserInfo(user_id):
 
 def getUserID(email):
     try:
-        user = session.query(User).filter_by(email=email).one()
+        user = db_session.query(User).filter_by(email=email).one()
         return user.id
     except:
         return None
 
 
+def generateToken():
+    state = ''.join(random.choice(string.ascii_lowercase + string.digits)
+                    for x in xrange(32))
+    return state
+
+
 @auth.route('/')
 def home():
     try:
-        return render_template('index.html', session=login_session)
+        login_session['state'] = generateToken()
+        return render_template(
+            'index.html',
+            session=login_session,
+            state=login_session['state']
+        )
     except TemplateNotFound:
         abort(404)
 
 
 @auth.route('/auth/login', methods=['GET'])
 def showLoginPage():
-    state = ''.join(random.choice(string.ascii_lowercase + string.digits)
-                    for x in xrange(32))
-    login_session['state'] = state
+    login_session['state'] = generateToken()
     return render_template('auth.html', state=login_session['state'])
 
 
@@ -114,7 +123,7 @@ def login():
 
     # Store the access token in the session for later use.
     login_session['credentials'] = credentials.access_token
-    login_session['gplus_id'] = gplus_id
+    # login_session['gplus_id'] = gplus_id
 
     # Get user info
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
@@ -166,7 +175,7 @@ def gdisconnect():
     if result['status'] == '200':
         # Reset the user's sesson.
         del login_session['credentials']
-        del login_session['gplus_id']
+        del login_session['user_id']
         del login_session['username']
         del login_session['email']
         del login_session['picture']
@@ -182,3 +191,11 @@ def gdisconnect():
             error='Failed to revoke token for given user.',
             status=400
         )
+
+# See all the users registered
+
+
+@auth.route('/users')
+def showUsers():
+    users = db_session.query(User).all()
+    return jsonify(collection=[i.serialize for i in users])
