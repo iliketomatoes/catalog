@@ -47,6 +47,26 @@ body {
 	<div class="small-12 columns">
 		<div class="recipe-footer-links">
 			<a href="/#" class="go-back-btn">&#10229; Go back</a>
+            <% if(window.userId == recipe.get("user_id")){ %>
+            <div class="recipe-dropdown-container">
+                <button href="#" data-dropdown="drop-<%= recipe.get("id") %>"aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button secondary tiny">&#8226;&#8226;&#8226;</button>
+                <br>
+                <ul id="drop-<%= recipe.get("id") %>" data-dropdown-content class="f-dropdown" aria-hidden="true">
+                    <li><a href="/#edit/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-btn"><i class="fi-pencil"></i> Update recipe</a></li>
+                    <li><a href="/#picture/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-pic-btn"><i class="fi-photo"></i> Change picture</a></li>
+                    <li><a href="#" data-id="<%= recipe.get("id") %>" class="recipe-delete-btn"><i class="fi-x-circle"></i> Delete</a></li>
+                </ul>
+            </div>
+            <% } %>
 		</div>
 	</div>
+</div>
+<!-- Reveal Modals begin -->
+<div id="confirm-deletion" class="reveal-modal" data-reveal aria-labelledby="Confirm recipe deletion" aria-hidden="true" role="dialog">
+  <h2 id="confirm-deletion-name"></h2>
+  <p>Are you sure you want to delete this recipe?</p>
+  <a href="/#" class="confirm-deletion-confirm button">Yes, I'm sure</a>
+  <a href="/#" class="confirm-deletion-abort button secondary right">No, just kidding</a>
+  <!--<p><a href="#" data-reveal-id="secondModal" class="secondary button">Second Modal...</a></p>-->
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

@@ -16,28 +16,28 @@
 </head>
 
 <body>
-    <nav id="nav-container" class="app-top-bar" data-topbar role="navigation">
-        <div class="nav-content">
-            <div class="small-4 medium-6 columns">
-                <a href="/#" id="app-logo"><img src="/static/img/italianrecipes.png" alt="Italian recipes"> <span class="hide-for-small">Italian recipes</span></a>
-            </div>
-            <div class="small-8 medium-6 columns">
-                <div class="user-log-ctr">
-                {% if not session.credentials %}
-                    <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
-                 </div>
-                {% else %}
-                    <a href="/auth/gdisconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
-                 </div>
-                 <div class="user-info right">
-                    <span>{{ session.username.partition(' ')[0] + ' ' + session.username.partition(' ')[2][0] + '.'  }}</span>
-                    <img src="{{ session.picture}}" width="36" height="36" alt="{{ session.username }}">
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
     <div id="wrap">
+        <nav id="nav-container" class="app-top-bar" data-topbar role="navigation">
+            <div class="nav-content">
+                <div class="small-4 medium-6 columns">
+                    <a href="/#" id="app-logo"><img src="/static/img/italianrecipes.png" alt="Italian recipes"> <span class="hide-for-small">Italian recipes</span></a>
+                </div>
+                <div class="small-8 medium-6 columns">
+                    <div class="user-log-ctr">
+                    {% if not session.credentials %}
+                        <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
+                     </div>
+                    {% else %}
+                        <a href="/auth/gdisconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
+                     </div>
+                     <div class="user-info right">
+                        <span>{{ session.username.partition(' ')[0] + ' ' + session.username.partition(' ')[2][0] + '.'  }}</span>
+                        <img src="{{ session.picture}}" width="36" height="36" alt="{{ session.username }}">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>  
     <main id="container">
     </main>
     <div id="modal-menu-ctr">

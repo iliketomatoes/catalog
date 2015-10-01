@@ -4,10 +4,17 @@ define([
     'backbone',
     'collections/recipes',
     'models/recipe',
-    'text!templates/recipes/recipeTemplate.html'
-], function($, _, Backbone, RecipeCollection, RecipeModel, recipeTemplate) {
+    'text!templates/recipes/recipeTemplate.html',
+    'domready',
+    'foundation.dropdown',
+    'foundation.reveal'
+], function($, _, Backbone, RecipeCollection, RecipeModel, recipeTemplate, domready) {
     var RecipeView = Backbone.View.extend({
         el: $("#container"),
+
+        events: {
+            'click .recipe-delete-btn': 'deleteItem'
+        },
 
         template: _.template(recipeTemplate),
 
@@ -21,10 +28,14 @@ define([
                 self.mapped_regions[region.get('id')] = region.get('name');
             });
 
-            _.bindAll(this, 'render');
+            _.bindAll(this, 'render', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
         },
 
         populate: function(recipe_id){
+
+            this.undelegateEvents();
+            this.delegateEvents();
+
             this.model = new RecipeModel({
                 id: recipe_id
             });
@@ -65,7 +76,33 @@ define([
                 e.preventDefault();
                 Backbone.history.history.back();
             });
+
+            domready(function() {
+                $(document).foundation();
+            });
+        },
+
+        deleteItem: function(e) {
+            e.preventDefault();
+            var self = this;
+            $('#confirm-deletion-name').text(self.model.get('name'));
+            $('#confirm-deletion').foundation('reveal', 'open');
+            $('.confirm-deletion-confirm').one('click', self.confirmedDeleteItem);
+            $('.confirm-deletion-abort').one('click', self.abortedDeleteItem);
+        },
+
+        confirmedDeleteItem: function(e) {
+            e.preventDefault();
+            this.model.clear();
+            $('#confirm-deletion').foundation('reveal', 'close');
+            Backbone.history.history.back();
+        },
+
+        abortedDeleteItem: function(e) {
+            e.preventDefault();
+            $('#confirm-deletion').foundation('reveal', 'close');
         }
+
     });
     return RecipeView;
 });

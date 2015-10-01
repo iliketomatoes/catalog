@@ -19,7 +19,7 @@ define([
                 id: options.recipe_id
             });
 
-            this.old = options.old;
+            this.old = options.old || false;
 
             this.model.parse = function(response){
                 return response.collection[0];
@@ -68,7 +68,7 @@ define([
                         flash.render('success', successMsg);
 
                         //If we are just updating an existing recipe
-                        if(this.old){
+                        if(self.old){
                             Backbone.history.history.back();
                         }else{
                             window.location.replace("/#");

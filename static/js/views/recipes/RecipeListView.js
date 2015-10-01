@@ -124,6 +124,7 @@ define([
         },
 
         abortedDeleteItem: function(e) {
+            e.preventDefault();
             $('#confirm-deletion').foundation('reveal', 'close');
         }
 
