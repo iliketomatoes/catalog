@@ -24,11 +24,11 @@
                 </div>
                 <div class="small-8 medium-6 columns">
                     <div class="user-log-ctr">
-                    {% if not session.credentials %}
+                    {% if not session.username %}
                         <a href="/auth/login" class="right"><i class="fi-torso"></i> Login</a>
                      </div>
                     {% else %}
-                        <a href="/auth/gdisconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
+                        <a href="/auth/disconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
                      </div>
                      <div class="user-info right">
                         <span>{{ session.username.partition(' ')[0] + ' ' + session.username.partition(' ')[2][0] + '.'  }}</span>

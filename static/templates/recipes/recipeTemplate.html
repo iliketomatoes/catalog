@@ -49,7 +49,7 @@ body {
 			<a href="/#" class="go-back-btn">&#10229; Go back</a>
             <% if(window.userId == recipe.get("user_id")){ %>
             <div class="recipe-dropdown-container">
-                <button href="#" data-dropdown="drop-<%= recipe.get("id") %>"aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button secondary tiny">&#8226;&#8226;&#8226;</button>
+                <button href="#" data-dropdown="drop-<%= recipe.get("id") %>"aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button secondary small"><span class="meatballs">&#8226;&#8226;&#8226;</span> edit</button>
                 <br>
                 <ul id="drop-<%= recipe.get("id") %>" data-dropdown-content class="f-dropdown" aria-hidden="true">
                     <li><a href="/#edit/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-btn"><i class="fi-pencil"></i> Update recipe</a></li>
