@@ -31,7 +31,7 @@ define([
             _.bindAll(this, 'render', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
         },
 
-        populate: function(recipe_id){
+        populate: function(recipe_id) {
 
             this.undelegateEvents();
             this.delegateEvents();
@@ -39,7 +39,7 @@ define([
             this.model = new RecipeModel({
                 id: recipe_id
             });
-            this.model.parse = function(response){
+            this.model.parse = function(response) {
                 return response.collection[0];
             };
             this.collection = new RecipeCollection([this.model]);
@@ -47,7 +47,7 @@ define([
             this.model.bind('change', this.render);
 
             var queryParams = {
-                success: function(recipes, response){
+                success: function(recipes, response) {
                     if (response.collection.length == 0) {
                         var emptyCategory = '<div class="row"><div class="small-12 columns">';
                         emptyCategory += '<h2 class="text-center m-t-3">There are no recipes corresponding to the given id.</h2>';
@@ -72,7 +72,7 @@ define([
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
 
-            $('.go-back-btn').one('click', function(e){
+            $('.go-back-btn').one('click', function(e) {
                 e.preventDefault();
                 Backbone.history.history.back();
             });

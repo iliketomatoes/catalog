@@ -36,8 +36,10 @@ define([
             return this;
         },
 
-        pullupPage: function(){
-            $("html, body").animate({ scrollTop: 0 }, 0);
+        pullupPage: function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 0);
         }
     });
     return RecipeListItemView;

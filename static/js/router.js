@@ -103,8 +103,6 @@ define([
                 readRecipeView.populate(recipe_id);
             });
 
-            //TopBarView.render();
-
             RegionsMenuView.render(regions);
 
             Backbone.history.start();

@@ -64,8 +64,11 @@ def home():
 
 @auth.route('/auth/login', methods=['GET'])
 def showLoginPage():
-    login_session['state'] = generateToken()
-    return render_template('auth.html', state=login_session['state'])
+    if 'username' not in login_session:
+        login_session['state'] = generateToken()
+        return render_template('auth.html', state=login_session['state'])
+    else:
+        return redirect('/')
 
 
 @auth.route('/auth/gconnect', methods=['POST'])
