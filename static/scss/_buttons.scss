@@ -52,3 +52,24 @@ button, .button, input[type="submit"]{
   100% {  @include transform(scale(100)); opacity: 0;}
 }
 
+
+#g-signin-button{
+	display: inline-block;
+	overflow: auto;
+	margin-bottom: 1rem;
+	padding: 8px 6px;
+	background-color: #dd4b39;
+	border-radius: 2px;
+	color: $white;
+	@include single-transition();
+
+	svg{
+		//display: block;
+		fill: $white;
+		vertical-align: bottom;
+	}
+
+	&:hover{
+		background-color: #e74b37;
+	}
+}

@@ -42,185 +42,203 @@
         <main id="container">
             <div class="row">
                 <div class="small-12 columns">
-                    <h1 class="page-title">Login</h1>
+                    <h1 class="page-title">Log in</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="small-12 columns">
-                    <button id="signinButton">Sign in with Google <i class="fi-social-google-plus"></i></button>
-                    <script>
-                    $('#signinButton').click(function() {
-                        // signInCallback defined in step 6.
-                        auth2.grantOfflineAccess({
-                            'redirect_uri': 'postmessage'
-                        }).then(signInCallback);
-                    });
-                    </script>
-                    <div id="result"></div>
-                    <script>
-                    function signInCallback(authResult) {
-
-                        var italianRecipesToken = '{{ state }}';
-
-                        if (authResult['code']) {
-
-                            // Hide the sign-in button now that the user is authorized, for example:
-                            $('#signinButton').attr('style', 'display: none');
-
-                            // Send the code to the server
-                            $.ajax({
-                                type: 'POST',
-                                beforeSend: function(request) {
-                                    request.setRequestHeader('italian-recipes-token', italianRecipesToken);
-                                },
-                                url: '/auth/gconnect',
-                                contentType: 'application/octet-stream; charset=utf-8',
-                                success: function(xhr) {
-                                    // Handle or verify the server response.
-                                    var msg = xhr.error || xhr.success;
-
-                                    $('#result').html(msg[0] + ': ' + xhr.data.name + '</br>Redirecting...');
-
-                                    setTimeout(function() {
-                                        window.location.href = "/";
-                                    }, 3000)
-                                },
-                                error: function(xhr) {
-                                    var msg = xhr.error || xhr.success;
-                                    $('#result').html(msg[0]);
-                                },
-                                processData: false,
-                                data: authResult['code']
+                <div class="small-12 medium-6 large-5 columns">
+                    <p>Log in with your favorite social network:</p>
+                </div>
+                <div class="small-12 medium-6 large-7 columns">
+                    <!-- *START* GOOGLE SIGN UP -->
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <a id="g-signin-button">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 14 14">
+                                    <g>
+                                        <path d="m7.228,7.958l-.661-.514c-.201-.166-.476-.386-.476-.79 0-.405 .275-.663 .513-.901 .769-.606 1.538-1.25 1.538-2.611 0-1.256-.632-1.862-.94-2.24h.899l.899-.902h-3.622c-.989,0-2.235,.147-3.278,1.01-.788,.68-1.172,1.618-1.172,2.464 0,1.433 1.098,2.885 3.04,2.885 .183,0 .384-.018 .586-.036-.092,.22-.183,.405-.183,.717 0,.569 .048,.809 .305,1.14-.824,.055-2.119,.12-3.254,.819-1.082,.644-1.411,1.717-1.411,2.379 0,1.361 1.281,2.629 3.938,2.629 3.149,0 4.816-1.747 4.816-3.474 .001-1.269-.731-1.894-1.537-2.575zm-4.689-5.384c0-.479 .091-.975 .402-1.361 .293-.368 .806-.607 1.283-.607 1.519,0 2.306,2.06 2.306,3.383 0,.33-.037,.918-.457,1.341-.294,.295-.786,.515-1.244,.515-1.575,0-2.29-2.041-2.29-3.271zm2.308,10.66c-1.96,0-3.224-.938-3.224-2.243s1.063-1.691 1.466-1.839c.77-.256 1.788-.348 1.788-.348s.456,.026 .665,.019c1.115,.546 1.997,1.487 1.997,2.428 0,1.138-.935,1.983-2.692,1.983z"></path>
+                                        <polygon points="14,5.992 11.991,5.992 11.991,4.001 10.991,4.001 10.991,5.992 9,5.992 9,6.992 10.991,6.992 10.991,9 11.991,9 11.991,6.992 14,6.992 "></polygon>
+                                    </g>
+                                </svg> Log in with Google</a>
+                            <script>
+                            $('#g-signin-button').click(function(e) {
+                                e.preventDefault();
+                                // signInCallback defined in step 6.
+                                auth2.grantOfflineAccess({
+                                    'redirect_uri': 'postmessage'
+                                }).then(signInCallback);
                             });
-                        } else {
-                            // There was an error.
-                            $('#result').html('<div class="alert"> NO ONE TIME CODE WAS RECEIVED FROM GOOGLE</div>');
-                        }
-                    }
-                    </script>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <script>
-                    // This is called with the results from from FB.getLoginStatus().
-                    function statusChangeCallback(response) {
-                        console.log('statusChangeCallback');
-                        console.log(response);
-                        // The response object is returned with a status field that lets the
-                        // app know the current login status of the person.
-                        // Full docs on the response object can be found in the documentation
-                        // for FB.getLoginStatus().
-                        if (response.status === 'connected') {
-                            // Logged into your app and Facebook.
-                            testAPI();
-                        } else if (response.status === 'not_authorized') {
-                            // The person is logged into Facebook, but not your app.
-                            document.getElementById('status').innerHTML = 'Please log ' +
-                                'into this app.';
-                        } else {
-                            // The person is not logged into Facebook, so we're not sure if
-                            // they are logged into this app or not.
-                            document.getElementById('status').innerHTML = 'Please log ' +
-                                'into Facebook.';
-                        }
-                    }
+                            </script>
+                            <div id="result"></div>
+                            <script>
+                            function signInCallback(authResult) {
 
-                    // This function is called when someone finishes with the Login
-                    // Button.  See the onlogin handler attached to it in the sample
-                    // code below.
-                    function checkLoginState() {
-                        FB.getLoginStatus(function(response) {
-                            statusChangeCallback(response);
-                        });
-                    }
+                                var italianRecipesToken = '{{ state }}';
 
-                    window.fbAsyncInit = function() {
-                        FB.init({
-                            appId: '425324390988748',
-                            cookie: true, // enable cookies to allow the server to access 
-                            // the session
-                            xfbml: true, // parse social plugins on this page
-                            version: 'v2.2' // use version 2.2
-                        });
+                                if (authResult['code']) {
 
-                        // Now that we've initialized the JavaScript SDK, we call 
-                        // FB.getLoginStatus().  This function gets the state of the
-                        // person visiting this page and can return one of three states to
-                        // the callback you provide.  They can be:
-                        //
-                        // 1. Logged into your app ('connected')
-                        // 2. Logged into Facebook, but not your app ('not_authorized')
-                        // 3. Not logged into Facebook and can't tell if they are logged into
-                        //    your app or not.
-                        //
-                        // These three cases are handled in the callback function.
+                                    // Hide the sign-in button now that the user is authorized, for example:
+                                    $('#signinButton').attr('style', 'display: none');
 
-                        FB.getLoginStatus(function(response) {
-                            statusChangeCallback(response);
-                        });
+                                    // Send the code to the server
+                                    $.ajax({
+                                        type: 'POST',
+                                        beforeSend: function(request) {
+                                            request.setRequestHeader('italian-recipes-token', italianRecipesToken);
+                                        },
+                                        url: '/auth/gconnect',
+                                        contentType: 'application/octet-stream; charset=utf-8',
+                                        success: function(xhr) {
+                                            // Handle or verify the server response.
+                                            var msg = xhr.error || xhr.success;
 
-                    };
+                                            $('#result').html(msg[0] + ': ' + xhr.data.name + '</br>Redirecting...');
 
-                    // Load the SDK asynchronously
-                    (function(d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "//connect.facebook.net/en_US/sdk.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-
-                    // Here we run a very simple test of the Graph API after login is
-                    // successful.  See statusChangeCallback() for when this call is made.
-                    function testAPI() {
-                        var italianRecipesToken = '{{ state }}';
-                        var access_token = FB.getAuthResponse()['accessToken'];
-                        console.log(access_token);
-                        console.log('Welcome!  Fetching your information.... ');
-                        FB.api('/me', function(response) {
-                            console.log('Successful login for: ' + response.name);
-                            document.getElementById('status').innerHTML =
-                                'Thanks for logging in, ' + response.name + '!';
-
-                            // Send the code to the server
-                            $.ajax({
-                                type: 'POST',
-                                beforeSend: function(request) {
-                                    request.setRequestHeader('italian-recipes-token', italianRecipesToken);
-                                },
-                                url: '/auth/fbconnect',
-                                data: access_token,
-                                contentType: 'application/octet-stream; charset=utf-8',
-                                processData: false,
-                                success: function(xhr) {
-                                    // Handle or verify the server response.
-                                    var msg = xhr.error || xhr.success;
-
-                                    $('#result').html(msg[0] + ': ' + xhr.data.name + '</br>Redirecting...');
-
-                                    setTimeout(function() {
-                                        window.location.href = "/";
-                                    }, 3000)
-                                },
-                                error: function(xhr) {
-                                    var msg = xhr.error || xhr.success;
-                                    $('#result').html(msg[0]);
+                                            setTimeout(function() {
+                                                window.location.href = "/";
+                                            }, 2000);
+                                        },
+                                        error: function(xhr) {
+                                            var msg = xhr.error || xhr.success;
+                                            $('#result').html(msg[0]);
+                                        },
+                                        processData: false,
+                                        data: authResult['code']
+                                    });
+                                } else {
+                                    // There was an error.
+                                    $('#result').html('<div class="alert"> NO ONE TIME CODE WAS RECEIVED FROM GOOGLE</div>');
                                 }
-                            });    
-                        });
-                    }
-                    </script>
-                    <!--
+                            }
+                            </script>
+                        </div>
+                    </div>
+                    <!-- *END* GOOGLE SIGN UP -->
+                    <!-- *START* FACEBOOK SIGN UP -->
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <script>
+                            // This is called with the results from from FB.getLoginStatus().
+                            function statusChangeCallback(response) {
+                                console.log('statusChangeCallback');
+                                console.log(response);
+                                // The response object is returned with a status field that lets the
+                                // app know the current login status of the person.
+                                // Full docs on the response object can be found in the documentation
+                                // for FB.getLoginStatus().
+                                if (response.status === 'connected') {
+                                    // Logged into your app and Facebook.
+                                    testAPI();
+                                } else if (response.status === 'not_authorized') {
+                                    // The person is logged into Facebook, but not your app.
+                                    document.getElementById('status').innerHTML = 'Please log ' +
+                                        'into this app.';
+                                } else {
+                                    // The person is not logged into Facebook, so we're not sure if
+                                    // they are logged into this app or not.
+                                    document.getElementById('status').innerHTML = 'Please log ' +
+                                        'into Facebook.';
+                                }
+                            }
+
+                            // This function is called when someone finishes with the Login
+                            // Button.  See the onlogin handler attached to it in the sample
+                            // code below.
+                            function checkLoginState() {
+                                FB.getLoginStatus(function(response) {
+                                    statusChangeCallback(response);
+                                });
+                            }
+
+                            window.fbAsyncInit = function() {
+                                FB.init({
+                                    appId: '425324390988748',
+                                    cookie: true, // enable cookies to allow the server to access 
+                                    // the session
+                                    xfbml: true, // parse social plugins on this page
+                                    version: 'v2.2' // use version 2.2
+                                });
+
+                                // Now that we've initialized the JavaScript SDK, we call 
+                                // FB.getLoginStatus().  This function gets the state of the
+                                // person visiting this page and can return one of three states to
+                                // the callback you provide.  They can be:
+                                //
+                                // 1. Logged into your app ('connected')
+                                // 2. Logged into Facebook, but not your app ('not_authorized')
+                                // 3. Not logged into Facebook and can't tell if they are logged into
+                                //    your app or not.
+                                //
+                                // These three cases are handled in the callback function.
+
+                                FB.getLoginStatus(function(response) {
+                                    statusChangeCallback(response);
+                                });
+
+                            };
+
+                            // Load the SDK asynchronously
+                            (function(d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0];
+                                if (d.getElementById(id)) return;
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "//connect.facebook.net/en_US/sdk.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }(document, 'script', 'facebook-jssdk'));
+
+                            // Here we run a very simple test of the Graph API after login is
+                            // successful.  See statusChangeCallback() for when this call is made.
+                            function testAPI() {
+                                var italianRecipesToken = '{{ state }}';
+                                var access_token = FB.getAuthResponse()['accessToken'];
+                                console.log(access_token);
+                                console.log('Welcome!  Fetching your information.... ');
+                                FB.api('/me', function(response) {
+                                    console.log('Successful login for: ' + response.name);
+                                    document.getElementById('status').innerHTML =
+                                        'Thanks for logging in, ' + response.name + '!';
+
+                                    // Send the code to the server
+                                    $.ajax({
+                                        type: 'POST',
+                                        beforeSend: function(request) {
+                                            request.setRequestHeader('italian-recipes-token', italianRecipesToken);
+                                        },
+                                        url: '/auth/fbconnect',
+                                        data: access_token,
+                                        contentType: 'application/octet-stream; charset=utf-8',
+                                        processData: false,
+                                        success: function(xhr) {
+                                            // Handle or verify the server response.
+                                            var msg = xhr.error || xhr.success;
+
+                                            $('#result').html(msg[0] + ': ' + xhr.data.name + '</br>Redirecting...');
+
+                                            setTimeout(function() {
+                                                window.location.href = "/";
+                                            }, 2000);
+                                        },
+                                        error: function(xhr) {
+                                            var msg = xhr.error || xhr.success;
+                                            $('#result').html(msg[0]);
+                                        }
+                                    });
+                                });
+                            }
+                            </script>
+                            <!--
   Below we include the Login Button social plugin. This button uses
   the JavaScript SDK to present a graphical Login button that triggers
   the FB.login() function when clicked.
 -->
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button>
-                    <div id="status">
+                            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" size="xlarge">
+                            </fb:login-button>
+                            <div id="status" class="hide">
+                            </div>
+                        </div>
                     </div>
+                    <!-- *END* FACEBOOK SIGN UP -->
                 </div>
             </div>
         </main>
