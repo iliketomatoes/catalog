@@ -60,12 +60,14 @@ def showAll():
             query(Recipe).filter_by(region_id=region_id).order_by(
                 Recipe.last_update.desc()).all()
 
+    serialized_result = [i.serialize for i in recipes_list]
+
+    # Lastly we decide which format to send the data
     if (xml_format == 'true' or xml_format == 'TRUE'):
-        recipe_dict = [i.serialize for i in recipes_list]
-        xml_output = dicttoxml.dicttoxml(recipe_dict)
+        xml_output = dicttoxml.dicttoxml(serialized_result)
         return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}
     else:
-        return jsonify(collection=[i.serialize for i in recipes_list])
+        return jsonify(collection=serialized_result)
 
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['GET'])

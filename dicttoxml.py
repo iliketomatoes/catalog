@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+# https://github.com/quandyfactory/dicttoxml
 
 """
 Converts a native Python dictionary into an XML string. Supports numbers, strings, lists, dictionaries and arbitrary nesting.
