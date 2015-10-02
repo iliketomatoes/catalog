@@ -69,7 +69,7 @@ define([
 
         render: function(recipe) {
 
-            if(!!recipe){
+            if (!!recipe) {
                 this.actual_region = parseInt(recipe.get('region_id'));
             }
 
@@ -84,6 +84,13 @@ define([
 
             domready(function() {
                 $(document).foundation('slider', 'reflow');
+
+                $('.difficulty label').click(function(e) {
+                    e.preventDefault();
+                    var targetId = e.target.getAttribute('for');
+                    console.log(targetId);
+                    $('#' + targetId).prop('checked', true);
+                })
             });
 
         },
@@ -115,7 +122,7 @@ define([
                         var regionId = parseInt(model.get('region_id'));
 
                         //If we have changed region we have to update the counter
-                        if(self.actual_region !== regionId){
+                        if (self.actual_region !== regionId) {
                             var $new_counter = $('.region-count').filter(function(index, el) {
                                 return parseInt($(el).attr("data-region-count")) === regionId;
                             });
@@ -128,7 +135,7 @@ define([
 
                             var oldCounterValue = parseInt($old_counter.text()) - 1;
 
-                            oldCounterValue = oldCounterValue === 0 ? '' :  oldCounterValue;
+                            oldCounterValue = oldCounterValue === 0 ? '' : oldCounterValue;
 
                             $new_counter.text(newCounterValue.toString());
 
