@@ -1,4 +1,5 @@
 import os
+import dicttoxml
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -49,6 +50,8 @@ def removeImage(image_url):
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
     region_id = request.args.get('region_id')
+    xml_format = request.args.get('xml')
+
     if (region_id == '' or region_id is None):
         recipes_list = db_session.query(Recipe).order_by(
             Recipe.last_update.desc()).all()
@@ -56,7 +59,13 @@ def showAll():
         recipes_list = db_session.\
             query(Recipe).filter_by(region_id=region_id).order_by(
                 Recipe.last_update.desc()).all()
-    return jsonify(collection=[i.serialize for i in recipes_list])
+
+    if (xml_format == 'true' or xml_format == 'TRUE'):
+        recipe_dict = [i.serialize for i in recipes_list]
+        xml_output = dicttoxml.dicttoxml(recipe_dict)
+        return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}
+    else:
+        return jsonify(collection=[i.serialize for i in recipes_list])
 
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['GET'])
