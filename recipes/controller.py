@@ -50,19 +50,23 @@ def removeImage(image_url):
 @recipes.route('/recipes', methods=['GET'])
 def showAll():
     region_id = request.args.get('region_id')
+    user_id = request.args.get('user_id')
     xml_format = request.args.get('xml')
 
-    if (region_id == '' or region_id is None):
-        recipes_list = db_session.query(Recipe).order_by(
-            Recipe.last_update.desc()).all()
-    else:
+    if (region_id != '' and region_id is not None):
         recipes_list = db_session.\
             query(Recipe).filter_by(region_id=region_id).order_by(
                 Recipe.last_update.desc()).all()
+    elif (user_id != '' and user_id is not None):
+        recipes_list = db_session.\
+            query(Recipe).filter_by(user_id=user_id).order_by(
+                Recipe.last_update.desc()).all()
+    else:
+        recipes_list = db_session.query(Recipe).order_by(
+            Recipe.last_update.desc()).all()
 
     serialized_result = [i.serialize for i in recipes_list]
-
-    # Lastly we decide which format to send the data
+    # Lastly we decide which data format to send
     if (xml_format == 'true' or xml_format == 'TRUE'):
         xml_output = dicttoxml.dicttoxml(serialized_result)
         return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}
@@ -72,9 +76,17 @@ def showAll():
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['GET'])
 def showRecipe(recipe_id):
+    xml_format = request.args.get('xml')
     recipes_list = db_session.query(Recipe).filter(
         Recipe.id == recipe_id).all()
-    return jsonify(collection=[i.serialize for i in recipes_list])
+    serialized_result = [i.serialize for i in recipes_list]
+
+    # Lastly we decide which data format to send
+    if (xml_format == 'true' or xml_format == 'TRUE'):
+        xml_output = dicttoxml.dicttoxml(serialized_result)
+        return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}
+    else:
+        return jsonify(collection=serialized_result)
 
 
 @recipes.route('/recipes/<int:recipe_id>', methods=['DELETE'])
@@ -95,6 +107,7 @@ def deleteRecipe(recipe_id):
         return resp
     if(recipe.image_url is not None):
         removeImage(recipe.image_url)
+
     db_session.delete(recipe)
     db_session.commit()
     return jsonify(id=recipe.id)

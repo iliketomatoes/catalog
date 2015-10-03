@@ -31,8 +31,10 @@
                         <a href="/auth/disconnect" class="right"><i class="fi-arrow-right"></i> Logout</a>
                      </div>
                      <div class="user-info right">
+                        <a href="/#user/{{ session.user_id or 'null'}}">
                         <span>{{ session.username.partition(' ')[0] + ' ' + session.username.partition(' ')[2][0] + '.'  }}</span>
                         <img src="{{ session.picture}}" width="36" height="36" alt="{{ session.username }}">
+                        </a>
                     </div>
                     {% endif %}
                 </div>

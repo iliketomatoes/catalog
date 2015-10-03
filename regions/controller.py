@@ -54,7 +54,7 @@ def showRegions():
         region_list = db_session.query(Region).all()
         serialized_result = [i.serialize for i in region_list]
 
-    # Lastly we decide which format to send the data
+    # Lastly we decide which data format to send
     if (xml_format == 'true' or xml_format == 'TRUE'):
         xml_output = dicttoxml.dicttoxml(serialized_result)
         return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}
@@ -86,7 +86,7 @@ def showOne(region_id):
     else:
         serialized_result = [i.serialize for i in region_list]
 
-    # Lastly we decide which format to send the data
+    # Lastly we decide which data format to send
     if (xml_format == 'true' or xml_format == 'TRUE'):
         xml_output = dicttoxml.dicttoxml(serialized_result)
         return xml_output, 200, {'Content-Type': 'text/xml; charset=utf-8'}

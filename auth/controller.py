@@ -278,9 +278,3 @@ def disconnect():
             status=401
         )
 
-
-# See all the users registered
-@auth.route('/users')
-def showUsers():
-    users = db_session.query(User).all()
-    return jsonify(collection=[i.serialize for i in users])
