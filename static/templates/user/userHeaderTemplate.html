@@ -1,0 +1,12 @@
+<div class="row">
+	<div class="small-12 columns">
+		<h3><%= user.get("name") %>'s recipes</h3>
+	</div>
+</div> 
+<div class="submenu-container">
+    <% if(!!window.userId){ %>
+    <div class="submenu-half">
+        <a href="#new_recipe" class="right bold"><i class="fi-plus"></i> Add a new recipe</a>
+    </div>
+    <% } %>
+</div>

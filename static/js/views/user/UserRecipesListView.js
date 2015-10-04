@@ -3,12 +3,14 @@ define([
     'underscore',
     'backbone',
     'views/recipes/RecipeListItemView',
+    'views/user/UserHeaderView',
+    'models/user',
     'collections/recipes',
     'text!templates/user/userRecipesListTemplate.html',
     'domready',
     'foundation.dropdown',
     'foundation.reveal'
-], function($, _, Backbone, RecipeListItemView, RecipeCollection, userRecipesListTemplate, domready) {
+], function($, _, Backbone, RecipeListItemView, UserHeaderView, User, RecipeCollection, userRecipesListTemplate, domready) {
     var UserRecipesListView = Backbone.View.extend({
         el: $("#container"),
 
@@ -64,7 +66,6 @@ define([
 
         render: function(user_id) {
 
-
             var data = {
                 regions: this.mapped_regions,
                 _: _
@@ -72,6 +73,12 @@ define([
 
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
+
+            var user = new User({ id: user_id});
+            user.parse = function(response) {
+                return response.collection[0];
+            };
+            var userInfo = new UserHeaderView({ model: user});
 
         },
 
