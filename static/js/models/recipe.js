@@ -32,9 +32,6 @@ define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function
 
                     $totalCount.text(totalValue.toString());
 
-                    console.log(self.view.$el[0]);
-                    self.view.$el.addClass('hide');
-
                     self.view.remove();
 
                 },

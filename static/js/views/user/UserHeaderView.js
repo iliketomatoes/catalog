@@ -28,7 +28,7 @@ define([
                 _: _
             };
             var compiledTemplate = this.template(data);
-            $("#user-header").html(compiledTemplate);
+            $("#recipe-list-header").html(compiledTemplate);
 
             $('.go-back-btn').one('click', function(e) {
                 e.preventDefault();

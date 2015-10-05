@@ -9,7 +9,6 @@ define([
     'views/recipes/FormRecipeView',
     'views/regionsmenu/RegionsMenuView',
     'views/recipes/AddPictureView',
-    'views/user/UserRecipesListView',
     'collections/regions'
 ], function(
     $,
@@ -21,7 +20,6 @@ define([
     FormRecipeView,
     RegionsMenuView,
     AddPictureView,
-    UserRecipesListView,
     RegionCollection
 ) {
 
@@ -83,10 +81,6 @@ define([
                 regions: regions
             });
 
-            var userRecipesView = new UserRecipesListView({
-                regions: regions
-            });
-
             app_router.on('route:showRecipes', function() {
                 recipeList.populate();
             });
@@ -112,7 +106,7 @@ define([
             });
 
             app_router.on('route:showUser', function(user_id) {
-                userRecipesView.populate(user_id);
+                recipeList.populate(null, user_id);
             });
 
             RegionsMenuView.render(regions);

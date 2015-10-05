@@ -1,0 +1,11 @@
+<div class="submenu-container">
+    <div class="<% if(!!window.userId){ %>submenu-half<% }else{ %>submenu<% } %>">
+        <span class="bold"><%= defaultRegion.name %> <i class="fi-check"></i></span>
+        <a href="#!" id="region-select" class="right bold region-menu" data-id="<%= defaultRegion.id %>"><i class="fi-widget"></i> Select a region</a>
+    </div>
+    <% if(!!window.userId){ %>
+    <div class="submenu-half">
+        <a href="#new_recipe" class="right bold"><i class="fi-plus"></i> Add a new recipe</a>
+    </div>
+    <% } %>
+</div>

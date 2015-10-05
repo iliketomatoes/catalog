@@ -3,12 +3,15 @@ define([
     'underscore',
     'backbone',
     'views/recipes/RecipeListItemView',
+    'views/recipes/RecipeListHeaderView',
+    'views/user/UserHeaderView',
+    'models/user',
     'collections/recipes',
     'text!templates/recipes/recipeListTemplate.html',
     'domready',
     'foundation.dropdown',
     'foundation.reveal'
-], function($, _, Backbone, RecipeListItemView, RecipeCollection, recipeListTemplate, domready) {
+], function($, _, Backbone, RecipeListItemView, RecipeListHeaderView, UserHeaderView, User, RecipeCollection, recipeListTemplate, domready) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
@@ -32,11 +35,17 @@ define([
             _.bindAll(this, 'addOne', 'initFoundation', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
         },
 
-        populate: function(region_id) {
+        populate: function(region_id, user_id) {
             var queryParams = {};
 
-            if (!!region_id) queryParams.data = {
-                region_id: region_id
+            if (!!region_id) {
+                queryParams.data = {
+                    region_id: region_id
+                }
+            } else if (!!user_id) {
+                queryParams.data = {
+                    user_id: user_id
+                };
             };
 
             queryParams.success = function(recipes) {
@@ -58,11 +67,11 @@ define([
             //Let's init the foundation plugins when we have done adding recipes to the view
             this.collection.bind('update', this.initFoundation);
 
-            this.render(region_id);
+            this.render(region_id, user_id);
             this.collection.fetch(queryParams);
         },
 
-        render: function(region_id) {
+        render: function(region_id, user_id) {
 
             var defaultRegion = {
                 id: 0,
@@ -82,6 +91,23 @@ define([
 
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
+
+            if (!!user_id) {
+                var user = new User({
+                    id: user_id
+                });
+                user.parse = function(response) {
+                    return response.collection[0];
+                };
+                var userInfo = new UserHeaderView({
+                    model: user
+                });
+
+            } else {
+                var subNav = new RecipeListHeaderView({
+                    defaultRegion: defaultRegion
+                });
+            }
 
         },
 
