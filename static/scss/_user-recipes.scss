@@ -1,0 +1,54 @@
+.user-header-info {
+    padding: 1rem 0;
+    margin: 0.5rem auto;
+
+    @media #{$medium-up} {
+     margin: 1rem auto;
+    }
+
+     @media #{$large-up} {
+        margin: 1.2rem auto;
+    }
+}
+
+.user-recipes-profile-pic {
+    width: 60px;
+    height: 60px;
+    margin-top: 0.5rem;
+    border-radius: 50%;
+    float: right;
+    @media #{$medium-up} {
+    margin-top: 1rem;	
+        width: 90px;
+    height: 90px;
+    }
+
+    @media #{$large-up} {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+.user-recipes-name{
+	margin-top: 0.8rem;
+
+	@media #{$medium-up} {
+    margin-top: 1.2rem;	
+    }
+
+     @media #{$large-up} {
+        margin-top: 2rem;	
+    }
+}
+
+.user-recipes-add-btn{
+
+	@media #{$medium-up} {
+    margin-left: 0.6rem;
+    }
+}
+
+.user-recipes-btn-devider{
+	@extend .clearfix;
+	margin: 0.5rem 0;
+}

@@ -14,10 +14,6 @@ define([
     var UserRecipesListView = Backbone.View.extend({
         el: $("#container"),
 
-        events: {
-            'click .card-delete-btn': 'deleteItem'
-        },
-
         template: _.template(userRecipesListTemplate),
 
         initialize: function(options) {
@@ -31,7 +27,7 @@ define([
                 self.mapped_regions[region.get('id')] = region.get('name');
             });
 
-            _.bindAll(this, 'addOne', 'initFoundation', 'deleteItem', 'confirmedDeleteItem', 'abortedDeleteItem');
+            _.bindAll(this, 'addOne', 'initFoundation');
         },
 
         populate: function(user_id) {
@@ -74,11 +70,15 @@ define([
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
 
-            var user = new User({ id: user_id});
+            var user = new User({
+                id: user_id
+            });
             user.parse = function(response) {
                 return response.collection[0];
             };
-            var userInfo = new UserHeaderView({ model: user});
+            var userInfo = new UserHeaderView({
+                model: user
+            });
 
         },
 
@@ -97,32 +97,6 @@ define([
             domready(function() {
                 $(document).foundation();
             });
-        },
-
-        deleteItem: function(e) {
-            e.preventDefault();
-            var self = this;
-            var target = e.target ? e.target : e.srcElement;
-            var targetID = target.getAttribute('data-id');
-            var model = this.collection.get(targetID);
-            $('.confirm-deletion-confirm').data('id', targetID);
-            $('#confirm-deletion-name').text(model.get('name'));
-            $('#confirm-deletion').foundation('reveal', 'open');
-            $('.confirm-deletion-confirm').one('click', self.confirmedDeleteItem);
-            $('.confirm-deletion-abort').one('click', self.abortedDeleteItem);
-        },
-
-        confirmedDeleteItem: function(e) {
-            e.preventDefault();
-            var targetID = $('.confirm-deletion-confirm').data('id');
-            var modelToDelete = this.collection.get(targetID);
-            modelToDelete.clear();
-            $('#confirm-deletion').foundation('reveal', 'close');
-        },
-
-        abortedDeleteItem: function(e) {
-            e.preventDefault();
-            $('#confirm-deletion').foundation('reveal', 'close');
         }
 
     });

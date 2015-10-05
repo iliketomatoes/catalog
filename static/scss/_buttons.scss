@@ -73,3 +73,16 @@ button, .button, input[type="submit"]{
 		background-color: #e74b37;
 	}
 }
+
+.recipe-action-btn{
+	border: 1px solid $border-color;
+	background-color: transparent;
+	border-radius: 22px;
+	padding: 8px 22px;
+	font-size: rem-calc(16);
+	@include single-transition($speed:150ms);
+
+	&:hover{
+		background-color: $border-color;
+	}
+}

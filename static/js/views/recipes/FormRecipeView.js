@@ -88,7 +88,6 @@ define([
                 $('.difficulty label').click(function(e) {
                     e.preventDefault();
                     var targetId = e.target.getAttribute('for');
-                    console.log(targetId);
                     $('#' + targetId).prop('checked', true);
                 })
             });

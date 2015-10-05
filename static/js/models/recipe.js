@@ -15,7 +15,6 @@ define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function
                     var regionId = parseInt(model.get('region_id'));
 
                     var $counter = $('.region-count').filter(function(index, el) {
-                        console.log(parseInt($(el).attr("data-region-count")) === regionId);
                         return parseInt($(el).attr("data-region-count")) === regionId;
                     });
 
@@ -32,6 +31,9 @@ define(['jquery', 'underscore', 'backbone', 'views/flash/FlashView', ], function
                     $counter.text(actualValue.toString());
 
                     $totalCount.text(totalValue.toString());
+
+                    console.log(self.view.$el[0]);
+                    self.view.$el.addClass('hide');
 
                     self.view.remove();
 

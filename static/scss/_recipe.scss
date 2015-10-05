@@ -66,12 +66,12 @@ RECIPE
 
 .recipe-time{
 	@media #{$medium-up}{
-	  border-left: 2px solid $border-color;
+	  border-left: 1px solid $border-color;
 	}
 }
 
 .recipe-difficulty{
-	border-left: 2px solid $border-color;
+	border-left: 1px solid $border-color;
 }
 
 .recipe-info{
@@ -92,15 +92,22 @@ RECIPE
 
 .recipe-footer-links{
 	position: relative;
-	margin: 0.5rem auto 0;
+	margin: 1.5rem auto 1rem;
+	text-align: center;
 	//max-width: rem-calc(720);
 }
 
 .recipe-dropdown-container{
-    float: right;
+    //float: right;
     z-index: 200;
+    display: inline-block;
+    margin-left: 1rem;
 
-    button {
+    .f-dropdown{
+    	text-align: left;
+    }
+
+    /*button {
     //padding: 0.2rem 0.6rem;
     font-size: 1rem;
     word-spacing: 2px;
@@ -109,7 +116,7 @@ RECIPE
     -webkit-box-shadow: none;
     -moz-box-shadow:    none;
     box-shadow:         none;
-    }
+    }*/
 }
 
 .meatballs{

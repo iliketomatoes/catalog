@@ -11,8 +11,11 @@ SUBMENU
     @extend .clearfix;
     @media #{$medium-up} {
         padding: 10px 0;
-        margin: 2rem auto 3rem;
+        margin: 2rem 1rem 3rem;
         border-bottom: 2px solid $border-color;
+    }
+    @media #{$screen} and (min-width:rem-calc(1180)) {
+        margin: 2rem auto 3rem;
     }
 }
 
@@ -54,6 +57,7 @@ RECIPE LIST
 .recipe-list-container {
     margin: 0 auto;
     max-width: rem-calc(1500);
+   // overflow: auto;
 }
 
 .recipe-list {
@@ -64,7 +68,6 @@ RECIPE LIST
     width: 100%;
     list-style-type: none;
     margin: 0;
-    overflow: auto;
 }
 
 .recipe-list-item {

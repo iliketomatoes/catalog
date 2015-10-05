@@ -46,10 +46,10 @@ body {
 <div class="row">
 	<div class="small-12 columns">
 		<div class="recipe-footer-links">
-			<a href="/#" class="go-back-btn">&#10229; Go back</a>
+			<a href="/#" class="go-back-btn recipe-action-btn">&#10229; Go back</a>
             <% if(window.userId == recipe.get("user_id")){ %>
             <div class="recipe-dropdown-container">
-                <button href="#" data-dropdown="drop-<%= recipe.get("id") %>"aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="button secondary small"><span class="meatballs">&#8226;&#8226;&#8226;</span> edit</button>
+                <a href="#" data-dropdown="drop-<%= recipe.get("id") %>"aria-controls="drop-<%= recipe.get("id") %>" aria-expanded="false" class="recipe-action-btn"><span class="meatballs">&#8226;&#8226;&#8226;</span> Edit</a>
                 <br>
                 <ul id="drop-<%= recipe.get("id") %>" data-dropdown-content class="f-dropdown" aria-hidden="true">
                     <li><a href="/#edit/<%= recipe.get("id") %>" data-id="<%= recipe.get("id") %>" class="card-edit-btn"><i class="fi-pencil"></i> Update recipe</a></li>
