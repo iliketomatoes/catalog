@@ -17,6 +17,7 @@
     margin-top: 0.5rem;
     border-radius: 50%;
     float: right;
+    @include material-element();
     @media #{$medium-up} {
     margin-top: 1rem;	
         width: 90px;
