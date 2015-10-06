@@ -66,3 +66,10 @@ Endpoints:
 | /users/*USER ID* | Get single user |
 
 
+## Credits
+
+This project was inspired by [www.academiabarilla.com](http://www.academiabarilla.com/en/italian-recipes/dir/Speciali/Ricette.aspx). I didn't like that website's UX and UI, though I found it to have interesting contents. So I decided to make a prototype of a more modern version of that website. Some (if not all) the recipes and the images you will find in this app are borrowed from [www.academiabarilla.com](http://www.academiabarilla.com/en/italian-recipes/dir/Speciali/Ricette.aspx) indeed. 
+
+The default recipe's picture was taken from [www.subtlepatterns.com](http://subtlepatterns.com/?s=food).
+
+This app is not intended for commercial use. It's just for educational purpose.
