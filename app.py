@@ -9,6 +9,7 @@ init_db()
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
+# Register all the blueprints
 app.register_blueprint(recipes)
 app.register_blueprint(regions)
 app.register_blueprint(auth)

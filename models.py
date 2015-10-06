@@ -11,7 +11,6 @@ class Region(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    # recipes = relationship("Recipe", backref="regions")
 
     @property
     def serialize(self):
@@ -29,7 +28,6 @@ class User(Base):
     email = Column(String(250), nullable=False)
     name = Column(String(250), nullable=False)
     picture = Column(String(250), nullable=False)
-    # recipes = relationship("Recipe", backref="users")
 
     @property
     def serialize(self):
@@ -75,9 +73,3 @@ class Recipe(Base):
             'insert_date': self.insert_date,
             'last_update': self.last_update
         }
-
-
-# engine = create_engine('sqlite:///italianrecipes.db')
-
-
-# Base.metadata.create_all(engine)

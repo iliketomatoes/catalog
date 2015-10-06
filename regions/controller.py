@@ -18,11 +18,14 @@ def showRegions():
     catalog_mode = request.args.get('catalog')
     xml_format = request.args.get('xml')
 
+    # Check if query parameters were added to the request
     if (catalog_mode == 'true' or catalog_mode == 'TRUE'):
+        # Get the whole catalog
         region_list = db_session.query(Region).all()
 
         regions = []
 
+        # Add recipes to every region
         for i in region_list:
             recipes = []
             for recipe in i.region_recipes:
@@ -33,8 +36,8 @@ def showRegions():
 
         serialized_result = regions
 
-    elif (count == 'true' or count == 'TRUE'):  # noqa
-        # Get region_ids with amount of recpies for each region
+    elif (count == 'true' or count == 'TRUE'):
+        # Get regions with recipe count
         stmt = db_session.query(Recipe.region_id, func.count('*').
                                 label('recipes_count')).\
             group_by(Recipe.region_id).subquery()
@@ -51,6 +54,7 @@ def showRegions():
         serialized_result = regions
 
     else:
+        # Get all regions
         region_list = db_session.query(Region).all()
         serialized_result = [i.serialize for i in region_list]
 
@@ -70,8 +74,9 @@ def showOne(region_id):
     region_list = db_session.query(Region).filter(
         Region.id == region_id).all()
 
+    # Check if query parameters were added to the request
     if (catalog_mode == 'true' or catalog_mode == 'TRUE'):
-
+        # Get single region's catalog
         regions = []
 
         for i in region_list:
@@ -84,6 +89,7 @@ def showOne(region_id):
 
         serialized_result = [regions]
     else:
+        # Get single region
         serialized_result = [i.serialize for i in region_list]
 
     # Lastly we decide which data format to send

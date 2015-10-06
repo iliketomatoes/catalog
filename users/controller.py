@@ -6,13 +6,14 @@ from flask import jsonify
 from database import db_session
 from models import User
 
-
+# Define the Blueprint
 users = Blueprint('users', __name__)
 
 
 # See all the users registered
 @users.route('/users')
 def showUsers():
+    # Check if they are asking for XML format response
     xml_format = request.args.get('xml')
     users = db_session.query(User).all()
     serialized_result = [i.serialize for i in users]
@@ -25,8 +26,10 @@ def showUsers():
         return jsonify(collection=serialized_result)
 
 
+# Get the single user
 @users.route('/users/<int:user_id>', methods=['GET'])
 def showUser(user_id):
+    # Check if they are asking for XML format response
     xml_format = request.args.get('xml')
     users = db_session.query(User).filter(
         User.id == user_id).all()

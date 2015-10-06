@@ -13,9 +13,10 @@ from models import User
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
-
+# Define the Blueprint and its template folder location
 auth = Blueprint('auth', __name__, template_folder='templates')
 
+# Get client id for Google+ authentication
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Udacity Catalog - Italian Recipes"
@@ -50,6 +51,7 @@ def generateToken():
 
 @auth.route('/')
 def home():
+    """Here we register the route for the homepage"""
     try:
         login_session['state'] = generateToken()
         return render_template(
@@ -277,4 +279,3 @@ def disconnect():
             error='You are not logged in.',
             status=401
         )
-
