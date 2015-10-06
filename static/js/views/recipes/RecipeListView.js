@@ -9,9 +9,10 @@ define([
     'collections/recipes',
     'text!templates/recipes/recipeListTemplate.html',
     'domready',
+    'imageloader',
     'foundation.dropdown',
     'foundation.reveal'
-], function($, _, Backbone, RecipeListItemView, RecipeListHeaderView, UserHeaderView, User, RecipeCollection, recipeListTemplate, domready) {
+], function($, _, Backbone, RecipeListItemView, RecipeListHeaderView, UserHeaderView, User, RecipeCollection, recipeListTemplate, domready, imageloader) {
     var RecipeListView = Backbone.View.extend({
         el: $("#container"),
 
@@ -117,6 +118,7 @@ define([
                 mapped_regions: this.mapped_regions
             });
             $('.recipe-list').append(view.render().el);
+            imageloader.revalidate();
         },
 
         initFoundation: function() {

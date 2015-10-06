@@ -21,7 +21,7 @@
                     }else{
                         image = "/static/uploads/" + recipe.get("image_url");
                     } %>
-        <img src="<%= image %>" alt="<%= recipe.get("name") %>">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="<%= image %>" alt="<%= recipe.get("name") %>" class="b-lazy">
         <div class="card-title"><%= recipe.get("name") %></div>
         </div>
     </a>
