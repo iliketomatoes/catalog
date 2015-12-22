@@ -9,11 +9,12 @@ from werkzeug import secure_filename
 from database import db_session
 from models import Region, Recipe, User
 from sqlalchemy.sql import func
+from settings import UPLOAD_FOLDER
 
 recipes = Blueprint('recipes', __name__)
 
 # Variables for managing picture upload
-UPLOAD_FOLDER = 'static/uploads'
+# UPLOAD_FOLDER = os.path.join(APP_STATIC, 'uploads')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 

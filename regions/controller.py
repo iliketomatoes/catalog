@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import dicttoxml
 from flask import Blueprint
 from flask import request
@@ -38,17 +41,14 @@ def showRegions():
 
     elif (count == 'true' or count == 'TRUE'):
         # Get regions with recipe count
-        stmt = db_session.query(Recipe.region_id, func.count('*').
-                                label('recipes_count')).\
-            group_by(Recipe.region_id).subquery()
-
-        region_list = db_session.query(Region, stmt.c.recipes_count).\
-            outerjoin(stmt, Region.id == stmt.c.region_id).group_by(Region.id)
+        region_list = db_session.query(Region).all()
 
         regions = []
 
-        for i, count in region_list:
-            region = {'name': i.name, 'id': i.id, 'count': count}
+        # Add recipes to every region
+        for i in region_list:
+            region = { 'name': i.name, 'id': i.id}
+            region['count'] = len(i.region_recipes)
             regions.append(region)
 
         serialized_result = regions

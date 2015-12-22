@@ -82,6 +82,8 @@ define([
             var compiledTemplate = _.template(newRecipeTemplate)(data);
             this.$el.html(compiledTemplate);
 
+            this.pullupPage();
+
             domready(function() {
                 $(document).foundation('slider', 'reflow');
 
@@ -223,6 +225,12 @@ define([
 
             }
 
+        },
+
+        pullupPage: function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 0);
         }
     });
     return FormRecipeView;

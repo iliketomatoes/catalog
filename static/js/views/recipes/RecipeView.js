@@ -72,6 +72,8 @@ define([
             var compiledTemplate = this.template(data);
             this.$el.html(compiledTemplate);
 
+            this.pullupPage();
+
             $('.go-back-btn').one('click', function(e) {
                 e.preventDefault();
                 Backbone.history.history.back();
@@ -101,6 +103,12 @@ define([
         abortedDeleteItem: function(e) {
             e.preventDefault();
             $('#confirm-deletion').foundation('reveal', 'close');
+        },
+
+        pullupPage: function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 0);
         }
 
     });

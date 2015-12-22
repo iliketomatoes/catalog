@@ -49,6 +49,8 @@ define([
             var compiledTemplate = _.template(addPictureTemplate)(data);
             this.$el.html(compiledTemplate);
 
+            this.pullupPage();
+
             var flash = new FlashView();
 
             $('#upload-picture-form').dropzone({
@@ -92,6 +94,12 @@ define([
                 Backbone.history.history.back();
             });
 
+        },
+
+        pullupPage: function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 0);
         }
     });
     return AddPictureView;

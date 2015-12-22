@@ -7,7 +7,7 @@ require.config({
         'regionmenu': '/static/js/modules/regionmenu',
         'dropzone': '/static/js/modules/dropzone-amd-module',
         'velocity': '/static/js/modules/velocity.min',
-        'blazy': '/static/bower_components/blazy/blazy',
+        'blazy': '/static/bower_components/bLazy/blazy',
         'imageloader': '/static/js/modules/imageloader',
         'foundation.core': '/static/bower_components/foundation/js/foundation/foundation',
         'foundation.abide': '/static/bower_components/foundation/js/foundation/foundation.abide',

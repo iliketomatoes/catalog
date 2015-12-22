@@ -9,11 +9,6 @@ define([
 
         className: 'recipe-list-item',
 
-        events: {
-            'click .card-header-link': 'pullupPage',
-            'click .card-edit-btn': 'pullupPage'
-        },
-
         template: _.template(recipeListItemTemplate),
 
         initialize: function(options) {
@@ -34,12 +29,7 @@ define([
             this.$el.append(compiledTemplate);
 
             return this;
-        },
 
-        pullupPage: function() {
-            $("html, body").animate({
-                scrollTop: 0
-            }, 0);
         }
     });
     return RecipeListItemView;
