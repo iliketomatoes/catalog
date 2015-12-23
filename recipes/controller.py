@@ -6,10 +6,10 @@ from flask import jsonify
 from flask import session as login_session
 from jinja2 import Markup
 from werkzeug import secure_filename
-from database import db_session
-from models import Region, Recipe, User
+from catalog.database import db_session
+from catalog.models import Region, Recipe, User
 from sqlalchemy.sql import func
-from settings import UPLOAD_FOLDER
+from catalog.settings import UPLOAD_FOLDER
 
 recipes = Blueprint('recipes', __name__)
 

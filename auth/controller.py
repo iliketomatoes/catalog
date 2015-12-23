@@ -8,8 +8,8 @@ from flask import session as login_session
 from flask import Blueprint
 from flask import request
 from flask import jsonify
-from database import db_session
-from models import User
+from catalog.database import db_session
+from catalog.models import User
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
@@ -18,7 +18,7 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 
 # Get client id for Google+ authentication
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Udacity Catalog - Italian Recipes"
 
 

@@ -3,8 +3,8 @@ from flask import session as login_session
 from flask import Blueprint
 from flask import request
 from flask import jsonify
-from database import db_session
-from models import User
+from catalog.database import db_session
+from catalog.models import User
 
 # Define the Blueprint
 users = Blueprint('users', __name__)

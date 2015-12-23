@@ -5,8 +5,8 @@ import dicttoxml
 from flask import Blueprint
 from flask import request
 from flask import jsonify
-from database import db_session
-from models import Region, Recipe
+from catalog.database import db_session
+from catalog.models import Region, Recipe
 from sqlalchemy import func
 from inspect import getmembers
 from pprint import pprint
