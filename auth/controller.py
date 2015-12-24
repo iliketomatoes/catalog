@@ -12,13 +12,14 @@ from catalog.database import db_session
 from catalog.models import User
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
+from catalog.settings import APP_ROOT
 
 # Define the Blueprint and its template folder location
 auth = Blueprint('auth', __name__, template_folder='templates')
 
 # Get client id for Google+ authentication
 CLIENT_ID = json.loads(
-    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
+    open(APP_ROOT + 'client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Udacity Catalog - Italian Recipes"
 
 
@@ -84,7 +85,8 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets(
+            APP_ROOT + 'client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError, e:
@@ -162,10 +164,10 @@ def fbconnect():
     access_token = request.data
     print "access token received %s " % access_token
 
-    app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
+    app_id = json.loads(open(APP_ROOT + 'fb_client_secrets.json', 'r').read())[
         'web']['app_id']
     app_secret = json.loads(
-        open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+        open(APP_ROOT + 'fb_client_secrets.json', 'r').read())['web']['app_secret']  # noqa
     url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (  # noqa
         app_id, app_secret, access_token)
     h = httplib2.Http()
